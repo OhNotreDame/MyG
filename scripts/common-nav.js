@@ -7,6 +7,9 @@ function prepareToolbar()
 			<a href="./inbox.html">Inbox</a>\
 		</li>\
 		<li>\
+			<a href="./threads.html">Threads (beta)</a>\
+		</li>\
+		<li>\
 			<a href="./inbox.html?updates">Updates</a>\
 		</li>\
 		<li>\

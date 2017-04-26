@@ -32,25 +32,26 @@ function renderInbox() {
 		for(key of urlParamsKeys) { 
 			switch(key) {
 				case 'updates':
-					listMessage('INBOX', 'label:Updates', 50, appendMessageRow);
+					listMessages('INBOX', 'label:Updates', 50, appendMessageRow);
 					break;
 				case 'social':
-					listMessage('INBOX', 'label:Social', 50, appendMessageRow);
+					listMessages('INBOX', 'label:Social', 50, appendMessageRow);
 					break;
 				case 'promotions':
-					listMessage('INBOX', 'label:Promotions', 50, appendMessageRow);
+					listMessages('INBOX', 'label:Promotions', 50, appendMessageRow);
 					break;
 				case 'forums':
-					listMessage('INBOX', 'label:Forums', 50, appendMessageRow);
+					listMessages('INBOX', 'label:Forums', 50, appendMessageRow);
 					break;
 				default:
-					listMessage('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+					listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+					break;
 			}
 		}
 	}
 	else
 	{
-		listMessage('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+		listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
 	}
 }
 
@@ -64,13 +65,6 @@ function appendMessageRow(message) {
      if (tmp_from) {
           from = tmp_from[1];
      }
-
-     // Check if email has attachments
-     var hasAttachString = "No";
-     var tmpFileName = "";
-
-     //Retrieve attachemnt
-
 
      var mailDateString = getHeader(headers, 'Date');
      var mailDate = new Date(mailDateString);
@@ -199,6 +193,7 @@ function sendEmail() {
           composeTidy);
      return false;
 }
+
 
 /* generic js handler to send an email to trash, relies on deleteMessage() */
 function markEmailAsRead(messageId) {

@@ -18,7 +18,7 @@ function renderTrash() {
      // Clear Messages table
      prepareToolbar();
 	 $('.table-trash tbody').empty();
-     listMessage('TRASH', '!label:CHAT', 30, appendMessageRow);
+     listMessages('TRASH', '!label:CHAT', 30, appendMessageRow);
 
 }
 

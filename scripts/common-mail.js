@@ -36,7 +36,123 @@ function handleAuthResult(authResult) {
      }
 }
 
-function listMessage(labelIds, query, maxResult, callback) {
+
+
+/*
+ Handling Threads
+*/
+
+function listThreads(labelIds, query, maxResult, callback) {
+	var getPageOfThreads = function (request, result) {
+		request.execute(function (resp) {
+			result = result.concat(resp.threads);
+			var nextPageToken = resp.nextPageToken;
+			if (nextPageToken) {
+				request = gapi.client.gmail.users.threads.list({
+						  'userId': USER,
+						  'labelIds': labelIds,
+						  'q': query,
+						  'maxResults': maxResult,
+						  'pageToken': nextPageToken
+					 });
+				getPageOfThreads(request, result);
+			} else {
+				parseThreads(resp.threads);
+			}
+		});
+	};
+    
+	var request = gapi.client.gmail.users.threads.list({
+              'userId': USER,
+			  'labelIds': labelIds,
+			  'q': query,
+			  'maxResults': maxResult
+          });
+    getPageOfThreads(request, []); 
+}
+
+function parseThreads(threads) {
+	$.each(threads, function () {
+		getThread(this.id);
+	});
+}
+
+function getThread(threadId) {
+	var request = gapi.client.gmail.users.threads.get({
+		   'userId': USER,
+		   'id': threadId
+	});
+	request.execute(function (resp) {
+		appendThreadRow(resp);
+	});
+}
+
+/* js function, using google api, to mark a thread as read, based on its messageID */
+function markThreadAsRead(threadId, callback) {
+     var sendRequest = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                    'addLabelIds': [],
+                    'removeLabelIds': ['UNREAD']
+               }
+          });
+     return sendRequest.execute(callback);
+}
+
+
+/* js function, using google api, to delete a thread (send the email to trash), based on its threadId */
+function sendThreadToTrash(threadId, callback) {
+     var sendRequest = gapi.client.gmail.users.threads.trash({
+               'userId': USER,
+               'id': threadId
+          });
+     return sendRequest.execute(callback);
+}
+
+/* js function, using google api, to restore a thread (send the email back to the inbox), based on its threadId */
+function sendThreadBackToInbox(threadId, callback) {
+     var sendRequest = gapi.client.gmail.users.threads.untrash({
+               'userId': USER,
+               'id': threadId
+          });
+     return sendRequest.execute(callback);
+}
+
+/* js function, using google api, to add a message to a thread (send the email back to the inbox), based on its threadId */
+function insertMessageToThread(threadId, email, callback) {
+  // Using the js-base64 library for encoding:
+  // https://www.npmjs.com/package/js-base64
+  var base64EncodedEmail = Base64.encodeURI(email);
+  var request = gapi.client.gmail.users.messages.insert({
+    'userId': USER,
+	'threadId': threadId,
+    'resource': {
+      'raw': base64EncodedEmail
+    }
+  });
+  request.execute(callback);
+}
+
+
+function replyToThread(threadId, headers_obj, message, callback)
+{
+console.log("replyToThread");
+
+}
+
+
+
+
+
+
+
+
+/*
+ Handling Messages
+*/
+
+function listMessages(labelIds, query, maxResult, callback) {
      // Prepare Request to Google API
      var request = gapi.client.gmail.users.messages.list({
                'userId': USER,
@@ -53,8 +169,9 @@ function listMessage(labelIds, query, maxResult, callback) {
                messageRequest.execute(callback);
           });
      });
-
 }
+
+
 
 /* js function, using google api, to send a message (an email indeed), based on its parameters */
 function sendMessage(headers_obj, message, callback) {
@@ -92,7 +209,6 @@ function sendMessageToTrash(messageId, callback) {
           });
      return sendRequest.execute(callback);
 }
-
 
 /* js function, using google api, to restore a message (send the email back to the inbox), based on its messageID */
 function sendMessageBackToInbox(messageId, callback) {
@@ -181,6 +297,50 @@ function renderEmailIcons(message)
 }
 
 
+function renderThreadIcons(ThreadLabelIds, messageID)
+{
+	if (ThreadLabelIds.includes("UNREAD")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='newIco' src='../img/new.png' title='Unread'/>&nbsp;");
+
+          var buttonID = "#asread-button-" + messageID;
+          $(buttonID).toggle();
+     }
+
+     if (ThreadLabelIds.includes("STARRED")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='starIco' src='../img/star.png' title='Starred'/>&nbsp;");
+     }
+
+     if (ThreadLabelIds.includes("IMPORTANT")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='importIco' src='../img/important.png'  title='Important'/>&nbsp;");
+     }
+     if (ThreadLabelIds.includes("CATEGORY_PERSONAL")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
+     }
+     if (ThreadLabelIds.includes("CATEGORY_UPDATES")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
+     }
+
+     if (ThreadLabelIds.includes("CATEGORY_PROMOTIONS")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
+     }
+
+     if (ThreadLabelIds.includes("CATEGORY_SOCIAL")) {
+          var iconDivID = "#icons-" + messageID;
+          $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
+     }
+
+}
+
+
+
+
+
 
 function getHeader(headers, index) {
      var header = '';
@@ -214,4 +374,9 @@ function getHTMLPart(arr) {
           }
      }
      return '';
+}
+
+function getFirstMessageOfThread(thread)
+{
+	return thread.messages[0];
 }
