@@ -1,0 +1,31 @@
+{
+	"manifest_version": 2,
+	"name": "MyG",
+	"description": "This extension shows MyG",
+	"version": "2.0",
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://*.google.com https://*.google.com:*/ ; img-src 'self'; object-src 'self' 'unsafe-eval'",
+	"browser_action": 
+	{
+		"default_icon": "img/icon.png",
+		"default_popup": "pages/popup.html"
+	},
+	"permissions": 
+	[
+		"tabs",
+		"activeTab",
+		"identity",
+		"https://ajax.googleapis.com/"
+	],
+    "content_scripts": 
+	[ 
+		{
+			"js": [ 
+				"scripts/jquery-3.1.1.js",
+				"scripts/jquery.tablesorter.min.js"
+				],
+			"matches": [ "http://*/*", "https://*/*"],
+			"run_at": "document_end"
+		}
+	],
+	"options_page": "pages/options.html"
+}
