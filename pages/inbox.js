@@ -8,6 +8,8 @@ window.onload = function () {
      .addEventListener("click", sendEmail, false);
      document.getElementById("reply-button")
      .addEventListener("click", sendReply, false);
+	 
+	
 
 }
 
@@ -21,8 +23,35 @@ function renderInbox() {
      prepareToolbar();
      // Clear Messages table
      $('#table-inbox > tbody').empty();
-     listMessage('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 30, appendMessageRow);
-
+	 
+	var urlParams = new URLSearchParams(window.location.search);
+	var curLoc = window.location.href;
+	if (curLoc.includes('?'))
+	{
+		var urlParamsKeys = urlParams.keys();
+		for(key of urlParamsKeys) { 
+			switch(key) {
+				case 'updates':
+					listMessage('INBOX', 'label:Updates', 50, appendMessageRow);
+					break;
+				case 'social':
+					listMessage('INBOX', 'label:Social', 50, appendMessageRow);
+					break;
+				case 'promotions':
+					listMessage('INBOX', 'label:Promotions', 50, appendMessageRow);
+					break;
+				case 'forums':
+					listMessage('INBOX', 'label:Forums', 50, appendMessageRow);
+					break;
+				default:
+					listMessage('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+			}
+		}
+	}
+	else
+	{
+		listMessage('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+	}
 }
 
 function appendMessageRow(message) {

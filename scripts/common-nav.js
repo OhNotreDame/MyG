@@ -7,13 +7,16 @@ function prepareToolbar()
 			<a href="./inbox.html">Inbox</a>\
 		</li>\
 		<li>\
-			<a href="./updates.html">Updates</a>\
+			<a href="./inbox.html?updates">Updates</a>\
 		</li>\
 		<li>\
-			<a href="./social.html">Social</a>\
+			<a href="./inbox.html?social">Social</a>\
 		</li>\
 		<li>\
-			<a href="./promotions.html">Promotions</a>\
+			<a href="./inbox.html?promotions">Promotions</a>\
+		</li>\
+		<li>\
+			<a href="./inbox.html?forums">Forums</a>\
 		</li>\
 		<li>\
 			<a href="./trash.html">Trash</a>\
