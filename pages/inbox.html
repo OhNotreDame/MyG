@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../scripts/clientID.js"></script>
     <script type="text/javascript" src="../scripts/common-mail.js"></script>
     <script type="text/javascript" src="../scripts/common-nav.js"></script>
+	<script type="text/javascript" src="../scripts/bootstrap-mail.js"></script>
     <script type="text/javascript" src="../scripts/jquery.tablesorter.min.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
 	<script src="inbox.js"></script>
@@ -36,9 +37,7 @@
 		<div id="navBar" class="toolbar">
 		</div>
 		 <div class="container">
-			<a href="#compose-modal" data-toggle="modal" id="compose-button" class="btn btn-primary pull-right hidden">
-				<img id="composeIcon" src="../img/compose.png" title="Compose"/> Compose
-			</a>
+			<button id="compose-button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#compose-modal" ><img id="composeIcon" src="../img/compose.png" title="Compose"/> Compose</button>
 			<button id="authorize-button" class="btn btn-primary hidden">Authorize</button>
 			<table class="table table-striped table-hover table-inbox hidden tablesorter {dateFormat: uk}" id="table-inbox">
 				<thead>
@@ -64,8 +63,7 @@
 				</button>
 				<h4 class="modal-title">Compose</h4>
 			  </div>
-			  <!-- <form onsubmit="return sendEmail();">  -->
-			  <form>
+		
 			   <div class="modal-body">
 				  <div class="form-group">
 					<input type="email" class="form-control" id="compose-to" placeholder="To" required />
@@ -83,9 +81,8 @@
 				</div>
 				<div class="modal-footer">
 				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				  <button type="submit" id="send-button" class="btn btn-primary">Send</button>
+				  <button type="button" id="send-button" class="btn btn-primary" data-dismiss="modal">Send</button>
 				</div>
-			  </form>
 			</div>
 		  </div>
 		</div>
@@ -116,11 +113,11 @@
 					</div>
 					<div class="modal-footer">			  
 					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					  <button type="submit" id="reply-button" class="btn btn-primary">Send</button>
+					  <button type="button" id="reply-button" class="btn btn-primary" data-dismiss="modal">Send</button>
 					</div>
 				  </form>
 				</div>
 			</div>
-		</div>
+		</div>		
   </body>
 </html>
