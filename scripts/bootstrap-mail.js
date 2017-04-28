@@ -57,17 +57,14 @@ function renderMailRow(message) {
           '</a>\
           </td>\
           <td style="width: 166px !important;"><div id="dateEmail">' + finalMailDate + '</div></td>\
-          <td> <button type="button" style="display:none;" class="btn btn-primary asread-button" id="asread-button-' + message.id + '"> \
+          <td> <button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + message.id + '"> \
           <img id="asread-icon-' + message.id + '" src="../img/markAsRead.png" title="Mark as read"/>\
-          Mark as read\
           </button>\</td>\
-          <td> <button type="button" class="btn btn-primary delete-button" id="delete-button-' + message.id + '">\
+          <td> <button type="button" class="btn delete-button" id="delete-button-' + message.id + '">\
           <img id="delete-icon-' + message.id + '" src="../img/delete.png" title="Delete"/>\
-          Delete\
           </button>\</td>\
-          <td> <button type="button" class="btn btn-primary reply-button" id="reply-button-' + message.id + '">\
+          <td> <button type="button" class="btn reply-button" id="reply-button-' + message.id + '">\
           <img id="reply-icon-' + message.id + '" src="../img/reply.png" title="Reply"/>\
-          Reply\
           </button>\</td>\
           </tr>');
 
