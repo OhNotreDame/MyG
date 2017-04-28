@@ -81,7 +81,7 @@ function getThread(threadId) {
                'id': threadId
           });
      request.execute(function (resp) {
-          appendThreadRow(resp);
+          addThreadRowToInbox(resp);
      });
 }
 

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <title>MyG - Thread (details)</title>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"  href="../css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css"  href="../css/menu.css">
+    <script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/clientID.js"></script>
+    <script type="text/javascript" src="../scripts/common-mail.js"></script>
+    <script type="text/javascript" src="../scripts/common-nav.js"></script>
+	<script type="text/javascript" src="../scripts/bootstrap-mail.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.tablesorter.min.js"></script>
+	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
+	<script src="thread.js"></script>
+    <style>
+      iframe {
+        width: 100%;
+        border: 0;
+        min-height: 80%;
+        height: 600px;
+        display: flex;
+      }
+	  .table-hover>tbody>tr:hover
+	  {
+		background-color:#e6efff;
+	  }
+	  
+    </style>
+  </head>
+  <body>
+	<div class="header">
+	<h1>MyG</h1>	
+	</div>		
+		<div id="navBar" class="toolbar">
+		</div>
+		 <div class="container">
+			</br>
+			<input type="hidden" id="reply-thread-id" />	
+			<div id="threadInfo" class="hidden" >
+					<div id="threadSubject" class="pull-left">threadSubject</div>
+					<div id="threadLabels">threadLabels</div>
+					<div id="threadActions" class="pull-right"> threadActions</div>
+			</div>
+			<div id="accordion" role="tablist" aria-multiselectable="true">
+				<div class="msg" id="threadMsg-1">
+					<div class="msg-header" role="tab" id="threadMsg-1-hdr">
+						<a data-toggle="collapse" data-parent="#accordion" href="#threadMsg-1-msg" aria-expanded="true" aria-controls="#threadMsg-1-msg">
+							<div id="threadMsg-1-from" class="pull-left">  From </div>  							
+							<div id="threadMsg-1-date" class="pull-right"> Date </div>  
+							<br/>
+						</a>
+						<div id="threadMsg-1-firstLine" class="pull-left"> First Line </div>  
+					</div>
+					<br/>
+					<div id="threadMsg-1-msg" class="collapse" role="tabpanel" aria-labelledby="#threadMsg-1-msg">
+						Message 
+					</div>  
+				</div> 
+				
+				<div class="msg" id="threadMsg-2">
+					<div class="msg-header" role="tab" id="threadMsg-2-hdr">
+						<a data-toggle="collapse" data-parent="#accordion" href="#threadMsg-2-msg" aria-expanded="true" aria-controls="#threadMsg-2-msg">
+							<div id="threadMsg-2-from" class="pull-left">  From 2</div>  							
+							<div id="threadMsg-2-date" class="pull-right"> Date 2</div>  
+							<br/>
+						</a>
+						<div id="threadMsg-2-firstLine" class="pull-left"> First Line 2 </div>  
+					</div>
+					<br/>
+					<div id="threadMsg-2-msg" class="collapse" role="tabpanel" aria-labelledby="#threadMsg-2-msg">
+						Message 2
+					</div>  
+				</div> 
+			</div> 
+		</div> 	
+  </body>
+</html>

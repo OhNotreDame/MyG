@@ -29,29 +29,29 @@ function renderInbox() {
 	{
 		switch(splitLoc[1]) {
 			case 'updates':
-				listMessages('INBOX', 'label:Updates', 50, appendMessageRow);
+				listMessages('INBOX', 'label:Updates', 50, addMessageRowToInbox);
 				break;
 			case 'social':
-				listMessages('INBOX', 'label:Social', 50, appendMessageRow);
+				listMessages('INBOX', 'label:Social', 50, addMessageRowToInbox);
 				break;
 			case 'promotions':
-				listMessages('INBOX', 'label:Promotions', 50, appendMessageRow);
+				listMessages('INBOX', 'label:Promotions', 50, addMessageRowToInbox);
 				break;
 			case 'forums':
-				listMessages('INBOX', 'label:Forums', 50, appendMessageRow);
+				listMessages('INBOX', 'label:Forums', 50, addMessageRowToInbox);
 				break;
 			default:
-				listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+				listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, addMessageRowToInbox);
 				break;
 		}
 	}
 	else
 	{
-		listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, appendMessageRow);
+		listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, addMessageRowToInbox);
 	}
 }
 
-function appendMessageRow(message) {
+function addMessageRowToInbox(message) {
 
      var headers = message.payload.headers;
 	
