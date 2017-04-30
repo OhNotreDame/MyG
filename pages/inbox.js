@@ -8,7 +8,6 @@ window.onload = function () {
      .addEventListener("click", sendEmail, false);
      document.getElementById("reply-button")
      .addEventListener("click", sendReply, false);
-
 }
 
 /* Load Gmail API, and when it's done, call renderInbox */
@@ -18,7 +17,8 @@ function loadGmailAPI() {
 
 /* renderInbox()	*/
 function renderInbox() {
-     prepareToolbar();
+    
+	prepareToolbar();
      // Clear Messages table
      $('#table-inbox > tbody').empty();
 
@@ -29,41 +29,52 @@ function renderInbox() {
 	{
 		switch(splitLoc[1]) {
 			case 'updates':
-				listMessages('INBOX', 'label:Updates', 50, addMessageRowToInbox);
+				listThreads('INBOX', 'label:Updates after:'+getLast30DaysDate(), 50, addThreadToInbox);
 				break;
 			case 'social':
-				listMessages('INBOX', 'label:Social', 50, addMessageRowToInbox);
+				listThreads('INBOX', 'label:Social after:'+getLast30DaysDate(), 50, addThreadToInbox);
 				break;
 			case 'promotions':
-				listMessages('INBOX', 'label:Promotions', 50, addMessageRowToInbox);
+				listThreads('INBOX', 'label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
 				break;
 			case 'forums':
-				listMessages('INBOX', 'label:Forums', 50, addMessageRowToInbox);
+				listThreads('INBOX', 'label:Forums after:'+getLast30DaysDate(), 50, addThreadToInbox);
 				break;
 			default:
-				listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, addMessageRowToInbox);
+				listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
 				break;
 		}
 	}
 	else
 	{
-		listMessages('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions', 50, addMessageRowToInbox);
+		listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
 	}
 }
 
-function addMessageRowToInbox(message) {
 
-     var headers = message.payload.headers;
-	
-     /* Append Message to table #table-inbox */
-     renderMailRow(message);
+function getLast30DaysDate() {
+     var d = new Date();
+     d.setDate(d.getDate() - 30);
+     var dateString = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+     return dateString;
+}
+
+function addThreadToInbox(thread) {
+
+	var firstMsgOfThread = getFirstMessageOfThread(thread);
+	var threadHeaders = firstMsgOfThread.payload.headers;
+	var threadLabels = firstMsgOfThread.labelIds;
+	var threadParts = firstMsgOfThread.payload.part;
+
+	 /* Append Message to table #table-inbox */
+     renderMailRow(firstMsgOfThread);
 
      /* Extract ReplyTo value and parse it */
      // Option 1: Display Name <EmailAddress@MyDomain.com>
      // Option 2: EmailAddress@MyDomain.com
-     var reply_to = (getHeader(headers, 'Reply-to') !== '' ?
-          getHeader(headers, 'Reply-to') :
-          getHeader(headers, 'From')).replace(/"/g, '&quot;');
+     var reply_to = (getHeader(threadHeaders, 'Reply-to') !== '' ?
+          getHeader(threadHeaders, 'Reply-to') :
+          getHeader(threadHeaders, 'From')).replace(/"/g, '&quot;');
 
      // If necessary, extract Email Address from <EmailAddress@MyDomain.com>, escaping "<" and ">"
      var tmp_reply_to = reply_to.match("<(.*)>");
@@ -72,7 +83,7 @@ function addMessageRowToInbox(message) {
      }
 
 	 /* Extract Subject value and parse it */
-     var subject = getHeader(headers, 'Subject');
+     var subject = getHeader(threadHeaders, 'Subject');
      var substring = "Re: ";
      var reply_subject = "";
 
@@ -83,30 +94,31 @@ function addMessageRowToInbox(message) {
      }
 	
 	/* Prepare Message Modal*/
-	prepareMessageModal(message);
+	prepareMessageModal(firstMsgOfThread);
 
      /* Add js event handler on Email Subject */
-     $('#message-link-' + message.id).on('click', function () {
-          var ifrm = $('#message-iframe-' + message.id)[0].contentWindow.document;
-          $('body', ifrm).html(getBody(message.payload));
+     $('#thread-' + thread.id).on('click', function () {
+         var threadDetailURL="thread.html?threadId="+thread.id;
+		 console.log(threadDetailURL);
+		 document.location.href=threadDetailURL;
      });
 
      /* Add js event handler on Delete Main Button */
-     $('#delete-button-' + message.id).on('click', function () {
-         sendMessageToTrash(message.id, null);
-         $('#delete-button-' + message.id).hide();
-		 $('#row-' +  message.id).hide();
+     $('#delete-button-' + firstMsgOfThread.id).on('click', function () {
+         sendThreadToTrash(firstMsgOfThread.id, null);
+         $('#delete-button-' + firstMsgOfThread.id).hide();
+		 $('#row-' +  firstMsgOfThread.id).hide();
      });
 
      /*  Add js event handler on Delete Main Button */
-     $('#asread-button-' + message.id).on('click', function () {
-           markMessageAsRead(message.id, null);
-			$('#asread-button-' + message.id).hide();
+     $('#asread-button-' + firstMsgOfThread.id).on('click', function () {
+           markThreadAsRead(firstMsgOfThread.id, null);
+			$('#asread-button-' + firstMsgOfThread.id).hide();
      });
 
      /* Add js event handler on Reply Main Button */
-     $('#reply-button-' + message.id).on('click', function () {
-          fillInReply(reply_to, reply_subject, message.id);
+     $('#reply-button-' + firstMsgOfThread.id).on('click', function () {
+          fillInReply(reply_to, reply_subject, firstMsgOfThread.id);
      });
 	 
 	 /* Reinforce sort */

@@ -51,8 +51,7 @@ function renderMailRow(message) {
           <td><div style="display:inline-block; width: 70px !important;" id="icons-' + message.id + '""/></td>\
           <td>' + from + '</td>\
           <td>\
-          <a href="#message-modal-' + message.id +
-          '" data-toggle="modal" id="message-link-' + message.id + '">' +
+          <a id="thread-' + message.threadId + '">' +
           getHeader(messageHeaders, 'Subject') +
           '</a>\
           </td>\

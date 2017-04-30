@@ -16,19 +16,49 @@
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
 	<script src="thread.js"></script>
     <style>
-      iframe {
-        width: 100%;
-        border: 0;
-        min-height: 80%;
-        height: 600px;
-        display: flex;
-      }
-	  .table-hover>tbody>tr:hover
-	  {
-		background-color:#e6efff;
-	  }
-	  
-    </style>
+		div.threadSubject
+		{
+			font-family: arial,sans-serif;
+			color: #222;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		div.threadLabels
+		{
+			font-family: arial,sans-serif;
+			color: blue;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		.msg-from
+		{
+			font-weight: bold;
+		}
+		.msg-from-small 
+		{
+			font-size: 12px !important;
+			font-style: italic !important;
+		}
+		.gmail_extra, .gmail_quote
+		{
+			font-size: 14px !important;
+			font-family: arial,sans-serif !important;
+		}
+
+		.panel-heading
+		{
+			color: #333 !important;
+			background-color: #f9f9f9 !important;
+			border-color: #ddd !important;			
+			padding: 12px 12px !important;
+			border-top-left-radius: 3px!important;
+			border-top-right-radius: 3px!important;
+		}
+		.panel-title > a
+		{
+			  text-decoration: none;
+		}
+	  </style>
   </head>
   <body>
 	<div class="header">
@@ -39,41 +69,17 @@
 		 <div class="container">
 			</br>
 			<input type="hidden" id="reply-thread-id" />	
-			<div id="threadInfo" class="hidden" >
-					<div id="threadSubject" class="pull-left">threadSubject</div>
-					<div id="threadLabels">threadLabels</div>
-					<div id="threadActions" class="pull-right"> threadActions</div>
+			<div id="threadActions"  class="pull-right" >
 			</div>
-			<div id="accordion" role="tablist" aria-multiselectable="true">
-				<div class="msg" id="threadMsg-1">
-					<div class="msg-header" role="tab" id="threadMsg-1-hdr">
-						<a data-toggle="collapse" data-parent="#accordion" href="#threadMsg-1-msg" aria-expanded="true" aria-controls="#threadMsg-1-msg">
-							<div id="threadMsg-1-from" class="pull-left">  From </div>  							
-							<div id="threadMsg-1-date" class="pull-right"> Date </div>  
-							<br/>
-						</a>
-						<div id="threadMsg-1-firstLine" class="pull-left"> First Line </div>  
-					</div>
-					<br/>
-					<div id="threadMsg-1-msg" class="collapse" role="tabpanel" aria-labelledby="#threadMsg-1-msg">
-						Message 
-					</div>  
-				</div> 
-				
-				<div class="msg" id="threadMsg-2">
-					<div class="msg-header" role="tab" id="threadMsg-2-hdr">
-						<a data-toggle="collapse" data-parent="#accordion" href="#threadMsg-2-msg" aria-expanded="true" aria-controls="#threadMsg-2-msg">
-							<div id="threadMsg-2-from" class="pull-left">  From 2</div>  							
-							<div id="threadMsg-2-date" class="pull-right"> Date 2</div>  
-							<br/>
-						</a>
-						<div id="threadMsg-2-firstLine" class="pull-left"> First Line 2 </div>  
-					</div>
-					<br/>
-					<div id="threadMsg-2-msg" class="collapse" role="tabpanel" aria-labelledby="#threadMsg-2-msg">
-						Message 2
-					</div>  
-				</div> 
+			<br/><br/>
+			<div id="threadInfo" >
+					<div id="threadImportant" class="pull-left"></div>
+					<div id="threadSubject" class="pull-left threadSubject"></div>
+					<div id="threadLabels" class="pull-right threadLabels"></div>
+			</div>
+			<br>
+			<br>
+			<div id="msg-accordion" role="tablist" aria-multiselectable="true" class="panel-group">
 			</div> 
 		</div> 	
   </body>

@@ -40,7 +40,7 @@ function handleAuthResult(authResult) {
 Handling Threads
  */
 
-function listThreads(labelIds, query, maxResult, callback) {
+function listThreads(labelIds, query, maxResult) {
      var getPageOfThreads = function (request, result) {
           request.execute(function (resp) {
                result = result.concat(resp.threads);
@@ -81,7 +81,17 @@ function getThread(threadId) {
                'id': threadId
           });
      request.execute(function (resp) {
-          addThreadRowToInbox(resp);
+          addThreadToInbox(resp);
+     });
+}
+
+function getThreadMessage(threadId) {
+     var request = gapi.client.gmail.users.threads.get({
+               'userId': USER,
+               'id': threadId
+          });
+     request.execute(function (resp) {
+          addMessageToThreadDisplay(resp);
      });
 }
 
