@@ -121,67 +121,6 @@ function renderMailRow(message) {
      }
 }
 
-function prepareMessageModal(message) {
-     var messageHeaders = message.payload.headers;
-     var messageLabelIds = message.labelIds;
-
-     // Reply_To/From format:
-     // Option 1: Display Name <EmailAddress@MyDomain.com>
-     // Option 2: EmailAddress@MyDomain.com
-     var reply_to = (getHeader(messageHeaders, 'Reply-to') !== '' ?
-          getHeader(messageHeaders, 'Reply-to') :
-          getHeader(messageHeaders, 'From')).replace(/"/g, '&quot;');
-
-     // If necessary, extract Email Address from <EmailAddress@MyDomain.com>, escaping "<" and ">"
-     var tmp_reply_to = reply_to.match("<(.*)>");
-     if (tmp_reply_to) {
-          reply_to = tmp_reply_to[1];
-     }
-
-     // Extract From value, and parse it if necessary
-     var from = getHeader(messageHeaders, 'From');
-     var tmp_from = from.match("<(.*)>");
-     if (tmp_from) {
-          from = tmp_from[1];
-     }
-     var mailDateString = getHeader(messageHeaders, 'Date');
-     var mailDate = new Date(mailDateString);
-     var finalMailDate = mailDate.toLocaleString("en-GB");
-
-     $('body').append(
-	  '<div class="modal fade" id="message-modal-' + message.id + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\
-	  <div class="modal-dialog modal-lg">\
-	  <div class="modal-content">\
-	  <div class="modal-header">\
-	  <button type="button"\
-	  class="close"\
-	  data-dismiss="modal"\
-	  aria-label="Close">\
-	  <span aria-hidden="true">&times;</span></button>\
-	  <h2 class="modal-title" id="emailSubject">' +
-	  getHeader(messageHeaders, 'Subject') +
-	  '</h2>\
-	  <div id="emailFrom" class="text-left">From: ' + reply_to + '</div>\
-	  <div id="emailSent" class="text-left">Sent: ' + finalMailDate + '</div>\</h5>\
-	  <div id="emailAttach-' + message.id + '" style="display:none;">Attachments: </div>\
-	  </div>\
-	  <div class="modal-body">\
-	  <iframe id="message-iframe-' + message.id + '" srcdoc="<p>Loading...</p>">\
-	  </iframe>\
-	  </div>\
-	  <div class="modal-footer">\
-	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
-	  <div style="display:none" id="emailID">' + message.id + '</span>\
-	  </div>\
-	  </div>\
-	  </div>\
-	  </div>\
-	  </div>\
-	  </div>');
-
-}
-
-
 
 /* bootstrap js handler to send email, relies on sendMessage() */
 function sendEmail() {

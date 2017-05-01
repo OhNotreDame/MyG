@@ -20,14 +20,54 @@
 		{
 			font-family: arial,sans-serif;
 			color: #222;
-			font-size: 18px;
+			font-size: 20px;
 			font-weight: bold;
 		}
-		div.threadLabels
+	
+		div.threadUnread
 		{
 			font-family: arial,sans-serif;
 			color: blue;
-			font-size: 15px;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		
+		div.threadPersonal
+		{
+			font-family: arial,sans-serif;
+			color: #222;
+			font-size: 12px;
+			font-weight: bold;
+		}
+
+		div.threadUpdates
+		{
+			font-family: arial,sans-serif;
+			color: #FFA500;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		
+		div.threadImportant
+		{
+			font-family: arial,sans-serif;
+			color: #E04006;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		
+		div.threadSocial, div.threadPromo
+		{
+			font-family: arial,sans-serif;
+			color: #A6D785;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		div.threadForums
+		{
+			font-family: arial,sans-serif;
+			color: #42C0FB;
+			font-size: 12px;
 			font-weight: bold;
 		}
 		.msg-from
@@ -72,13 +112,18 @@
 			<div id="threadActions"  class="pull-right" >
 			</div>
 			<br/><br/>
-			<div id="threadInfo" >
-					<div id="threadImportant" class="pull-left"></div>
-					<div id="threadSubject" class="pull-left threadSubject"></div>
-					<div id="threadLabels" class="pull-right threadLabels"></div>
+			<div id="threadSubject" class="pull-left threadSubject" >
 			</div>
-			<br>
-			<br>
+			<br/>			
+			<div id="threadPromo" class="hidden pull-right threadPromo"> <img id='promoIco' src='../img/promotions.png' title='Promotions'/> &nbsp; Promotions &nbsp;</div>	
+			<div id="threadSocial" class="hidden pull-right threadSocial"> <img id='socialIco' src='../img/social.png' title='Social'/> &nbsp; Social &nbsp;</div>	
+			<div id="threadForums" class="hidden pull-right threadForums"> <img id='forumIco' src='../img/forums.png' title='Forums'/> &nbsp; Forums &nbsp;</div>	
+			<div id="threadUpdates" class="hidden pull-right threadUpdates"> <img id='updateIco' src='../img/updates.png' title='Update'/> &nbsp; Update &nbsp;</div>	
+			<div id="threadPersonal" class="hidden pull-right threadPersonal"> <img id='persoIco' src='../img/personal.png' title='Personal'/> &nbsp; Personal &nbsp;</div>	
+			<div id="threadImportant" class="hidden pull-right threadImportant"> <img id='importIco' src='../img/important.png' title='Important'/> &nbsp; Important &nbsp;</div>
+			<div id="threadUnread" class="hidden pull-right threadUnread"> <img id='newIco' src='../img/new.png' title='Unread'/> &nbsp; Unread &nbsp;</div>
+			<br/>
+			<br/>
 			<div id="msg-accordion" role="tablist" aria-multiselectable="true" class="panel-group">
 			</div> 
 		</div> 	

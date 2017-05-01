@@ -309,3 +309,18 @@ function getHTMLPart(arr) {
 function getFirstMessageOfThread(thread) {
      return thread.messages[0];
 }
+
+function createContact(contactString)
+{
+	var contactStringSplit = contactString.split("<");
+	if(contactStringSplit.length == 2)
+	{
+		var contact = {fullName: contactStringSplit[0].trim(), emailAddress: contactStringSplit[1].replace(">", '').trim()};
+	}
+	else
+	{
+		var contact = {fullName: contactStringSplit[0].trim(), emailAddress: contactStringSplit[0].trim()};
+	}
+	
+	return contact;
+}

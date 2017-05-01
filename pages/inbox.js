@@ -1,5 +1,3 @@
-// https://www.sitepoint.com/sending-emails-gmail-javascript-api/
-
 /* On Window Load */
 window.onload = function () {
      window.setTimeout(checkAuth, 1);
@@ -93,9 +91,6 @@ function addThreadToInbox(thread) {
           reply_subject = 'Re: ' + subject.replace(/\"/g, '&quot;');
      }
 	
-	/* Prepare Message Modal*/
-	prepareMessageModal(firstMsgOfThread);
-
      /* Add js event handler on Email Subject */
      $('#thread-' + thread.id).on('click', function () {
          var threadDetailURL="thread.html?threadId="+thread.id;
