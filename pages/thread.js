@@ -127,9 +127,17 @@ function addMessageToThreadDisplay(thread) {
 		'<div class="msg-row panel panel-default" id="msg-row-' + i + '">\
 			<div class="msg-header panel-heading" role="tab" id="msg-header-'+ i + '" >\
 				<h4 class="panel-title">\
+					<div id="msg-reply-' + i + '" class="pull-right">\
+							&nbsp; <button type="button" class="reply-button" id="reply-button-' + thread.id + '">\
+								<img id="reply-icon-' + thread.id + '" src="../img/reply.png" title="Reply"/>\
+							</button>\
+							&nbsp; <button type="button" class="reply-button" id="replyall-button-' +thread.id + '">\
+								<img id="replyall-icon-' + thread.id + '" src="../img/replyall.png" title="Reply"/>\
+							</button>&nbsp; \
+					</div>\
 					<a data-toggle="collapse" data-parent="#msg-accordion" href="#msg-body-'+ i +'" aria-expanded="true" aria-controls="#msg-body-'+ i +'" >\
 						<div id="msg-from-' + i + '" class="msg-from pull-left">  '+ fromContact.fullName + ' </div>\
-						<div id="msg-date-' + i + '" class="pull-right"> ' + finalMailDate + ' </div>\
+						<div id="msg-date-' + i + '" class="msg-date pull-right"> ' + finalMailDate + ' </div>\
 						<br/><div id="msg-to-' + i + '" class="msg-from-small pull-left"> ' + globalToMailTxt + ' </div>\
 					</a>\
 				<\h4>\
@@ -139,7 +147,7 @@ function addMessageToThreadDisplay(thread) {
 				<div id="msg-hidden-toMail-'+ i +' " class="hidden"> '+ toContact.emailAddress  + ' </div>\
 				<div id="msg-hidden-ccMail-'+ i +' " class="hidden"> '+ ccContact.emailAddress  + ' </div>\
 			</div>\
-		<div id="msg-body-' + i + '" class="collapse" role="tabpanel" aria-labelledby="#msg-body-'+ i + '">'+ getBody(message.payload) + '</div>\
+		<div id="msg-body-' + i + '" class="collapse msg-body" role="tabpanel" aria-labelledby="#msg-body-'+ i + '">'+ getBody(message.payload) + '</div>\
 		</div>');
 	}
 	
@@ -161,6 +169,18 @@ function addMessageToThreadDisplay(thread) {
          sendThreadToTrash(thread.id, null);
 		 document.location.href="inbox.html";
      });
+	 
+	 /* Add js event handler on Reply Main Button */
+     $('#reply-button-' + thread.id).on('click', function () {
+          console.log("reply to this thread");
+     });
+	 
+	 	 
+	 /* Add js event handler on Reply Main Button */
+     $('#replyall-button-' + thread.id).on('click', function () {
+          console.log("reply all to this thread");
+     });
+	 
 }
 
 

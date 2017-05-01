@@ -97,7 +97,7 @@ function getThreadMessage(threadId) {
 
 /* js function, using google api, to mark a thread as read, based on its messageID */
 function markThreadAsRead(threadId, callback) {
-     var sendRequest = gapi.client.gmail.users.threads.modify({
+     var request = gapi.client.gmail.users.threads.modify({
                'userId': USER,
                'id': threadId,
                'resource': {
@@ -105,25 +105,25 @@ function markThreadAsRead(threadId, callback) {
                     'removeLabelIds': ['UNREAD']
                }
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
 
 /* js function, using google api, to delete a thread (send the email to trash), based on its threadId */
 function sendThreadToTrash(threadId, callback) {
-     var sendRequest = gapi.client.gmail.users.threads.trash({
+     var request = gapi.client.gmail.users.threads.trash({
                'userId': USER,
                'id': threadId
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
 
 /* js function, using google api, to restore a thread (send the email back to the inbox), based on its threadId */
 function sendThreadBackToInbox(threadId, callback) {
-     var sendRequest = gapi.client.gmail.users.threads.untrash({
+     var request = gapi.client.gmail.users.threads.untrash({
                'userId': USER,
                'id': threadId
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
 
 /* js function, using google api, to add a message to a thread (send the email back to the inbox), based on its threadId */
@@ -175,18 +175,37 @@ function sendMessage(headers_obj, message, callback) {
      for (var header in headers_obj)
           email += header += ": " + headers_obj[header] + "\r\n";
      email += "\r\n" + message;
-     var sendRequest = gapi.client.gmail.users.messages.send({
+     var request = gapi.client.gmail.users.messages.send({
                'userId': USER,
                'resource': {
                     'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
                }
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
+
+
+/* js function, using google api, to send a message (an email indeed), based on its parameters */
+function sendReplyToThread(thread_id, headers_obj, message, callback) {
+     var email = '';
+     for (var header in headers_obj)
+          email += header += ": " + headers_obj[header] + "\r\n";
+     email += "\r\n" + message;
+     var request = gapi.client.gmail.users.messages.send({
+               'userId': USER,              
+               'resource': {
+                    'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_'),
+					'threadId': thread_id
+               }
+          });
+     return request.execute(callback);
+}
+
+
 
 /* js function, using google api, to mark a message as read, based on its messageID */
 function markMessageAsRead(messageId, callback) {
-     var sendRequest = gapi.client.gmail.users.messages.modify({
+     var request = gapi.client.gmail.users.messages.modify({
                'userId': USER,
                'id': messageId,
                'resource': {
@@ -194,25 +213,25 @@ function markMessageAsRead(messageId, callback) {
                     'removeLabelIds': ['UNREAD']
                }
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
 
 /* js function, using google api, to delete a message (send the email to trash), based on its messageID */
 function sendMessageToTrash(messageId, callback) {
-     var sendRequest = gapi.client.gmail.users.messages.trash({
+     var request = gapi.client.gmail.users.messages.trash({
                'userId': USER,
                'id': messageId
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
 
 /* js function, using google api, to restore a message (send the email back to the inbox), based on its messageID */
 function sendMessageBackToInbox(messageId, callback) {
-     var sendRequest = gapi.client.gmail.users.messages.untrash({
+     var request = gapi.client.gmail.users.messages.untrash({
                'userId': USER,
                'id': messageId
           });
-     return sendRequest.execute(callback);
+     return request.execute(callback);
 }
 
 /* js function, using google api, to retrieve emails attachments */
