@@ -1,0 +1,60 @@
+.toolbar ul {
+	display:table-row;
+}
+.toolbar ul li
+{
+	display: table-cell;	
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+
+	vertical-align: middle;
+}
+.toolbar ul li a {
+	display:table-cell;
+	vertical-align: middle;
+	color: #333;
+	text-decoration: none;
+}
+
+.toolbar ul li a:hover {
+	display:table-cell;
+	vertical-align: middle;
+	color: #337ab7;
+	text-decoration: none;
+}
+.header ul li h1 {
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+
+a.inboxNav, a.driveNav {	
+	color: #333 !important;
+	font-weight: bold;
+}
+
+a.updatesNav {	
+	color: #FFA500 !important;
+	font-weight: bold;
+}
+
+a.socialNav {	
+	color: #4986e7 !important;
+	font-weight: bold;
+}
+
+a.promoNav {	
+	color: #A6D785 !important;
+	font-weight: bold;
+}
+
+a.forumNav {	
+	color: #a479e2 !important;
+	font-weight: bold;
+}
+
+
+a.trashNav {	
+	color: #e33333 !important;
+	font-weight: bold;
+}

@@ -28,25 +28,33 @@ function renderInbox() {
 		switch(splitLoc[1]) {
 			case 'updates':
 				listThreads('INBOX', 'label:Updates after:'+getLast30DaysDate(), 50, addThreadToInbox);
-				break;
+				//$('#labelUpdates').removeClass('hidden');
+				break;			
 			case 'social':
 				listThreads('INBOX', 'label:Social after:'+getLast30DaysDate(), 50, addThreadToInbox);
+				//$('#labelSocial').removeClass('hidden');
 				break;
 			case 'promotions':
 				listThreads('INBOX', 'label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
+				//$('#labelPromo').removeClass('hidden');
 				break;
 			case 'forums':
 				listThreads('INBOX', 'label:Forums after:'+getLast30DaysDate(), 50, addThreadToInbox);
+				//$('#labelForums').removeClass('hidden');
 				break;
 			default:
 				listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
+				//$('#labelPersonal').removeClass('hidden');
+				//$('#labelImportant').removeClass('hidden');
 				break;
 		}
 	}
 	else
 	{
 		listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
-	}
+		//$('#labelPersonal').removeClass('hidden');
+		//$('#labelImportant').removeClass('hidden');
+	}	
 }
 
 

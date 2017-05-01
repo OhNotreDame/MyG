@@ -88,20 +88,20 @@ function renderMailRow(message) {
           var iconDivID = "#icons-" + message.id;
           $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
      }
-     if (messageLabelIds.includes("CATEGORY_UPDATES")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
-     }
+     // if (messageLabelIds.includes("CATEGORY_UPDATES")) {
+          // var iconDivID = "#icons-" + message.id;
+          // $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
+     // }
 
-     if (messageLabelIds.includes("CATEGORY_PROMOTIONS")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
-     }
+     // if (messageLabelIds.includes("CATEGORY_PROMOTIONS")) {
+          // var iconDivID = "#icons-" + message.id;
+          // $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
+     // }
 
-     if (messageLabelIds.includes("CATEGORY_SOCIAL")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
-     }
+     // if (messageLabelIds.includes("CATEGORY_SOCIAL")) {
+          // var iconDivID = "#icons-" + message.id;
+          // $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
+     // }
 
      if (message.payload.parts) {
           getAttachments(message.id, message.payload.parts, function (filename, mimeType, attachment) {

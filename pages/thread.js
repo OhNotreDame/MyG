@@ -18,7 +18,6 @@ function renderThreadContent() {
 	var threadId = searchParams.get("threadId");
 	if (threadId)
 	{
-		//$('#msg-accordion').empty();
 		getThreadMessage(threadId, addMessageToThreadDisplay);
 	}
 }
@@ -27,30 +26,20 @@ function renderThreadContent() {
 
 function addMessageToThreadDisplay(thread) {
 
-	var firstMsgOfThread = getFirstMessageOfThread(thread);
+	var firstMsgOfThread = getLastMessageOfThread(thread);
 	var threadHeaders = firstMsgOfThread.payload.headers;
 	var threadLabels = firstMsgOfThread.labelIds;
 	
-	// <div id="threadSubject" class="pull-left">threadSubject</div>
-	// <div id="threadLabels">threadLabels</div>
-	// <div id="threadActions" class="pull-right"> threadActions</div>
 	$('#threadSubject').text(getHeader(threadHeaders, 'Subject'));
-	//$('#threadLabels').text(threadLabels);
 	$('#threadInfo').show();
-	
-	
-	
-	  $('#threadActions').append(
-		'<button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + thread.id + '"> \
-          <img id="asread-icon-' + thread.id + '" src="../img/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
-          </button> &nbsp; \
-          <button type="button" class="btn delete-button" id="delete-button-' + thread.id + '">\
-          <img id="delete-icon-' + thread.id + '" src="../img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
-          </button>');
-	
-	
-	
-	
+	$('#threadActions').append(
+			'<button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + thread.id + '"> \
+				<img id="asread-icon-' + thread.id + '" src="../img/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
+			</button> &nbsp; \
+			<button type="button" class="btn delete-button" id="delete-button-' + thread.id + '">\
+				<img id="delete-icon-' + thread.id + '" src="../img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
+			</button>');
+		
 	if (threadLabels.includes("IMPORTANT")) {
 		$('#threadImportant').removeClass('hidden');
 		$('#threadImportant').show();

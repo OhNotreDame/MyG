@@ -1,0 +1,110 @@
+.threadSubject
+{
+	font-family: arial,sans-serif;
+	color: #222;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.threadUnread
+{
+	font-family: arial,sans-serif;
+	color: blue;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.threadPersonal
+{
+	font-family: arial,sans-serif;
+	color: #222;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.threadUpdates
+{
+	font-family: arial,sans-serif;
+	color: #FFA500 !important;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.threadImportant
+{
+	font-family: arial,sans-serif;
+	color: #E04006;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.threadSocial
+{
+	font-family: arial,sans-serif;
+	color: #4986e7 !important;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.threadPromo
+{
+	font-family: arial,sans-serif;
+	color: #A6D785 !important;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.threadForums
+{
+	font-family: arial,sans-serif;
+	color: #a479e2 !important;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+
+.msg-from
+{
+	font-weight: bold;
+}
+.msg-from-small 
+{
+	/*padding: 5px 0px 5px 0px !important;*/
+	font-size: 12px !important;
+	font-style: italic !important;
+}
+.msg-date
+{
+	font-size: 14px !important;
+}
+.gmail_extra, .gmail_quote
+{
+	font-size: 14px !important;
+	font-family: arial,sans-serif !important;
+}
+
+.msg-body
+{
+	padding-left: 5px!important;
+}
+
+.panel-heading
+{
+	color: #333 !important;
+	background-color: #f9f9f9 !important;
+	border-color: #ddd !important;			
+	padding: 12px 12px !important;
+	border-top-left-radius: 3px!important;
+	border-top-right-radius: 3px!important;
+}
+.panel-title > a
+{
+	  text-decoration: none;
+}
+
+button.reply-button
+{
+	border: 1px solid;
+	border-color: #ddd !important;	
+	background-color: #fff !important;	
+}

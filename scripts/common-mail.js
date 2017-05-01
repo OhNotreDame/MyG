@@ -253,41 +253,41 @@ function getAttachments(messageId, payloadParts, callback) {
 }
 
 function renderThreadIcons(ThreadLabelIds, messageID) {
-     if (ThreadLabelIds.includes("UNREAD")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='newIco' src='../img/new.png' title='Unread'/>&nbsp;");
+     // if (ThreadLabelIds.includes("UNREAD")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='newIco' src='../img/new.png' title='Unread'/>&nbsp;");
 
-          var buttonID = "#asread-button-" + messageID;
-          $(buttonID).toggle();
-     }
+          // var buttonID = "#asread-button-" + messageID;
+          // $(buttonID).toggle();
+     // }
 
-     if (ThreadLabelIds.includes("STARRED")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='starIco' src='../img/star.png' title='Starred'/>&nbsp;");
-     }
+     // if (ThreadLabelIds.includes("STARRED")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='starIco' src='../img/star.png' title='Starred'/>&nbsp;");
+     // }
 
-     if (ThreadLabelIds.includes("IMPORTANT")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='importIco' src='../img/important.png'  title='Important'/>&nbsp;");
-     }
-     if (ThreadLabelIds.includes("CATEGORY_PERSONAL")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
-     }
-     if (ThreadLabelIds.includes("CATEGORY_UPDATES")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
-     }
+     // if (ThreadLabelIds.includes("IMPORTANT")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='importIco' src='../img/important.png'  title='Important'/>&nbsp;");
+     // }
+     // if (ThreadLabelIds.includes("CATEGORY_PERSONAL")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
+     // }
+     // if (ThreadLabelIds.includes("CATEGORY_UPDATES")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
+     // }
 
-     if (ThreadLabelIds.includes("CATEGORY_PROMOTIONS")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
-     }
+     // if (ThreadLabelIds.includes("CATEGORY_PROMOTIONS")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
+     // }
 
-     if (ThreadLabelIds.includes("CATEGORY_SOCIAL")) {
-          var iconDivID = "#icons-" + messageID;
-          $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
-     }
+     // if (ThreadLabelIds.includes("CATEGORY_SOCIAL")) {
+          // var iconDivID = "#icons-" + messageID;
+          // $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
+     // }
 
 }
 
@@ -327,6 +327,10 @@ function getHTMLPart(arr) {
 
 function getFirstMessageOfThread(thread) {
      return thread.messages[0];
+}
+
+function getLastMessageOfThread(thread) {
+     return thread.messages[thread.messages.length-1];
 }
 
 function createContact(contactString)

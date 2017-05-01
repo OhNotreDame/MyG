@@ -52,7 +52,6 @@ function appendMessageRow(message) {
      // Append row to table
      $('#table-trash').append(
           '<tr class="email_item" id="row-' + message.id + '">\
-          <td><div style="display:inline-block; width: 70px !important;" id="icons-' + message.id + '""/></td>\
           <td>' + from + '</td>\
           <td>\
           <a href="#message-modal-' + message.id +
@@ -62,12 +61,10 @@ function appendMessageRow(message) {
           </td>\
           <td style="width: 166px !important;"><div id="dateEmail">' + finalMailDate + '</div></td>\
           <td> <button type="button" class="btn btn-primary restore-button" id="restore-button-' + message.id + '">\
-          <img id="delete-icon-' + message.id + '" src="../img/restore.png" title="Restore"/>\
-          Restore\
-          </button>\</td>\
+          <img id="delete-icon-' + message.id + '" src="../img/restore.png" title="Restore"/></button>\</td>\
           </tr>');
 
-     renderEmailIcons(message);
+     //renderEmailIcons(message);
 
      $('body').append(
           '<div class="modal fade" id="message-modal-' + message.id + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\

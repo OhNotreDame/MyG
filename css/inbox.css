@@ -1,0 +1,68 @@
+/*iframe
+{
+	width: 100%;
+	border: 0;
+	min-height: 80%;
+	height: 600px;
+	display: flex;
+}*/
+
+.table-hover>tbody>tr:hover
+{
+	background-color:#e6efff;
+}
+
+.labelSubject
+{
+	font-family: arial,sans-serif;
+	color: #222;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.labelUnread
+{
+	font-family: arial,sans-serif;
+	color: blue;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.labelPersonal
+{
+	font-family: arial,sans-serif;
+	color: #222;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.labelUpdates
+{
+	font-family: arial,sans-serif;
+	color: #FFA500;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.labelImportant
+{
+	font-family: arial,sans-serif;
+	color: #E04006;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.labelSocial, .labelPromo
+{
+	font-family: arial,sans-serif;
+	color: #A6D785;
+	font-size: 12px;
+	font-weight: bold;
+}
+.labelForums
+{
+	font-family: arial,sans-serif;
+	color: #42C0FB;
+	font-size: 12px;
+	font-weight: bold;
+}
