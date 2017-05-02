@@ -53,8 +53,14 @@ a.forumNav {
 	font-weight: bold;
 }
 
-
 a.trashNav {	
 	color: #e33333 !important;
 	font-weight: bold;
 }
+
+
+a.tasksNav {	
+	color: #007F0E !important;
+	font-weight: bold;
+}
+

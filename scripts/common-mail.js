@@ -9,7 +9,6 @@ const USER = 'me';
  * Check if the current user has authorized the application.
  */
 function checkAuth() {
-     console.log("checkAuth");
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
           'scope': SCOPES,
@@ -22,7 +21,6 @@ function checkAuth() {
  * Handle authorization result, displaying or not the authorize button.
  */
 function handleAuthResult(authResult) {
-     console.log("handleAuthResult");
      if (authResult && !authResult.error) {
           loadGmailAPI();
           $('#authorize-button').remove();
@@ -143,7 +141,6 @@ function insertMessageToThread(threadId, email, callback) {
 
 function replyToThread(threadId, headers_obj, message, callback) {
      console.log("replyToThread");
-
 }
 
 /*
