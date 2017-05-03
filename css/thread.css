@@ -105,6 +105,7 @@
 button.reply-button
 {
 	border: 1px solid;
+	border-radius: 1px solid;
 	border-color: #ddd !important;	
 	background-color: #fff !important;	
 }

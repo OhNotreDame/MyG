@@ -6,3 +6,35 @@ iframe
 	height: 600px;
 	display: flex;
 }
+
+div.ongoing {	
+	color: #FFA500 !important;
+	font-weight: bold;
+}
+
+div.overdue {	
+	/*color: #FF0000 !important; */
+	color: #E04006 !important;	
+	font-weight: bold;
+}
+
+div.completed {	
+	color: #00B200 !important;
+	font-weight: bold;
+}
+
+
+div.deleted {	
+	color: #333 !important;
+	font-weight: bold;
+}
+
+
+
+button.task-button
+{
+	border: 1px solid;
+	border-radius: 1px solid;
+	border-color: #ddd !important;	
+	background-color: #fff !important;	
+}

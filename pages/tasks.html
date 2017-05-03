@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>MyG - Tasks (Beta)</title>
+		<title>MyG - Tasks</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css"  href="../css/bootstrap-theme.min.css">
@@ -27,21 +27,24 @@
 			
 			<button id="authorize-button" class="btn btn-primary hidden">Authorize</button>
 			<a href="#addtask-modal" data-toggle="modal" id="addtask-button" class="btn btn-primary pull-right">
-				<img id="addtaskIcon" src="../img/compose.png" title="Add Task"/> Add Task
+				<img id="addtaskIcon" src="../img/newTask.png" title="Add Task"/> Add Task
 			</a>
 			
 			<table class="table table-striped table-hover table-tasks tablesorter {dateFormat: uk}" id="table-tasks">
 				<thead>
 					<tr>
-						<th>Task</th>
-						<th>Status</th>
-						<th>Last Modified</th>
+						<th></th>
+						<th>Status</th>						
+						<th>Task</th>						
 						<th>Tasks List</th>
+						<th>Notes</th>
+						<th>Due Date</th>
+						<th>Completed on</th>
+						<th>Last Modified</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
 			</table>
-			
 			
 		<div class="modal fade" id="addtask-modal" tabindex="-1" role="dialog">
 		  <div class="modal-dialog modal-lg">
@@ -54,10 +57,12 @@
 			  </div>
 			  <form>
 			   <div class="modal-body">
-				  <input type="hidden" id="addtask-taskList-id" />	
 				  <div class="form-group">
 					<input type="text" class="form-control" id="addtask-title" placeholder="Task" required />
 				  </div>
+					<div class="form-group" >
+						<select class="form-control" id="addtask-taskList"></select>
+					</div>
 				  <div class="form-group">
 					<textarea class="form-control" id="addtask-desc" placeholder="Description" rows="10"></textarea>
 				  </div>
@@ -69,7 +74,7 @@
 				</div>
 				<div class="modal-footer">
 				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				  <button type="submit" id="add-button" class="btn btn-primary">Add</button>
+				  <button type="button" id="add-button" class="btn btn-primary">Add</button>
 				</div>
 			  </form>
 			</div>
