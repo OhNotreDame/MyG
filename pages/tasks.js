@@ -1,5 +1,5 @@
-var  showDeleted = false;
-var  showHidden= false;
+var showDeleted = false;
+var showHidden = false;
 
 /* On Window Load */
 window.onload = function () {
@@ -74,8 +74,8 @@ function listTasks(taskListName, taskListId) {
      var request = gapi.client.tasks.tasks.list({
                'userId': USER,
                'tasklist': taskListId,
-			   'showDeleted': showDeleted,
-			   'showHidden': showHidden
+               'showDeleted': showDeleted,
+               'showHidden': showHidden
           });
      request.execute(function (resp) {
           $.each(resp.items, function () {
@@ -128,11 +128,11 @@ function addTaskToTable(task, taskListId, taskListName) {
           if (task.deleted) {
                statusFormatted = "<div id='deleted-" + task.id + "' class='deleted'> <img id='iconDeleted-" + task.id + "' src='../img/deleteTask.png' title='Deleted'/>&nbsp; Deleted</div>";
           }
-		  if (task.hidden) {
+          if (task.hidden) {
                statusFormatted += " (Hidden)";
           }
 
-     var notesFormatted = "";
+          var notesFormatted = "";
      if (task.notes) {
           notesFormatted = task.notes
      };
@@ -155,16 +155,15 @@ function addTaskToTable(task, taskListId, taskListName) {
      if (task.status != "completed") {
           $(iconDivID).append("<button type='button' class='task-button' id='complete-button-" + task.id + "'><img id='completeIco' src='../img/completeTask.png' title='Complete Task'/></button>&nbsp;");
 
-         // $(iconDivID).append("<button type='button' class='task-button' id='edit-button-" + task.id + "'><img id='editIco' src='../img/edit.png' title='Edit Task'/></button>&nbsp;");
+          // $(iconDivID).append("<button type='button' class='task-button' id='edit-button-" + task.id + "'><img id='editIco' src='../img/edit.png' title='Edit Task'/></button>&nbsp;");
      } else {
           $(iconDivID).append("<button type='button' class='task-button' id='reopen-button-" + task.id + "'><img id='reopenIco' src='../img/reopen.png' title='Reopen Task'/></button>&nbsp;");
      }
-	 if (!task.deleted) {
-		$(iconDivID).append("<button type='button' class='task-button' id='delete-button-" + task.id + "'><img id='deleteIco' src='../img/deleteTask.png' title='Delete Task'/></button>&nbsp;");
-	 }
-	 else{
-		$(iconDivID).append("<button type='button' class='task-button' id='restore-button-" + task.id + "'><img id='restoreIco' src='../img/restoreTask.png' title='Restore Task'/></button>&nbsp;");
-	}
+     if (!task.deleted) {
+          $(iconDivID).append("<button type='button' class='task-button' id='delete-button-" + task.id + "'><img id='deleteIco' src='../img/deleteTask.png' title='Delete Task'/></button>&nbsp;");
+     } else {
+          $(iconDivID).append("<button type='button' class='task-button' id='restore-button-" + task.id + "'><img id='restoreIco' src='../img/restoreTask.png' title='Restore Task'/></button>&nbsp;");
+     }
 
      /* Reinforce sort */
      $('#table-tasks').tablesorter({
@@ -185,13 +184,12 @@ function addTaskToTable(task, taskListId, taskListName) {
           location.reload();
      });
 
-	   /* Add js event handler on Complete Task Button */
+     /* Add js event handler on Complete Task Button */
      $('#restore-button-' + task.id).on('click', function () {
           restoreTask(taskListId, task.id, null);
           location.reload();
      });
 
-	 
      /* Add js event handler on Complete Task Button */
      $('#delete-button-' + task.id).on('click', function () {
           //$('#row-' + task.id).hide();
@@ -214,14 +212,20 @@ function createTaskFromModal() {
      var taskName = $('#addtask-title').val();
      var taskDescription = $('#addtask-desc').val();
      var taskDue = $('#addtask-date').val();
-     var dueDate = new Date(taskDue);
+     console.log(taskDue);
+     var dueDateTxt = null;
+     if (taskDue) {
+         /* var curTime = new Date().toLocaleTimeString("en-GB");
+		 var date = new Date(taskDue).toLocaleDateString("en-GB"); */
+		 var dueDate = new Date(taskDue);
+		 console.log(dueDate);
+		 dueDateTxt = dueDate.toISOString()
+     }
 
-     // console.log(taskDue); console.log(dueDate);  console.log(dueDate.toISOString());
-     insertTask(taskListId, taskName, taskDescription, dueDate.toISOString());
-     clearAddTaskModal(taskListId, taskName, taskDescription, taskDue);
+    insertTask(taskListId, taskName, taskDescription, dueDateTxt, clearAddTaskModal);
 }
 
-function insertTask(taskListId, taskName, taskDescription, taskDue) {
+function insertTask(taskListId, taskName, taskDescription, taskDue, callback) {
      var resource = {
           'title': taskName,
           'notes': taskDescription,
@@ -234,13 +238,7 @@ function insertTask(taskListId, taskName, taskDescription, taskDue) {
                'due': taskDue,
                'resource': resource
           });
-     request.execute(function (resp) {
-          if (resp.id) {
-               alert("Task was successfully added to the task list!");
-          } else {
-               alert("An error occurred. Please try again later.")
-          }
-     });
+	request.execute(callback);
 }
 
 function markTaskAsCompleted(taskListId, taskId, callback) {
@@ -272,8 +270,8 @@ function restoreTask(taskListId, taskId, callback) {
                'userId': USER,
                'tasklist': taskListId,
                'task': taskId,
-			   'deleted':false
-     });
+               'deleted': false
+          });
      request.execute(callback);
 }
 
@@ -299,10 +297,11 @@ function deleteTask(taskListId, taskId, callback) {
 }
 
 function clearAddTaskModal() {
-     $('#addtask-modal').modal('hide');
+
      $('#addtask-title').val('')
      $('#addtask-desc').val('')
      $('#addtask-date').val('')
      $('#add-button').removeClass('disabled');
+     $('#addtask-modal').modal('hide');
      location.reload();
 }
