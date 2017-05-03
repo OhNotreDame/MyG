@@ -168,7 +168,8 @@ function addTaskToTable(task, taskListId, taskListName) {
      /* Reinforce sort */
      $('#table-tasks').tablesorter({
           dateFormat: "uk",
-          sortList: [[1, 1]]
+          /* sortList: [[7, 1]] // by Modified date DESC */
+          sortList: [[1, 1]] // by Status DESC 
      });
 
      /* Add js event handler on Complete Task Button */

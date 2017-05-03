@@ -11,6 +11,8 @@ function composeTidy() {
      $('#compose-to').val('');
      $('#compose-subject').val('');
      $('#compose-message').val('');
+	 $('#reply-message-id').val('');
+     $('#reply-thread-id').val('');
      $('#send-button').removeClass('disabled');
      location.reload();
 }
@@ -24,15 +26,16 @@ function replyTidy() {
 }
 
 /* bootstrap function to fill-in reply modal with email info */
-function fillInReply(to, subject, message_id) {
+function fillInReply(to, subject, message_id, thread_id) {
      $('#reply-modal').modal('show');
      $('#reply-to').val(to);
      $('#reply-subject').val(subject);
      $('#reply-message-id').val(message_id);
+     $('#reply-thread-id').val(thread_id);
 }
 
 /* function to render a row with email info */
-function renderMailRow(message) {
+function renderMailRow(message, threadId) {
      var messageHeaders = message.payload.headers;
      var messageLabelIds = message.labelIds;
 
@@ -46,8 +49,10 @@ function renderMailRow(message) {
      var mailDate = new Date(mailDateString);
      var finalMailDate = mailDate.toLocaleString("en-GB");
 
+	 /* '<tr class="email_item" id="row-' + message.id + '">\ */
+	 
      $('#table-inbox > tbody').append(
-          '<tr class="email_item" id="row-' + message.id + '">\
+          '<tr class="email_item" id="row-' + threadId + '">\
           <td><div style="display:inline-block; width: 70px !important;" id="icons-' + message.id + '""/></td>\
           <td>' + from + '</td>\
           <td>\
@@ -137,11 +142,12 @@ function sendEmail() {
 /* bootstrap js handler to send a reply to an existing email, relies on sendMessage() */
 function sendReply() {
      $('#reply-button').addClass('disabled');
-     sendMessage({
-          'To': $('#reply-to').val(),
-          'Subject': $('#reply-subject').val(),
-          'In-Reply-To': $('#reply-message-id').val()
-     },
+     sendMessage($('#reply-thread-id').val(),
+		 {
+			  'To': $('#reply-to').val(),
+			  'Subject': $('#reply-subject').val(),
+			  'In-Reply-To': $('#reply-message-id').val()
+		 },
           $('#reply-message').val(),
           replyTidy);
      return false;

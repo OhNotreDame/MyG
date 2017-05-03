@@ -73,7 +73,7 @@ function addThreadToInbox(thread) {
 	var threadParts = firstMsgOfThread.payload.part;
 
 	 /* Append Message to table #table-inbox */
-     renderMailRow(firstMsgOfThread);
+     renderMailRow(firstMsgOfThread, thread.Id);
 
      /* Extract ReplyTo value and parse it */
      // Option 1: Display Name <EmailAddress@MyDomain.com>
@@ -120,8 +120,8 @@ function addThreadToInbox(thread) {
      });
 
      /* Add js event handler on Reply Main Button */
-     $('#reply-button-' + firstMsgOfThread.id).on('click', function () {
-          fillInReply(reply_to, reply_subject, firstMsgOfThread.id);
+     $('#reply-button-' + thread.id).on('click', function () {
+          fillInReply(reply_to, reply_subject, firstMsgOfThread.id, thread.Id);
      });
 	 
 	 /* Reinforce sort */
