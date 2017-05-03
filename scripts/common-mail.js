@@ -168,7 +168,8 @@ function listMessages(labelIds, query, maxResult, callback) {
 
 /* js function, using google api, to send a message (an email indeed), based on its parameters */
 function sendMessage(thread_id, headers_obj, message, callback) {
-     var email = '';
+     console.log(thread_id);
+	 var email = '';
      for (var header in headers_obj)
           email += header += ": " + headers_obj[header] + "\r\n";
      email += "\r\n" + message;
@@ -177,7 +178,6 @@ function sendMessage(thread_id, headers_obj, message, callback) {
                'resource': {
                     'threadId': thread_id,
 					'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
-					
                }
           });
      return request.execute(callback);

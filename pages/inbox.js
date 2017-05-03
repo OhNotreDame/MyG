@@ -68,12 +68,13 @@ function getLast30DaysDate() {
 function addThreadToInbox(thread) {
 
 	var firstMsgOfThread = getFirstMessageOfThread(thread);
+	//var lastMsgOfThread = getLastMessageOfThread(thread);
 	var threadHeaders = firstMsgOfThread.payload.headers;
 	var threadLabels = firstMsgOfThread.labelIds;
 	var threadParts = firstMsgOfThread.payload.part;
 
 	 /* Append Message to table #table-inbox */
-     renderMailRow(firstMsgOfThread, thread.Id);
+     renderMailRow(firstMsgOfThread);
 
      /* Extract ReplyTo value and parse it */
      // Option 1: Display Name <EmailAddress@MyDomain.com>
@@ -91,13 +92,15 @@ function addThreadToInbox(thread) {
 	 /* Extract Subject value and parse it */
      var subject = getHeader(threadHeaders, 'Subject');
      var substring = "Re: ";
-     var reply_subject = "";
-
+     var reply_subject = subject;
+	
+	/*
      if (subject.indexOf(substring) !== -1) {
           reply_subject = subject.replace(/\"/g, '&quot;');
      } else {
           reply_subject = 'Re: ' + subject.replace(/\"/g, '&quot;');
      }
+	 */
 	
      /* Add js event handler on Email Subject */
      $('#thread-' + thread.id).on('click', function () {
@@ -121,7 +124,7 @@ function addThreadToInbox(thread) {
 
      /* Add js event handler on Reply Main Button */
      $('#reply-button-' + thread.id).on('click', function () {
-          fillInReply(reply_to, reply_subject, firstMsgOfThread.id, thread.Id);
+          fillInReply(reply_to, reply_subject, firstMsgOfThread.id, thread.id);
      });
 	 
 	 /* Reinforce sort */

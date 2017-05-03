@@ -14,7 +14,7 @@ function composeTidy() {
 	 $('#reply-message-id').val('');
      $('#reply-thread-id').val('');
      $('#send-button').removeClass('disabled');
-     location.reload();
+     //location.reload();
 }
 
 /* bootstrap function to enhance email reply */
@@ -22,7 +22,7 @@ function replyTidy() {
      $('#reply-modal').modal('hide');
      $('#reply-message').val('');
      $('#reply-button').removeClass('disabled');
-     location.reload();
+     //location.reload();
 }
 
 /* bootstrap function to fill-in reply modal with email info */
@@ -31,11 +31,12 @@ function fillInReply(to, subject, message_id, thread_id) {
      $('#reply-to').val(to);
      $('#reply-subject').val(subject);
      $('#reply-message-id').val(message_id);
+	 console.log(thread_id);
      $('#reply-thread-id').val(thread_id);
 }
 
 /* function to render a row with email info */
-function renderMailRow(message, threadId) {
+function renderMailRow(message) {
      var messageHeaders = message.payload.headers;
      var messageLabelIds = message.labelIds;
 
@@ -52,7 +53,7 @@ function renderMailRow(message, threadId) {
 	 /* '<tr class="email_item" id="row-' + message.id + '">\ */
 	 
      $('#table-inbox > tbody').append(
-          '<tr class="email_item" id="row-' + threadId + '">\
+          '<tr class="email_item" id="row-' + message.threadId + '">\
           <td><div style="display:inline-block; width: 70px !important;" id="icons-' + message.id + '""/></td>\
           <td>' + from + '</td>\
           <td>\
@@ -93,20 +94,6 @@ function renderMailRow(message, threadId) {
           var iconDivID = "#icons-" + message.id;
           $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
      }
-     // if (messageLabelIds.includes("CATEGORY_UPDATES")) {
-          // var iconDivID = "#icons-" + message.id;
-          // $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
-     // }
-
-     // if (messageLabelIds.includes("CATEGORY_PROMOTIONS")) {
-          // var iconDivID = "#icons-" + message.id;
-          // $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
-     // }
-
-     // if (messageLabelIds.includes("CATEGORY_SOCIAL")) {
-          // var iconDivID = "#icons-" + message.id;
-          // $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
-     // }
 
      if (message.payload.parts) {
           getAttachments(message.id, message.payload.parts, function (filename, mimeType, attachment) {
