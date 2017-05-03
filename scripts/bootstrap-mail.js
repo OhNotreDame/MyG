@@ -26,11 +26,12 @@ function replyTidy() {
 }
 
 /* bootstrap function to fill-in reply modal with email info */
-function fillInReply(to, subject, message_id, thread_id) {
+function fillInReply(to, subject, reply_quote, message_id, thread_id) {
      $('#reply-modal').modal('show');
      $('#reply-to').val(to);
-     $('#reply-subject').val(subject);
-     $('#reply-message-id').val(message_id);
+     $('#reply-subject').val("Re: " + subject);
+     $('#reply-message-id').val(reply_quote);
+     $('#reply-message').val(subject);
 	 console.log(thread_id);
      $('#reply-thread-id').val(thread_id);
 }
@@ -117,7 +118,7 @@ function renderMailRow(message) {
 /* bootstrap js handler to send email, relies on sendMessage() */
 function sendEmail() {
      $('#send-button').addClass('disabled');
-     sendMessage({
+     sendMessage('',{
           'To': $('#compose-to').val(),
           'Subject': $('#compose-subject').val()
      },

@@ -124,7 +124,9 @@ function addThreadToInbox(thread) {
 
      /* Add js event handler on Reply Main Button */
      $('#reply-button-' + thread.id).on('click', function () {
-          fillInReply(reply_to, reply_subject, firstMsgOfThread.id, thread.id);
+		 var bodyReply = getBody(firstMsgOfThread.payload);
+		// var bodyReply = "<div class='gmail_quote'>" + getBody(firstMsgOfThread.payload)+"</div>";
+          fillInReply(reply_to, reply_subject, bodyReply , firstMsgOfThread.id, thread.id);
      });
 	 
 	 /* Reinforce sort */

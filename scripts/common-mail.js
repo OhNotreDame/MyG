@@ -124,28 +124,9 @@ function sendThreadBackToInbox(threadId, callback) {
      return request.execute(callback);
 }
 
-/* js function, using google api, to add a message to a thread (send the email back to the inbox), based on its threadId */
-function insertMessageToThread(threadId, email, callback) {
-     // Using the js-base64 library for encoding:
-     // https://www.npmjs.com/package/js-base64
-     var base64EncodedEmail = Base64.encodeURI(email);
-     var request = gapi.client.gmail.users.messages.insert({
-               'userId': USER,
-               'threadId': threadId,
-               'resource': {
-                    'raw': base64EncodedEmail
-               }
-          });
-     request.execute(callback);
-}
-
-function replyToThread(threadId, headers_obj, message, callback) {
-     console.log("replyToThread");
-}
-
 /*
 Handling Messages
- */
+*/
 
 function listMessages(labelIds, query, maxResult, callback) {
      // Prepare Request to Google API
@@ -184,7 +165,7 @@ function sendMessage(thread_id, headers_obj, message, callback) {
 }
 
 
-/* js function, using google api, to send a message (an email indeed), based on its parameters */
+/* js function, using google api, to send a message (an email indeed), based on its parameters 
 function sendReplyToThread(thread_id, headers_obj, message, callback) {
      var email = '';
      for (var header in headers_obj)
@@ -199,7 +180,7 @@ function sendReplyToThread(thread_id, headers_obj, message, callback) {
           });
      return request.execute(callback);
 }
-
+*/
 
 
 /* js function, using google api, to mark a message as read, based on its messageID */
