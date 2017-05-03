@@ -30,8 +30,8 @@ function fillInReply(to, subject, reply_quote, message_id, thread_id) {
      $('#reply-modal').modal('show');
      $('#reply-to').val(to);
      $('#reply-subject').val("Re: " + subject);
-     $('#reply-message-id').val(reply_quote);
-     $('#reply-message').val(subject);
+     $('#reply-message-id').val(message_id);
+     $('#reply-message').val(reply_quote);
 	 console.log(thread_id);
      $('#reply-thread-id').val(thread_id);
 }
