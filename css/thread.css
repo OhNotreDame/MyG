@@ -1,3 +1,10 @@
+blockquote {
+    padding: 10px 20px !important;
+    margin: 0 0 20px  !important;
+    font-size: 14px !important;
+    border-left: 2px solid #eee !important;
+}
+
 .threadSubject
 {
 	font-family: arial,sans-serif;

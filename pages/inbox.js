@@ -2,7 +2,11 @@
 window.onload = function () {
      window.setTimeout(checkAuth, 1);
 
+	document.getElementById("send-close-button")
+     .addEventListener("click", clearAndCloseComposeModal, false);
 	
+	document.getElementById("reply-close-button")
+     .addEventListener("click", clearAndCloseReplyModal, false);
 	 
      document.getElementById("send-button")
      .addEventListener("click", sendEmail, false);
@@ -81,10 +85,14 @@ function addThreadToInbox(thread) {
      /* Extract ReplyTo value and parse it */
      // Option 1: Display Name <EmailAddress@MyDomain.com>
      // Option 2: EmailAddress@MyDomain.com
-     var reply_to = (getHeader(threadHeaders, 'Reply-to') !== '' ?
+     var orig_reply_to = (getHeader(threadHeaders, 'Reply-to') !== '' ?
           getHeader(threadHeaders, 'Reply-to') :
           getHeader(threadHeaders, 'From')).replace(/"/g, '&quot;');
 
+		var reply_to = (getHeader(threadHeaders, 'Reply-to') !== '' ?
+          getHeader(threadHeaders, 'Reply-to') :
+          getHeader(threadHeaders, 'From')).replace(/"/g, '&quot;');
+		  
      // If necessary, extract Email Address from <EmailAddress@MyDomain.com>, escaping "<" and ">"
      var tmp_reply_to = reply_to.match("<(.*)>");
      if (tmp_reply_to) {
@@ -126,9 +134,19 @@ function addThreadToInbox(thread) {
 
      /* Add js event handler on Reply Main Button */
      $('#reply-button-' + thread.id).on('click', function () {
-		 var bodyReply = getBody(firstMsgOfThread.payload);
-		// var bodyReply = "<div class='gmail_quote'>" + getBody(firstMsgOfThread.payload)+"</div>";
-          fillInReply(reply_to, reply_subject, bodyReply , firstMsgOfThread.id, thread.id);
+		
+		
+		console.log("reply-button: " + orig_reply_to);
+		var mailDateString = getHeader(threadHeaders, 'Date');
+		var mailDate = new Date(mailDateString);
+		var options = {weekday: "short", year: "numeric", month: "numeric", day: "numeric" , hour: "numeric" , minute: "numeric"};
+		var finalMailDate = mailDate.toLocaleString("en-GB", options);
+
+		var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
+		var quoteMessage = getBody(firstMsgOfThread.payload);
+
+		 //prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)
+          prepareAndOpenReplyModal(reply_to, '', '', reply_subject, quoteHeader, quoteMessage , firstMsgOfThread.id, thread.id);
      });
 	 
 	 /* Reinforce sort */

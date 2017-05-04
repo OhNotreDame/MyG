@@ -72,7 +72,7 @@
 				  </div>
 				</div>
 				<div class="modal-footer">
-				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  <button type="button" id="send-close-button" class="btn btn-default">Close</button>
 				  <button type="button" id="send-button" class="btn btn-primary">Send</button>
 				</div>
 			  </form>
@@ -95,6 +95,8 @@
 					<div class="modal-body">
 					  <div class="form-group">
 						<input type="text" class="form-control" id="reply-to" disabled />
+						<input type="text" class="form-control" id="reply-cc" disabled />
+						<input type="text" class="form-control" id="reply-cci" disabled />
 					  </div>
 
 					  <div class="form-group">
@@ -104,9 +106,15 @@
 					  <div class="form-group">
 						<textarea class="form-control" id="reply-message" placeholder="Message" rows="10" required></textarea>
 					  </div>
+					  <div class="form-group">
+							<div id="original-message-header" placeholder="Original Message Header" class=""></div>
+							<div id="original-message" placeholder="Original Message" class=""></div>
+					  </div>
+					  
 					</div>
 					<div class="modal-footer">			  
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					  <!-- <button type="button" id="reply-close-button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+					  <button type="button" id="reply-close-button" class="btn btn-default">Close</button>
 					  <button type="button" id="reply-button" class="btn btn-primary">Send</button>
 					</div>
 				  </form>

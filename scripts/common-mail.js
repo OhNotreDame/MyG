@@ -126,7 +126,7 @@ function sendThreadBackToInbox(threadId, callback) {
 
 /*
 Handling Messages
-*/
+ */
 
 function listMessages(labelIds, query, maxResult, callback) {
      // Prepare Request to Google API
@@ -149,8 +149,8 @@ function listMessages(labelIds, query, maxResult, callback) {
 
 /* js function, using google api, to send a message (an email indeed), based on its parameters */
 function sendMessage(thread_id, headers_obj, message, callback) {
-     console.log(thread_id);
-	 var email = '';
+     console.log("sendMessage/thread_id: " + thread_id);
+     var email = '';
      for (var header in headers_obj)
           email += header += ": " + headers_obj[header] + "\r\n";
      email += "\r\n" + message;
@@ -158,30 +158,28 @@ function sendMessage(thread_id, headers_obj, message, callback) {
                'userId': USER,
                'resource': {
                     'threadId': thread_id,
-					'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+                    'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
                }
           });
      return request.execute(callback);
 }
 
-
-/* js function, using google api, to send a message (an email indeed), based on its parameters 
+/* js function, using google api, to send a message (an email indeed), based on its parameters
 function sendReplyToThread(thread_id, headers_obj, message, callback) {
-     var email = '';
-     for (var header in headers_obj)
-          email += header += ": " + headers_obj[header] + "\r\n";
-     email += "\r\n" + message;
-     var request = gapi.client.gmail.users.messages.send({
-               'userId': USER,              
-               'resource': {
-                    'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_'),
-					'threadId': thread_id
-               }
-          });
-     return request.execute(callback);
+var email = '';
+for (var header in headers_obj)
+email += header += ": " + headers_obj[header] + "\r\n";
+email += "\r\n" + message;
+var request = gapi.client.gmail.users.messages.send({
+'userId': USER,
+'resource': {
+'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_'),
+'threadId': thread_id
 }
-*/
-
+});
+return request.execute(callback);
+}
+ */
 
 /* js function, using google api, to mark a message as read, based on its messageID */
 function markMessageAsRead(messageId, callback) {
@@ -234,39 +232,39 @@ function getAttachments(messageId, payloadParts, callback) {
 
 function renderThreadIcons(ThreadLabelIds, messageID) {
      // if (ThreadLabelIds.includes("UNREAD")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='newIco' src='../img/new.png' title='Unread'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='newIco' src='../img/new.png' title='Unread'/>&nbsp;");
 
-          // var buttonID = "#asread-button-" + messageID;
-          // $(buttonID).toggle();
+     // var buttonID = "#asread-button-" + messageID;
+     // $(buttonID).toggle();
      // }
 
      // if (ThreadLabelIds.includes("STARRED")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='starIco' src='../img/star.png' title='Starred'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='starIco' src='../img/star.png' title='Starred'/>&nbsp;");
      // }
 
      // if (ThreadLabelIds.includes("IMPORTANT")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='importIco' src='../img/important.png'  title='Important'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='importIco' src='../img/important.png'  title='Important'/>&nbsp;");
      // }
      // if (ThreadLabelIds.includes("CATEGORY_PERSONAL")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='promoIco' src='../img/personal.png' title='Personal'/>&nbsp;");
      // }
      // if (ThreadLabelIds.includes("CATEGORY_UPDATES")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='starIco' src='../img/updates.png' title='Update'/>&nbsp;");
      // }
 
      // if (ThreadLabelIds.includes("CATEGORY_PROMOTIONS")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='promoIco' src='../img/promotions.png' title='Promotions'/>&nbsp;");
      // }
 
      // if (ThreadLabelIds.includes("CATEGORY_SOCIAL")) {
-          // var iconDivID = "#icons-" + messageID;
-          // $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
+     // var iconDivID = "#icons-" + messageID;
+     // $(iconDivID).append("<img id='promoIco' src='../img/social.png' title='Social'/>&nbsp;");
      // }
 
 }
@@ -310,24 +308,25 @@ function getFirstMessageOfThread(thread) {
 }
 
 function getLastMessageOfThread(thread) {
-     return thread.messages[thread.messages.length-1];
+     return thread.messages[thread.messages.length - 1];
 }
 
-function createContact(contactString)
-{
-	var contactStringSplit = contactString.split("<");
-	if(contactStringSplit.length == 2)
-	{
-		var contact = {fullName: contactStringSplit[0].trim(), emailAddress: contactStringSplit[1].replace(">", '').trim()};
-	}
-	else
-	{
-		var contact = {fullName: contactStringSplit[0].trim(), emailAddress: contactStringSplit[0].trim()};
-	}
-	
-	return contact;
-}
+function createContact(contactString) {
+     var contactStringSplit = contactString.split("<");
+     if (contactStringSplit.length == 2) {
+          var contact = {
+               fullName: contactStringSplit[0].trim(),
+               emailAddress: contactStringSplit[1].replace(">", '').trim()
+          };
+     } else {
+          var contact = {
+               fullName: contactStringSplit[0].trim(),
+               emailAddress: contactStringSplit[0].trim()
+          };
+     }
 
+     return contact;
+}
 
 function showComposeModal() {
      console.log("showComposeModal");
@@ -336,34 +335,56 @@ function showComposeModal() {
      $('#compose-subject').val('');
      $('#compose-message').val('');
 }
-/* bootstrap function to enhance email composition */
-function composeTidy() {
+
+/* Clear and Close Compose Modal after thread/message is sent */
+function clearAndCloseComposeModal() {
      $('#compose-modal').modal('hide');
+	 $('#send-button').removeClass('disabled');
      $('#compose-to').val('');
+     $('#compose-cc').val('');
+     $('#compose-cci').val('');
      $('#compose-subject').val('');
      $('#compose-message').val('');
-	 $('#reply-message-id').val('');
-     $('#reply-thread-id').val('');
-     $('#send-button').removeClass('disabled');
+     /*
+     $('#reply-message-id').val('');
+     $('#reply-thread-id').val(''); 
+	 */
      //location.reload();
 }
 
-/* bootstrap function to enhance email reply */
-function replyTidy() {
+
+
+
+/* Clear and Close Reply Modal after thread/message is sent */
+function clearAndCloseReplyModal() {
      $('#reply-modal').modal('hide');
+	 $('#reply-button').removeClass('disabled');
+	 
+     $('#reply-to').val('');
+     $('#reply-cc').val('');
+     $('#reply-cci').val('');
+     $('#reply-subject').val('');
      $('#reply-message').val('');
-     $('#reply-button').removeClass('disabled');
+     $('#original-message-header').empty();
+     $('#original-message').empty();
+     $('#reply-message-id').val('');
+     $('#reply-thread-id').val('');
      //location.reload();
 }
 
-/* bootstrap function to fill-in reply modal with email info */
-function fillInReply(to, subject, reply_quote, message_id, thread_id) {
+/* Fill in Reply Modal with thread/message information */
+function prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage, message_id, thread_id) {
      $('#reply-modal').modal('show');
+	 $('#reply-button').removeClass('disabled');
+	 
      $('#reply-to').val(to);
-     $('#reply-subject').val("Re: " + subject);
+     $('#reply-cc').val(cc);
+     $('#reply-cci').val(cci);
+     $('#reply-subject').val(subject);
+     $('#reply-message').val('');
+     $('#original-message-header').html(quoteHeader);
+     $('#original-message').html(quoteMessage);
      $('#reply-message-id').val(message_id);
-     $('#reply-message').val(reply_quote);
-	 console.log(thread_id);
      $('#reply-thread-id').val(thread_id);
 }
 
@@ -382,8 +403,8 @@ function renderMailRow(message) {
      var mailDate = new Date(mailDateString);
      var finalMailDate = mailDate.toLocaleString("en-GB");
 
-	 /* '<tr class="email_item" id="row-' + message.id + '">\ */
-	 
+     /* '<tr class="email_item" id="row-' + message.id + '">\ */
+
      $('#table-inbox > tbody').append(
           '<tr class="email_item" id="row-' + message.threadId + '">\
           <td><div style="display:inline-block; width: 70px !important;" id="icons-' + message.id + '""/></td>\
@@ -445,32 +466,52 @@ function renderMailRow(message) {
      }
 }
 
-
 /* bootstrap js handler to send email, relies on sendMessage() */
 function sendEmail() {
      $('#send-button').addClass('disabled');
-     sendMessage('',{
+     sendMessage('', {
           'To': $('#compose-to').val(),
           'Subject': $('#compose-subject').val()
      },
           $('#compose-message').val(),
           getCallResultAndShowMessage);
-		  composeTidy();
+     clearAndCloseComposeModal();
      return false;
 }
 
 /* bootstrap js handler to send a reply to an existing email, relies on sendMessage() */
 function sendReply() {
+
      $('#reply-button').addClass('disabled');
-     sendMessage($('#reply-thread-id').val(),
-		 {
-			  'To': $('#reply-to').val(),
-			  'Subject': $('#reply-subject').val(),
-			  'In-Reply-To': $('#reply-message-id').val()
-		 },
-          $('#reply-message').val(),
+
+     // MessageId, ThreadId
+     var threadId = $('#reply-thread-id').val();
+     var messageId = $('#reply-message-id').val();
+
+     //prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)
+     var to = $('#reply-to').val();
+     var cc = $('#reply-cc').val();
+     var cci = $('#reply-cci').val();
+
+     // Mail itself
+     var subject = $('#reply-subject').val();
+     var reply = $('#reply-message').val()
+
+          // Quote
+          var quoteHeader = $('#original-message-header').html();
+     var quoteMessage = $('#original-message').html();
+
+     // Reply quotying
+     var replyMessage = reply + "<br/>" + quoteHeader + "<br/>" + "<blockquote class='gmail_quote'>" + quoteMessage + "</blockquote>";
+     console.log(replyMessage);
+     sendMessage(
+          threadId, {
+          'To': to,
+          'Subject': subject,
+          'In-Reply-To': messageId
+     },
+          replyMessage,
           getCallResultAndShowMessage);
-		  replyTidy();
+     clearAndCloseReplyModal();
      return false;
 }
-
