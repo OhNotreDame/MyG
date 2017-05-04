@@ -2,6 +2,8 @@
 window.onload = function () {
      window.setTimeout(checkAuth, 1);
 
+	
+	 
      document.getElementById("send-button")
      .addEventListener("click", sendEmail, false);
      document.getElementById("reply-button")
@@ -15,7 +17,7 @@ function loadGmailAPI() {
 
 /* renderInbox()	*/
 function renderInbox() {
-    
+
 	prepareToolbar();
      // Clear Messages table
      $('#table-inbox > tbody').empty();
