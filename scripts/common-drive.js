@@ -5,6 +5,7 @@ const SCOPES = [
      "https://www.googleapis.com/auth/drive.metadata"
 ];
 const USER = 'me';
+const apiKEY = 'epkkpeeiahpinbljfabcglnklpgefdgf';
 
 /*
  * checkAuth()
