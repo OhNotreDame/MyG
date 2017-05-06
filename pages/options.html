@@ -2,22 +2,49 @@
 <html>
   <head>
     <title>MyG - Options</title>
-     <meta charset="UTF-8">
+   <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css"  href="../css/bootstrap-theme.min.css">
-	<link rel="stylesheet" type="text/css"  href="../css/menu.css">
+	<link rel="stylesheet" type="text/css"  href="../css/common-nav.css">
+	<link rel="stylesheet" type="text/css"  href="../css/inbox.css">
     <script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap-notify.js"></script>
+    <script type="text/javascript" src="../scripts/clientID.js"></script>
+    <script type="text/javascript" src="../scripts/common-nav.js"></script>
+   <script type="text/javascript" src="../scripts/jquery.tablesorter.min.js"></script>
+	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
 	<script src="options.js"></script>
   </head>
 	<body> 	
-	 <div class="header">
-		<h1>MyG</h1>	
-		</div>		
-		<div class="toolbar">
-		</div>
-		<div class="container">
-		No options for the moment. Will see. Maybe one day.
+		<div id="header" class="row">
+			<div id="headerNavBar" class="header toolbar"></div>
 		</div>	
+		<br/>
+		<div class="container container-fluid">
+			<h2> Options </h2>			
+			<div class="row">
+				<div class="Gmail" class="col-lg-6">
+					<div id="headerGmail">
+						<h3>Gmail </h3>
+					</div>
+					<div id="authGmail">
+						<span id="authGmailStatus"> Authenticated as ...  | Need Authentication </span>
+						<button id="authGmail-button" class="btn btn-primary">Authorize</button>
+					</div>
+				</div>
+			
+				<div class="Drive" class="col-lg-6">
+					<div id="headerDrive">
+						<h3>Drive </h3>
+					</div>
+					<div id="authDrive">
+						<span id="authDriveStatus"> Authenticated as ...  | Need Authentication </span>
+						<button id="authDrive-button" class="btn btn-primary">Authorize</button>
+					</div>
+				</div>
+			</div>	
+		</div>	
+
 	</body>
 </html>
