@@ -28,7 +28,7 @@ function prepareToolbar()
 			<a href="./drive.html" class="driveNav"><img id="driveNavIco" src="../img/drive.png" title="Drive"/>&nbsp;Drive (Beta)</a>\
 		</li>\
 		<li>\
-			<a href="./tasks.html" class="tasksNav"><img id="tasksNavIco" src="../img/tasks.png" title="Tasks"/>&nbsp;Tasks</a>\
+			<a href="./tasks.html" class="tasksNav"><img id="tasksNavIco" src="../img/tasks/tasks.png" title="Tasks"/>&nbsp;Tasks</a>\
 		</li>\
 		</ul>');
 	$("#headerNavBar").show();
