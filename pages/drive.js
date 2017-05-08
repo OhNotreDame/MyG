@@ -13,12 +13,10 @@ function renderFiles() {
    	console.log("drive/renderFiles");
 	prepareToolbar();
 	$('#table-files > tbody').empty();
-	//retrieveAllFiles("mimeType = 'application/pdf'", null, 30);
-	//retrieveAllFiles('root', null, 5);
-	//retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', 5);
-	//retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'"", 'user', 'drive', 5);
-	//retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and trashed =false and folder_id='root'", 'user', 'drive', null);
-	//retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null);
+
+	//retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', null); <=> return all pdf fukes
+	//retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null); <=> return all folders
+	//retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null); <=> return all root folders (not in trash)
 	retrieveAllFiles("'root' in parents and trashed=true", 'user', 'drive', null);
 }
 
@@ -52,40 +50,6 @@ function retrieveAllFiles(q, corpora, spaces, orderBy) {
   retrievePageOfFiles(initialRequest, []);
 }
 
-
-/* retrieveAllFiles()
-function retrieveAllFiles(q, corpora, spaces, orderBy) {
-	console.log("drive/retrieveAllFiles");
-	var getPageOfFilesLists = function (request, result) {
-          request.execute(function (resp) {
-               result = result.concat(resp.items);
-               var nextPageToken = resp.nextPageToken;
-               if (nextPageToken) {
-                    request = gapi.client.drive.files.list({			
-							'key': apiKEY,
-							'pageToken': nextPageToken,
-							'q': q,
-							'corpora': corpora,
-							'spaces': spaces,
-							'orderBy' : orderBy
-                         });
-                    getPageOfFilesLists(request, result);
-               } else {
-                    parseFiles(result);
-               }
-          });
-     };
-
-		var	request = gapi.client.drive.files.list({
-							'key': apiKEY,
-							'q': q,
-							'corpora': corpora,
-							'spaces': spaces,
-							'orderBy' : orderBy
-                         });
-     getPageOfFilesLists(request, []);
-}
- */
 /* parseFiles() */
 function parseFiles(files) {
 	
@@ -123,10 +87,7 @@ function addFileToTable(file) {
 		  <td>' + file.mimeType + '</td>\
 		  </tr >');
 	
-	/*
-	Icons : https://icons8.com
-	*/
-
+	// render icon (https://icons8.com) based on file type
 	var fileType = file.mimeType;
 	switch (fileType)
 	{
@@ -167,7 +128,9 @@ function addFileToTable(file) {
 			case 'application/vnd.ms-excel':	
 				$('#fileIcon-' + file.id).append("<img src='../img/drive/excelFile.png' height='24' width='24' title='"+fileType+"'/>");
 				break;	
-				
+			default: //any other file type
+				$('#fileIcon-' + file.id).append("<img src='../img/drive/file.png' height='24' width='24' title='"+fileType+"'/>");
+				break;	
 	}
 	
 	
