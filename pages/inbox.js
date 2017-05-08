@@ -142,7 +142,8 @@ function addThreadToInbox(thread) {
 		var options = {weekday: "short", year: "numeric", month: "numeric", day: "numeric" , hour: "numeric" , minute: "numeric"};
 		var finalMailDate = mailDate.toLocaleString("en-GB", options);
 
-		var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
+		//var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
+		var quoteHeader = "On " + finalMailDate + ", "+  reply_to + " wrote:";
 		var quoteMessage = getBody(firstMsgOfThread.payload);
 
 		 //prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)

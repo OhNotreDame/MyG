@@ -1,6 +1,15 @@
 /* On Window Load */
 window.onload = function () {
     window.setTimeout(checkAuth, 1);
+	
+
+	document.getElementById("reply-close-button")
+     .addEventListener("click", clearAndCloseReplyModal, false);
+	 
+     // document.getElementById("send-button")
+     // .addEventListener("click", sendEmail, false);
+     document.getElementById("reply-send-button")
+     .addEventListener("click", sendReply, false);
 }
 
 /* Load Gmail API, and when it's done, call renderThreadContent */
@@ -34,47 +43,14 @@ function addMessageToThreadDisplay(thread) {
 	$('#threadInfo').show();
 	$('#threadActions').append(
 			'<button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + thread.id + '"> \
-				<img id="asread-icon-' + thread.id + '" src="../img/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
+				<img id="asread-icon-' + thread.id + '" src="../img/mail/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
 			</button> &nbsp; \
 			<button type="button" class="btn delete-button" id="delete-button-' + thread.id + '">\
-				<img id="delete-icon-' + thread.id + '" src="../img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
+				<img id="delete-icon-' + thread.id + '" src="../img/mail/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
 			</button>');
 		
-	if (threadLabels.includes("IMPORTANT")) {
-		$('#threadImportant').removeClass('hidden');
-		$('#threadImportant').show();
-    }
-	 
-	 if (threadLabels.includes("UNREAD")) {
-		$('#threadUnread').removeClass('hidden');
-		$('#threadUnread').show();
-		$('#asread-button-' + thread.id).show();
-	 }
 
-     if (threadLabels.includes("CATEGORY_PERSONAL")) {
-        $('#threadPersonal').removeClass('hidden');
-		$('#threadPersonal').show();
-     }
-	 
-	  if (threadLabels.includes("CATEGORY_UPDATES")) {
-        $('#threadUpdates').removeClass('hidden');
-		$('#threadUpdates').show();
-     }
-	 
-	  if (threadLabels.includes("CATEGORY_SOCIAL")) {
-        $('#threadSocial').removeClass('hidden');
-		$('#threadSocial').show();
-     }
-
-     if (threadLabels.includes("CATEGORY_PROMOTIONS")) {
-        $('#threadPromo').removeClass('hidden');
-		$('#threadPromo').show();
-     }
-     if (threadLabels.includes("CATEGORY_FORUMS")) {
-        $('#threadForums').removeClass('hidden');
-		$('#threadForums').show();
-     }
-    
+    renderThreadIcons(threadLabels);
 	
 	
 	
@@ -87,6 +63,7 @@ function addMessageToThreadDisplay(thread) {
 		var messageHeaders = message.payload.headers;
 		var messageLabelIds = message.labelIds;
 
+		console.log("rendering message(" + message.id + ") of thread("+ thread.id+")");
 
 		// Extract From value, and parse it if necessary
 		var fromMail = getHeader(messageHeaders, 'From');
@@ -117,11 +94,11 @@ function addMessageToThreadDisplay(thread) {
 				<div class="msg-header panel-heading" role="tab" id="msg-header-'+ i + '" >\
 					<h4 class="panel-title">\
 						<div id="msg-reply-' + i + '" class="pull-right">\
-								&nbsp; <button type="button" class="reply-button" id="reply-button-' + thread.id + '">\
-									<img id="reply-icon-' + thread.id + '" src="../img/reply.png" title="Reply"/>\
+								&nbsp; <button type="button" class="reply-button" id="' + i + '">\
+									<img id="reply-icon" src="../img/mail/reply.png" title="Reply"/>\
 								</button>\
-								<button type="button" class="reply-button" id="replyall-button-' +thread.id + '">\
-									<img id="replyall-icon-' + thread.id + '" src="../img/replyall.png" title="Reply"/>\
+								<button type="button" class="reply-button" id="' + i + '">\
+									<img id="replyall-icon" src="../img/mail/replyall.png" title="Reply"/>\
 								</button>\
 						</div>\
 						<a data-toggle="collapse" data-parent="#msg-accordion" href="#msg-body-'+ i +'" aria-expanded="true" aria-controls="#msg-body-'+ i +'" >\
@@ -138,6 +115,80 @@ function addMessageToThreadDisplay(thread) {
 				</div>\
 			<div id="msg-body-' + i + '" class="collapse msg-body" role="tabpanel" aria-labelledby="#msg-body-'+ i + '">'+ getBody(message.payload) + '</div>\
 			</div>');
+			
+			
+		/* Add js event handler on Reply Main Button */
+		//$('#reply-button-' + i).on('click', function () {
+		$('.reply-button').on('click', function () {
+			var messageId = this.id;
+			
+			var message = thread.messages[messageId];
+			var replyMsgHeaders = message.payload.headers;
+			
+			// Extract From value, and parse it if necessary
+			var fromMail = getHeader(replyMsgHeaders, 'From');
+			var tmp_from = fromMail.match("<(.*)>");
+			if (tmp_from) {
+			//	fromMail = tmp_from[1];
+			}
+			
+
+			var fromContact = createContact(getHeader(replyMsgHeaders, 'From')) ;
+			var toContact = createContact(getHeader(replyMsgHeaders, 'To')) ;
+			var ccContact = createContact(getHeader(replyMsgHeaders, 'CC')) ;
+
+			
+			
+			/* Extract Subject value and parse it */
+			 var subject = getHeader(replyMsgHeaders, 'Subject');
+			 var substring = "Re: ";
+			 var reply_subject = subject;
+			 
+			//console.log("reply-button: " + orig_reply_to);
+			var mailDateString = getHeader(replyMsgHeaders, 'Date');
+			var mailDate = new Date(mailDateString);
+			var options = {weekday: "short", year: "numeric", month: "numeric", day: "numeric" , hour: "numeric" , minute: "numeric"};
+			var finalMailDate = mailDate.toLocaleString("en-GB", options);
+
+			//var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
+			var quoteHeader = "On " + finalMailDate + ", "+  fromContact.emailAddress + " wrote:";
+			var quoteMessage = getBody(message.payload);
+
+			//prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)
+			//prepareAndOpenReplyModal( fromContact.emailAddress, '', '', reply_subject, quoteHeader, quoteMessage , message.id, thread.id);
+			prepareAndOpenReplyModal( fromContact.emailAddress, '', '', reply_subject, quoteHeader, quoteMessage , message.id, thread.id);
+		});
+		
+		
+		
+
+		/* Add js event handler on Reply Main Button */
+		// $('#replyall-button-' + message.id).on('click', function () {
+			// console.log('#replyall-button-' + message.id);
+			// console.log("message.id: " + message.id);
+			// console.log("thread.id: " + thread.id);
+			
+			
+			// /* Extract Subject value and parse it */
+			 // var subject = getHeader(threadHeaders, 'Subject');
+			 // var substring = "Re: ";
+			 // var reply_subject = subject;
+			 
+			// //console.log("reply-button: " + orig_reply_to);
+			// var mailDateString = getHeader(msgHeader, 'Date');
+			// var mailDate = new Date(mailDateString);
+			// var options = {weekday: "short", year: "numeric", month: "numeric", day: "numeric" , hour: "numeric" , minute: "numeric"};
+			// var finalMailDate = mailDate.toLocaleString("en-GB", options);
+
+			// //var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
+			// var quoteHeader = "<br/> On " + finalMailDate + ", "+  fromContact.emailAddress + " wrote:";
+			// var quoteMessage = getBody(message.payload);
+
+			// //prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)
+			// prepareAndOpenReplyModal( fromContact.emailAddress, ccContact.emailAddress, '', reply_subject, quoteHeader, quoteMessage , message.id, thread.id);
+		// });	
+			
+			
 	}
 	
 	// Expand last thread message
@@ -159,16 +210,8 @@ function addMessageToThreadDisplay(thread) {
 		document.location.href="inbox.html";
 	});
 
-	/* Add js event handler on Reply Main Button */
-	$('#reply-button-' + thread.id).on('click', function () {
-		console.log("reply to this thread");
-	});
-
-
-	/* Add js event handler on Reply Main Button */
-	$('#replyall-button-' + thread.id).on('click', function () {
-		console.log("reply all to this thread");
-	});
+	
+	
 	 
 }
 

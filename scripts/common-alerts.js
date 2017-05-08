@@ -32,14 +32,15 @@ function displayDanger(msg_title, msg_message) {
      }, {
           newest_on_top: true
      });
+	 
 }
 
 function getCallResultAndShowMessage(response)
 {
-	 console.log("getCallResultAndShowMessage");
 	 if (response && !response.error) {
          displaySuccess('', 'Success');
      } else {
+		console.log(response.code + " - " + response.message);
 		displayDanger('', 'Error');
 	 }
 }
