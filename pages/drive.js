@@ -14,10 +14,30 @@ function renderFiles() {
 	prepareToolbar();
 	$('#table-files > tbody').empty();
 
+	var curLoc = window.location.href;
+	var splitLoc = curLoc.split("?");
+	
+	if (splitLoc.length == 2 && splitLoc[1])
+	{
+		switch(splitLoc[1]) {
+			case 'root':
+				retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null);
+				break;
+			default:
+				retrieveAllFiles("'"+splitLoc[1]+"' in parents and trashed=false", 'user', 'drive', null);
+				break;
+		}
+	}
+	else
+	{
+		retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null);
+	}	
+	
+	
 	//retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', null); <=> return all pdf fukes
 	//retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null); <=> return all folders
 	//retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null); <=> return all root folders (not in trash)
-	retrieveAllFiles("'root' in parents and trashed=true", 'user', 'drive', null);
+	//retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null);
 }
 
 function retrieveAllFiles(q, corpora, spaces, orderBy) {
@@ -82,6 +102,10 @@ function addFileToTable(file) {
 	$('#table-files > tbody').append(
 		  '<tr class="file_item" id="row-' + file.id + '">\
 		  <td><div id="fileIcon-' + file.id +'"></td>\
+		  <td>\
+		  <a id="file-' + file.id + '">' +
+          file.name  +
+          '</a></td>\
 		  <td>' + file.name + '</td>\
 		  <td>' + file.id + '</td>\
 		  <td>' + file.mimeType + '</td>\
@@ -133,7 +157,25 @@ function addFileToTable(file) {
 				break;	
 	}
 	
-	
+	/* Add js event handler on Email Subject */
+     $('#file-' + file.id).on('click', function () {
+        var redirectTo = "";
+		var redirectToURL="";
+		if(file.mimeType == "application/vnd.google-apps.folder")
+		{
+			 redirectTo = "folder"
+			 redirectToURL="drive.html?"+file.id;
+		}
+		else{
+			 redirectTo = "file"
+			 // INCLUDE HERE FILE DOWNLOAD URL //
+			 redirectToURL= document.location.href;
+		}
+		
+		console.log("redirectTo:" + redirectTo +" # " + file.name);
+		console.log("redirectToURL:" + redirectToURL);
+		document.location.href=redirectToURL;
+     });
 
 	/* Reinforce sort */
 	$('#table-files > tbody').tablesorter({
