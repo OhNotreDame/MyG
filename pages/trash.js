@@ -61,7 +61,7 @@ function appendMessageRow(message) {
           </td>\
           <td style="width: 166px !important;"><div id="dateEmail">' + finalMailDate + '</div></td>\
           <td> <button type="button" class="btn btn-primary restore-button" id="restore-button-' + message.id + '">\
-          <img id="delete-icon-' + message.id + '" src="../img/restore.png" title="Restore"/></button>\</td>\
+          <img id="delete-icon-' + message.id + '" src="../img/mail/restore.png" title="Restore"/></button>\</td>\
           </tr>');
 
      //renderEmailIcons(message);

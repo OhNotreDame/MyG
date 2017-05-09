@@ -16,7 +16,8 @@ window.onload = function () {
 
 /* Load Gmail API, and when it's done, call renderInbox */
 function loadGmailAPI() {
-     gapi.client.load('gmail', 'v1', renderInbox);
+     console.log("inbox/loadGmailAPI");
+	gapi.client.load('gmail', 'v1', renderInbox);
 }
 
 /* renderInbox()	*/

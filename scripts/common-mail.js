@@ -9,6 +9,7 @@ const USER = 'me';
  * Check if the current user has authorized the application.
  */
 function checkAuth() {
+	console.log("inbox/checkAuth");
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
           'scope': SCOPES,
@@ -21,12 +22,16 @@ function checkAuth() {
  * Handle authorization result, displaying or not the authorize button.
  */
 function handleAuthResult(authResult) {
+	console.log("inbox/handleAuthResult");
      if (authResult && !authResult.error) {
-          loadGmailAPI();
+          
+		  console.log("inbox/handleAuthResult/OK");
+		  loadGmailAPI();
           $('#authorize-button').remove();
           $('.table-inbox').removeClass("hidden");
           $('#compose-button').removeClass("hidden");
      } else {
+		 console.log("inbox/handleAuthResult/KO");
           $('#authorize-button').removeClass("hidden");
           $('#authorize-button').on('click', function () {
                checkAuth();
