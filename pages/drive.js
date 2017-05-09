@@ -106,6 +106,7 @@ function addFileToTable(file) {
 		  <a id="file-' + file.id + '">' +
           file.name  +
           '</a></td>\
+		  <td>' + file.name + '</td>\
 		  <td>' + file.id + '</td>\
 		  <td>' + file.mimeType + '</td>\
 		  </tr >');
