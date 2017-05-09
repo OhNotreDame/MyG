@@ -13,7 +13,7 @@ function checkAuth() {
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
           'scope': SCOPES,
-          'immediate': false
+          'immediate': true
      }, handleAuthResult);
 }
 
@@ -557,7 +557,7 @@ function sendReply() {
 	var replyMessage = reply + "<br/>" +  "\r\n" + quoteHeader + "<blockquote class='gmail_quote'>"+  quoteMessage + "</blockquote>";
      
      console.log(replyMessage);
-   /*  sendMessage(
+     sendMessage(
           threadId, {
           'To': to,
 		  'Cc':cc,
@@ -569,13 +569,7 @@ function sendReply() {
      },
           replyMessage,
           getCallResultAndShowMessage);
-	*/	  
-		  
-	var msg = createMessageObject("Julie Bonnard (myG)", "", "To Label", to, subject, replyMessage) 
-	
-	sendMessage2(threadId, msg, getCallResultAndShowMessage);
-	
-     clearAndCloseReplyModal();
+	 clearAndCloseReplyModal();
      return false;
 }
 
@@ -590,90 +584,3 @@ function prepareMessageToSend()
 	
 }
 
-
-function createMessageObject(fromName, fromEmail, toName, toEmail, emailSubject, emailBody) 
-{
-	var message = {
-		to: {
-			name: fromName,
-			email: fromEmail
-		},
-		from: {
-			name: toName,
-			email: toEmail
-		},
-		body: {
-			text: emailBody,
-			html: emailBody
-		},
-		subject: emailSubject
-		//files: getAttachments_(attachments)
-	};
-
-	// Compose Gmail message and send immediately
-	var mimeMessage = createMimeMessage(message);
-	return mimeMessage;
-}
-
-
-// Create a MIME message that complies with RFC 2822
-function createMimeMessage(msg) {
-
-  var nl = "\n";
-  var boundary = "__MyG__";
-
-  var mimeBody = [
-
-    "MIME-Version: 1.0",
-    "To: "      + encodeUTF8(msg.to.name) + "<" + msg.to.email + ">",
-    "From: "    + encodeUTF8(msg.from.name) + "<" + msg.from.email + ">",
-    "Subject: " + encodeUTF8(msg.subject), // takes care of accented characters
-
-    "Content-Type: multipart/alternative; boundary=" + boundary + nl,
-    "--" + boundary,
-
-    "Content-Type: text/plain; charset=UTF-8",
-    "Content-Transfer-Encoding: base64" + nl,
-    utf8_to_b64(msg.body.text) + nl,
-    "--" + boundary,
-
-    "Content-Type: text/html; charset=UTF-8",
-    "Content-Transfer-Encoding: base64" + nl,
-    utf8_to_b64(msg.body.html) + nl
-
-  ];
-
-  // for (var i = 0; i < msg.files.length; i++) {
-
-    // var attachment = [
-      // "--" + boundary,
-      // "Content-Type: " + msg.files[i].mimeType + '; name="' + msg.files[i].fileName + '"',
-      // 'Content-Disposition: attachment; filename="' + msg.files[i].fileName + '"',
-      // "Content-Transfer-Encoding: base64" + nl,
-      // msg.files[i].bytes
-    // ];
-
-    // mimeBody.push(attachment.join(nl));
-
-  // }
-
-  mimeBody.push("--" + boundary + "--");
-
-  return mimeBody.join(nl);
-
-}
-// UTF-8 characters in names and subject
-function encodeUTF8(subject) {
-  var enc_subject = utf8_to_b64(subject);
-  //return '=?utf-8?B?' + enc_subject + '?=';
-  return enc_subject;
-}
-
-
-function utf8_to_b64( str ) {
-  return window.btoa(unescape(encodeURIComponent( str )));
-}
-
-function b64_to_utf8( str ) {
-  return decodeURIComponent(escape(window.atob( str )));
-}
