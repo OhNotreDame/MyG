@@ -1,6 +1,15 @@
 /* On Window Load */
 window.onload = function () {
      window.setTimeout(checkAuth, 1);
+	 
+	 document.getElementById("gotoparent")
+     .addEventListener("click", goToParentFolder, false);
+	 
+	 document.getElementById("uploadfile")
+     .addEventListener("click", uploadFile, false);	 
+	 
+	 document.getElementById("createfolder")
+     .addEventListener("click", newFolder, false);
 }
 
 /* Load Gmail API, and when it's done, call displayInbox */
@@ -20,148 +29,32 @@ function renderFiles() {
      if (splitLoc.length == 2 && splitLoc[1]) {
           switch (splitLoc[1]) {
           case 'root':
-               retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null);
+               retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable);
+			   getFolderMetatadata('root');
                break;
           default:
-               retrieveAllFiles("'" + splitLoc[1] + "' in parents and trashed=false", 'user', 'drive', null);
+               retrieveAllFiles("'" + splitLoc[1] + "' in parents and trashed=false", 'user', 'drive', null, addFileToTable);
+			   getFolderMetatadata(splitLoc[1]);
                break;
           }
      } else {
-          retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null);
+			retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable);
+			getFolderMetatadata('root');
      }
 
-     //retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', null); <=> return all pdf fukes
-     //retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null); <=> return all folders
-     //retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null); <=> return all root folders (not in trash)
-     //retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null);
+	 /**
+		retrieveAllFiles ... query examples
+		retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', null, addFileToTable); <=> return all pdf fukes and add them to the table
+		retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null, addFileToTable), addFileToTable; <=> return all folders  and add them to the table
+		retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable); <=> return all root folders (not in trash)  and add them to the table
+		retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable);
+	*/
 }
-
-function retrieveAllFiles(q, corpora, spaces, orderBy) {
-     var retrievePageOfFiles = function (request, result) {
-          request.execute(function (resp) {
-               result = result.concat(resp.files);
-               var nextPageToken = resp.nextPageToken;
-               if (nextPageToken) {
-                    request = gapi.client.drive.files.list({
-                              'key': apiKEY,
-                              'pageToken': nextPageToken,
-                              'q': q,
-                              'corpora': corpora,
-                              'spaces': spaces,
-                              'orderBy': orderBy
-                         });
-                    retrievePageOfFiles(request, result);
-               } else {
-                    parseFiles(result);
-               }
-          });
-     }
-     var initialRequest = gapi.client.drive.files.list({
-               'key': apiKEY,
-               'q': q,
-               'corpora': corpora,
-               'spaces': spaces,
-               'orderBy': orderBy
-          });
-     retrievePageOfFiles(initialRequest, []);
-}
-
-/* parseFiles() */
-function parseFiles(files) {
-
-     var filesCount = files.length;
-     console.log(filesCount);
-     for (var i = 0; i < filesCount; i++) {
-          var curFile = files[i]
-               addFileToTable(curFile);
-     }
-
-}
-
-/* getFile() */
-function getFile(fileId) {
-     var request = gapi.client.drive.files.get({
-               'fileId': fileId
-          });
-     request.execute(function (resp) {
-          addFileToTable(resp);
-     });
-}
-
-/* downloadFile() */
-function downloadFile(fileId, fileName, fileType) {
-     console.log("downloadFile: " + fileId + " - " + fileName + " - " + fileType);
-	 var xhr = new XMLHttpRequest();
-	 var fileDownloadUrl = "https://www.googleapis.com/drive/v3/files/" + fileId + "?alt=media"
-
-     var accessToken = gapi.auth.getToken().access_token; // get gapi authentication token
-     
-     xhr.open('GET', fileDownloadUrl);
-     xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // to ensure authentication during file download
-     xhr.responseType = "arraybuffer"; // to ensure that any file are properly created
-     xhr.onload = function () {
-          if (xhr.status === 200) {
-
-               var blob = new Blob([xhr.response], {
-                         type: fileType
-                    });
-               var docURL = URL.createObjectURL(blob);
-               chrome.downloads.download({
-                    url: docURL,
-                    filename: fileName,
-                    conflictAction: 'overwrite',
-                    saveAs: false
-               });
-			   displaySuccess("" , "Download of " + fileName + " completed.");
-          }
-     };
-
-     xhr.onerror = function () {
-          displayError("" , "Download of " + fileName + " to " + fileExtension + " failed.");
-     };
-
-     xhr.send();
-}
-
-
-/* exportFile() */
-function exportFile(fileId, fileName, mimeType, fileExtension) {
-     console.log("exportFile: " + fileId + " - " + fileName + " - " + mimeType);
-
-	 var xhr = new XMLHttpRequest();
-	 var fileDownloadUrl = "https://content.googleapis.com/drive/v3/files/" + fileId + "/export?mimeType="+mimeType
-     var accessToken = gapi.auth.getToken().access_token; // get gapi authentication token
-     
-     xhr.open('GET', fileDownloadUrl);
-     xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // to ensure authentication during file download
-     xhr.responseType = "arraybuffer"; // to ensure that any file are properly created
-     xhr.onload = function () {
-          if (xhr.status === 200) {
-
-               var blob = new Blob([xhr.response], {
-                         type: mimeType
-                    });
-               var docURL = URL.createObjectURL(blob);
-               chrome.downloads.download({
-                    url: docURL,
-                    filename: fileName +"."+fileExtension,
-                    conflictAction: 'overwrite',
-                    saveAs: false
-               });
-			   displaySuccess("" , "Export of " + fileName + " to " + fileExtension + " completed.");
-          }
-     };
-
-     xhr.onerror = function () {
-		 displayError("" , "Export of " + fileName + " to " + fileExtension + " failed.");
-     };
-
-     xhr.send();
-}
-
 
 /* addFileToTable() */
 function addFileToTable(file) {
+	
+	
      $('#table-files > tbody').append(
           '<tr class="file_item" id="row-' + file.id + '">\
           <td><div id="fileIcon-' + file.id + '"></td>\
@@ -228,6 +121,7 @@ function addFileToTable(file) {
                $('#fileIcon-' + file.id).append("<img src='../img/drive/pdfFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.ms-powerpoint':
+          case 'vnd.openxmlformats-officedocument.presentationml.presentation':
                $('#fileIcon-' + file.id).append("<img src='../img/drive/pptFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.visio':
@@ -238,8 +132,14 @@ function addFileToTable(file) {
                $('#fileIcon-' + file.id).append("<img src='../img/drive/wordFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.ms-excel':
+          case 'vnd.openxmlformats-officedocument.spreadsheetml.sheet':
                $('#fileIcon-' + file.id).append("<img src='../img/drive/excelFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
+          case 'octet-stream':
+          case 'x-zip-compressed':
+               $('#fileIcon-' + file.id).append("<img src='../img/drive/zipFile.png' height='24' width='24' title='" + fileType + "'/>");
+               break;   
+			   
           default: //any other file type
                $('#fileIcon-' + file.id).append("<img src='../img/drive/file.png' height='24' width='24' title='" + fileType + "'/>");
                break;
@@ -249,17 +149,12 @@ function addFileToTable(file) {
 
      /* Add js event handler on Email Subject */
      $('#file-' + file.id).on('click', function () {
-          var redirectTo = "";
           var redirectToURL = "";
           if (file.mimeType == "application/vnd.google-apps.folder") {
-               redirectTo = "folder"
-                    redirectToURL = "drive.html?" + file.id;
-               console.log("redirectTo:" + redirectTo + " # " + file.name);
-               console.log("redirectToURL:" + redirectToURL);
+               redirectToURL = "drive.html?" + file.id;          
                document.location.href = redirectToURL;
-          } else {
-               redirectTo = "file"
-			   
+          } 
+		  else {
 			   switch (file.mimeType)
 			   {
 
@@ -279,10 +174,7 @@ function addFileToTable(file) {
 				        downloadFile(file.id, file.name, file.mimeType);
 				        break;
 			   }
-                    
-               
           }
-
      });
 
      /* Reinforce sort */
@@ -290,3 +182,30 @@ function addFileToTable(file) {
           sortList: [[1, 0]]
      });
 }
+
+
+function goToParentFolder()
+{
+	//alert("goToParentFolder() not implemented yet!")
+	var parentId = $("#parent-folder-id").text();
+	var redirectToURL = "drive.html?" + parentId;          
+    document.location.href = redirectToURL;
+}
+
+
+function uploadFile()
+{
+	alert("uploadFile() not implemented yet!")
+}
+
+/* newFolder() */
+// create a new folder in the current location
+// find a decent solution to type the name of the folder
+function newFolder()
+{
+	//alert("newFolder() not implemented yet!")
+	var folderName ="test-from-MyG";
+	var parentId = $("#current-folder-id").text();
+	createFolder(folderName, parentId, getCallResultAndShowMessage);
+}
+
