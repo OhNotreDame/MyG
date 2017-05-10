@@ -14,6 +14,7 @@
 		"tabs",
 		"activeTab",
 		"identity",
+		"downloads",
 		"https://ajax.googleapis.com/"
 	],
     "content_scripts": 

@@ -42,16 +42,20 @@ function addMessageToThreadDisplay(thread) {
 	$('#threadSubject').text(getHeader(threadHeaders, 'Subject'));
 	$('#threadInfo').show();
 	$('#threadActions').append(
-			'<button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + thread.id + '"> \
+			'<button type="button" style="display:none;" class="btn asread-button" id="asread-button"> \
 				<img id="asread-icon-' + thread.id + '" src="../img/mail/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
 			</button> &nbsp; \
-			<button type="button" class="btn delete-button" id="delete-button-' + thread.id + '">\
+			<button type="button" class="btn delete-button" id="delete-button">\
 				<img id="delete-icon-' + thread.id + '" src="../img/mail/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
 			</button>');
 		
-
-    renderThreadIcons(threadLabels);
 	
+		
+    renderThreadIcons(threadLabels);
+	 if (threadLabels.includes("UNREAD")) {
+		$('#asread-button-' + thread.id).show();
+	 }
+
 	
 	
 	var messageCount = thread.messages.length;
@@ -197,7 +201,7 @@ function addMessageToThreadDisplay(thread) {
 
 
 	/*  Add js event handler on Delete Main Button */
-	$('#asread-button-' + thread.id).on('click', function () {
+	$('#asread-button').on('click', function () {
 		markThreadAsRead(thread.id, null);
 		$('#asread-button-' + thread.id).hide();
 		$('#threadUnread').addClass('hidden');
@@ -205,14 +209,9 @@ function addMessageToThreadDisplay(thread) {
 	});
 
 	/* Add js event handler on Delete Main Button */
-	$('#delete-button-' + thread.id).on('click', function () {
+	$('#delete-button').on('click', function () {
 		sendThreadToTrash(thread.id, null);
-		document.location.href="inbox.html";
 	});
-
-	
 	
 	 
 }
-
-

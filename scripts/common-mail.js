@@ -274,7 +274,7 @@ function renderThreadIcons(threadLabels) {
 	 if (threadLabels.includes("UNREAD")) {
 		$('#threadUnread').removeClass('hidden');
 		$('#threadUnread').show();
-		$('#asread-button-' + thread.id).show();
+		$('#asread-button').show();
 	 }
 
      if (threadLabels.includes("CATEGORY_PERSONAL")) {
