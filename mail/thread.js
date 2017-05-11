@@ -44,10 +44,10 @@ function addMessageToThreadDisplay(thread) {
 	$('#threadInfo').show();
 	$('#threadActions').append(
 			'<button type="button" style="display:none;" class="btn asread-button" id="asread-button"> \
-				<img id="asread-icon-' + thread.id + '" src="../img/mail/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
+				<img id="asread-icon-' + thread.id + '" src="img/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
 			</button> &nbsp; \
 			<button type="button" class="btn delete-button" id="delete-button">\
-				<img id="delete-icon-' + thread.id + '" src="../img/mail/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
+				<img id="delete-icon-' + thread.id + '" src="img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
 			</button>');
 		
 	
@@ -100,10 +100,10 @@ function addMessageToThreadDisplay(thread) {
 					<h4 class="panel-title">\
 						<div id="msg-reply-' + i + '" class="pull-right">\
 								&nbsp; <button type="button" class="reply-button" id="' + i + '">\
-									<img id="reply-icon" src="../img/mail/reply.png" title="Reply"/>\
+									<img id="reply-icon" src="img/reply.png" title="Reply"/>\
 								</button>\
 								<button type="button" class="reply-button" id="' + i + '">\
-									<img id="replyall-icon" src="../img/mail/replyall.png" title="Reply"/>\
+									<img id="replyall-icon" src="img/replyall.png" title="Reply"/>\
 								</button>\
 						</div>\
 						<a data-toggle="collapse" data-parent="#msg-accordion" href="#msg-body-'+ i +'" aria-expanded="true" aria-controls="#msg-body-'+ i +'" >\

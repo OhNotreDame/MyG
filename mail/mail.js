@@ -450,19 +450,19 @@ function renderMailRow(message) {
           </td>\
           <td style="width: 166px !important;"><div id="dateEmail">' + finalMailDate + '</div></td>\
           <td> <button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + message.id + '"> \
-          <img id="asread-icon-' + message.id + '" src="../img/mail/markAsRead.png" title="Mark as read"/>\
+          <img id="asread-icon-' + message.id + '" src="img/markAsRead.png" title="Mark as read"/>\
           </button>\</td>\
           <td> <button type="button" class="btn delete-button" id="delete-button-' + message.id + '">\
-          <img id="delete-icon-' + message.id + '" src="../img/mail/delete.png" title="Delete"/>\
+          <img id="delete-icon-' + message.id + '" src="img/delete.png" title="Delete"/>\
           </button>\</td>\
           <td> <button type="button" class="btn reply-button" id="reply-button-' + message.id + '">\
-          <img id="reply-icon-' + message.id + '" src="../img/mail/reply.png" title="Reply"/>\
+          <img id="reply-icon-' + message.id + '" src="img/reply.png" title="Reply"/>\
           </button>\</td>\
           </tr>');
 
      if (messageLabelIds.includes("UNREAD")) {
           var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='newIco' src='../img/mail/new.png' title='Unread'/>&nbsp;");
+          $(iconDivID).append("<img id='newIco' src='img/new.png' title='Unread'/>&nbsp;");
 
           var buttonID = "#asread-button-" + message.id;
           $(buttonID).toggle();
@@ -470,16 +470,16 @@ function renderMailRow(message) {
 
      if (messageLabelIds.includes("STARRED")) {
           var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='starIco' src='../img/mail/star.png' title='Starred'/>&nbsp;");
+          $(iconDivID).append("<img id='starIco' src='img/star.png' title='Starred'/>&nbsp;");
      }
 
      if (messageLabelIds.includes("IMPORTANT")) {
           var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='importIco' src='../img/mail/important.png'  title='Important'/>&nbsp;");
+          $(iconDivID).append("<img id='importIco' src='img/important.png'  title='Important'/>&nbsp;");
      }
      if (messageLabelIds.includes("CATEGORY_PERSONAL")) {
           var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='promoIco' src='../img/mail/personal.png' title='Personal'/>&nbsp;");
+          $(iconDivID).append("<img id='promoIco' src='img/personal.png' title='Personal'/>&nbsp;");
      }
 
      if (message.payload.parts) {
@@ -489,11 +489,11 @@ function renderMailRow(message) {
                     var iconDivID = "#icons-" + message.id;
                     if ($(iconDivID).has('#attachIco').length > 0) {}
                     else {
-                         $(iconDivID).append("<img id='attachIco' src='../img/mail/paperclip.png' title='Has attachment'/>&nbsp;");
+                         $(iconDivID).append("<img id='attachIco' src='img/paperclip.png' title='Has attachment'/>&nbsp;");
                     }
                     /* put attachement ref to the modal*/
                     var emailAttachID = "#emailAttach-" + message.id
-                         $(emailAttachID).append("<img id='attachIco' src='../img/mail/paperclip.png' title='Has attachment'/>" + filename + "&nbsp;");
+                         $(emailAttachID).append("<img id='attachIco' src='img/paperclip.png' title='Has attachment'/>" + filename + "&nbsp;");
                     $(emailAttachID).toggle();
                }
           });

@@ -72,12 +72,12 @@ function addFileToTable(file) {
 		  
 	 if (file.starred)
 	 {
-		   $('#fileIcons-' + file.id).append("<img src='../img/drive/star.png' height='24' width='24' title='Starred'/>&nbsp;&nbsp;");
+		   $('#fileIcons-' + file.id).append("<img src='img/star.png' height='24' width='24' title='Starred'/>&nbsp;&nbsp;");
 	 }
 	 
 	 if (file.shared)
 	 {
-		   $('#fileIcons-' + file.id).append("<img src='../img/drive/shared.png' height='24' width='24' title='Shared'/>&nbsp;&nbsp;");
+		   $('#fileIcons-' + file.id).append("<img src='img/shared.png' height='24' width='24' title='Shared'/>&nbsp;&nbsp;");
 	 }
 	 
 	
@@ -96,20 +96,20 @@ function addFileToTable(file) {
      case 'audio':
      case 'music':
      case 'video':
-          $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/mediaFile.png' height='24' width='24' title='" + fileType + "'/>");
+          $('#fileTypeIcon-' + file.id).prepend("<img src='img/mediaFile.png' height='24' width='24' title='" + fileType + "'/>");
           break;
 
      case 'image':
-          $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/imgFile.png' height='24' width='24' title='" + fileType + "'/>");
+          $('#fileTypeIcon-' + file.id).prepend("<img src='img/imgFile.png' height='24' width='24' title='" + fileType + "'/>");
           break;
 
      case 'message':
-          $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/msgFile.png' height='24' width='24' title='" + fileType + "'/>");
+          $('#fileTypeIcon-' + file.id).prepend("<img src='img/msgFile.png' height='24' width='24' title='" + fileType + "'/>");
           break;
 
      case 'text':
      default:
-          $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/file.png' height='24' width='24' title='" + fileType + "'/>");
+          $('#fileTypeIcon-' + file.id).prepend("<img src='img/file.png' height='24' width='24' title='" + fileType + "'/>");
           break;
      }
 	 
@@ -117,49 +117,49 @@ function addFileToTable(file) {
      if (displayAppIcon) {
           switch (mimeCTobj.extension) {
           case 'vnd.google-apps.folder':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/folder.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/folder.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.google-apps.document':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/googleDocs.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/googleDocs.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.google-apps.spreadsheet':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/googleSheets.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/googleSheets.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.google-apps.presentation':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/googleSlides.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/googleSlides.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.google-apps.video':
           case 'vnd.google-apps.audio':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/mediaFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/mediaFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.google-apps.photo':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/imgFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/imgFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'pdf':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/pdfFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/pdfFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.ms-powerpoint':
           case 'vnd.openxmlformats-officedocument.presentationml.presentation':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/pptFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/pptFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.visio':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/visioFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/visioFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.word':
           case 'vnd.openxmlformats-officedocument.wordprocessingml.document':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/wordFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/wordFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'vnd.ms-excel':
           case 'vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/excelFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/excelFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           case 'octet-stream':
           case 'x-zip-compressed':
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/zipFile.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/zipFile.png' height='24' width='24' title='" + fileType + "'/>");
                break;   
 			   
           default: //any other file type
-               $('#fileTypeIcon-' + file.id).prepend("<img src='../img/drive/file.png' height='24' width='24' title='" + fileType + "'/>");
+               $('#fileTypeIcon-' + file.id).prepend("<img src='img/file.png' height='24' width='24' title='" + fileType + "'/>");
                break;
           }
 
@@ -169,7 +169,7 @@ function addFileToTable(file) {
      $('#file-' + file.id).on('click', function () {
           var redirectToURL = "";
           if (file.mimeType == "application/vnd.google-apps.folder") {
-               redirectToURL = "drive.html?" + file.id;          
+               redirectToURL = "mydrive.html?" + file.id;          
                document.location.href = redirectToURL;
           } 
 		  else {
@@ -206,7 +206,7 @@ function goToParentFolder()
 {
 	//alert("goToParentFolder() not implemented yet!")
 	var parentId = $("#parent-folder-id").text();
-	var redirectToURL = "drive.html?" + parentId;          
+	var redirectToURL = "mydrive.html?" + parentId;          
     document.location.href = redirectToURL;
 }
 

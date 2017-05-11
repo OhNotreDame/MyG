@@ -3,18 +3,19 @@
   <head>
     <title>MyG - Thread (details)</title>
     <meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css"  href="../css/bootstrap-theme.min.css">
-	<link rel="stylesheet" type="text/css"  href="../css/common-nav.css">
-	<link rel="stylesheet" type="text/css"  href="../css/thread.css">
-    <script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap-notify.js"></script>
-    <script type="text/javascript" src="../scripts/clientID.js"></script>
-    <script type="text/javascript" src="../scripts/common-mail.js"></script>
-    <script type="text/javascript" src="../scripts/common-nav.js"></script>
-    <script type="text/javascript" src="../scripts/common-alerts.js"></script>
-    <script type="text/javascript" src="../scripts/jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="../common/scripts/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../common/scripts/jquery.tablesorter.min.js"></script>	  
+	<link rel="stylesheet" type="text/css"  href="thread.css">
+    <script type="text/javascript" src="mail.js"></script>	
+	<script type="text/javascript" src="../nav/nav.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../nav/nav.css">	
+	<script type="text/javascript" src="../common/scripts/common-alerts.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../common/css/common-alerts.css">	
+    <script type="text/javascript" src="../common/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../common/scripts/bootstrap-notify.js"></script>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"  href="../common/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="../common/scripts/clientID.js"></script>    
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
 	<script src="thread.js"></script>
   </head>
@@ -34,13 +35,13 @@
 			</div>
 			<br/>			
 			<div id="labelBar" class="row labelBar">
-				<div id="threadPromo" class="hidden pull-right threadPromo"> <img id='promoIco' src='../img/mail/promotions.png' title='Promotions'/> &nbsp; Promotions &nbsp;</div>	
-				<div id="threadSocial" class="hidden pull-right threadSocial"> <img id='socialIco' src='../img/mail/social.png' title='Social'/> &nbsp; Social &nbsp;</div>	
-				<div id="threadForums" class="hidden pull-right threadForums"> <img id='forumIco' src='../img/mail/forums.png' title='Forums'/> &nbsp; Forums &nbsp;</div>	
-				<div id="threadUpdates" class="hidden pull-right threadUpdates"> <img id='updateIco' src='../img/mail/updates.png' title='Update'/> &nbsp; Update &nbsp;</div>	
-				<div id="threadPersonal" class="hidden pull-right threadPersonal"> <img id='persoIco' src='../img/mail/personal.png' title='Personal'/> &nbsp; Personal &nbsp;</div>	
-				<div id="threadImportant" class="hidden pull-right threadImportant"> <img id='importIco' src='../img/mail/important.png' title='Important'/> &nbsp; Important &nbsp;</div>
-				<div id="threadUnread" class="hidden pull-right threadUnread"> <img id='newIco' src='../img/mail/new.png' title='Unread'/> &nbsp; Unread &nbsp;</div>
+				<div id="threadPromo" class="hidden pull-right threadPromo"> <img id='promoIco' src='img/promotions.png' title='Promotions'/> &nbsp; Promotions &nbsp;</div>	
+				<div id="threadSocial" class="hidden pull-right threadSocial"> <img id='socialIco' src='img/social.png' title='Social'/> &nbsp; Social &nbsp;</div>	
+				<div id="threadForums" class="hidden pull-right threadForums"> <img id='forumIco' src='img/forums.png' title='Forums'/> &nbsp; Forums &nbsp;</div>	
+				<div id="threadUpdates" class="hidden pull-right threadUpdates"> <img id='updateIco' src='img/updates.png' title='Update'/> &nbsp; Update &nbsp;</div>	
+				<div id="threadPersonal" class="hidden pull-right threadPersonal"> <img id='persoIco' src='img/personal.png' title='Personal'/> &nbsp; Personal &nbsp;</div>	
+				<div id="threadImportant" class="hidden pull-right threadImportant"> <img id='importIco' src='img/important.png' title='Important'/> &nbsp; Important &nbsp;</div>
+				<div id="threadUnread" class="hidden pull-right threadUnread"> <img id='newIco' src='img/new.png' title='Unread'/> &nbsp; Unread &nbsp;</div>
 			</div>
 			<br/>
 			<div id="msg-accordion" role="tablist" aria-multiselectable="true" class="panel-group">

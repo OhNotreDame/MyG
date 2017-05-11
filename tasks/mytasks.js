@@ -29,7 +29,7 @@ function loadTasksAPI() {
 function renderTasks() {
 
 	prepareGlobalNavBar();
-	prepareToolNavBar('task');
+	prepareToolNavBar('tasks');
 	$('#table-tasks > tbody').empty();
 	listTasksLists(50);
 
@@ -114,20 +114,20 @@ function addTaskToTable(task, taskListId, taskListName) {
           var statusFormatted = ""
           switch (task.status) {
           case 'completed':
-               statusFormatted = "<div id='completed-" + task.id + "' class='completed'> <img id='iconCompleted-" + task.id + "' src='../img/tasks/completed.png' title='Completed'/>&nbsp; Completed</div>";
+               statusFormatted = "<div id='completed-" + task.id + "' class='completed'> <img id='iconCompleted-" + task.id + "' src='img/completed.png' title='Completed'/>&nbsp; Completed</div>";
                break;
 
           case 'needsAction':
           default:
                if (overDue) {
-                    statusFormatted = "<div id='overdue-" + task.id + "' class='overdue'> <img id='iconOverdue-" + task.id + "' src='../img/tasks/overdue.png' title='Overdue'/>&nbsp; Overdue</div>";
+                    statusFormatted = "<div id='overdue-" + task.id + "' class='overdue'> <img id='iconOverdue-" + task.id + "' src='img/overdue.png' title='Overdue'/>&nbsp; Overdue</div>";
                } else {
-                    statusFormatted = "<div id='ongoing-" + task.id + "' class='ongoing'><img id='iconOngoing-" + task.id + "' src='../img/tasks/ongoing.png' title='Overdue'/>&nbsp; On-going</div>";
+                    statusFormatted = "<div id='ongoing-" + task.id + "' class='ongoing'><img id='iconOngoing-" + task.id + "' src='img/ongoing.png' title='Overdue'/>&nbsp; On-going</div>";
                }
                break;
           }
           if (task.deleted) {
-               statusFormatted = "<div id='deleted-" + task.id + "' class='deleted'> <img id='iconDeleted-" + task.id + "' src='../img/tasks/delete.png' title='Deleted'/>&nbsp; Deleted</div>";
+               statusFormatted = "<div id='deleted-" + task.id + "' class='deleted'> <img id='iconDeleted-" + task.id + "' src='img/delete.png' title='Deleted'/>&nbsp; Deleted</div>";
           }
           if (task.hidden) {
                statusFormatted += " (Hidden)";
@@ -154,16 +154,16 @@ function addTaskToTable(task, taskListId, taskListName) {
 
      var iconDivID = "#icons-" + task.id;
      if (task.status != "completed") {
-          $(iconDivID).append("<button type='button' class='task-button' id='complete-button-" + task.id + "'><img id='completeIco' src='../img/tasks/complete.png' title='Complete Task'/></button>&nbsp;");
+          $(iconDivID).append("<button type='button' class='task-button' id='complete-button-" + task.id + "'><img id='completeIco' src='img/complete.png' title='Complete Task'/></button>&nbsp;");
 
           // $(iconDivID).append("<button type='button' class='task-button' id='edit-button-" + task.id + "'><img id='editIco' src='../img/edit.png' title='Edit Task'/></button>&nbsp;");
      } else {
-          $(iconDivID).append("<button type='button' class='task-button' id='reopen-button-" + task.id + "'><img id='reopenIco' src='../img/tasks/reopen.png' title='Reopen Task'/></button>&nbsp;");
+          $(iconDivID).append("<button type='button' class='task-button' id='reopen-button-" + task.id + "'><img id='reopenIco' src='img/reopen.png' title='Reopen Task'/></button>&nbsp;");
      }
      if (!task.deleted) {
-          $(iconDivID).append("<button type='button' class='task-button' id='delete-button-" + task.id + "'><img id='deleteIco' src='../img/tasks/delete.png' title='Delete Task'/></button>&nbsp;");
+          $(iconDivID).append("<button type='button' class='task-button' id='delete-button-" + task.id + "'><img id='deleteIco' src='img/delete.png' title='Delete Task'/></button>&nbsp;");
      } else {
-          $(iconDivID).append("<button type='button' class='task-button' id='restore-button-" + task.id + "'><img id='restoreIco' src='../img/tasks/restore.png' title='Restore Task'/></button>&nbsp;");
+          $(iconDivID).append("<button type='button' class='task-button' id='restore-button-" + task.id + "'><img id='restoreIco' src='img/restore.png' title='Restore Task'/></button>&nbsp;");
      }
 
      /* Reinforce sort */

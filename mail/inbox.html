@@ -3,18 +3,19 @@
   <head>
     <title>MyG - Inbox</title>
     <meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css"  href="../css/bootstrap-theme.min.css">
-	<link rel="stylesheet" type="text/css"  href="../css/common-nav.css">
-	<link rel="stylesheet" type="text/css"  href="../css/inbox.css">
-    <script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap-notify.js"></script>
-    <script type="text/javascript" src="../scripts/clientID.js"></script>
-    <script type="text/javascript" src="../scripts/common-mail.js"></script>
-    <script type="text/javascript" src="../scripts/common-nav.js"></script>
-    <script type="text/javascript" src="../scripts/common-alerts.js"></script>
-    <script type="text/javascript" src="../scripts/jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="../common/scripts/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../common/scripts/jquery.tablesorter.min.js"></script>	  
+	<link rel="stylesheet" type="text/css"  href="inbox.css">
+    <script type="text/javascript" src="mail.js"></script>	
+	<script type="text/javascript" src="../nav/nav.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../nav/nav.css">	
+	<script type="text/javascript" src="../common/scripts/common-alerts.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../common/css/common-alerts.css">	
+    <script type="text/javascript" src="../common/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../common/scripts/bootstrap-notify.js"></script>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"  href="../common/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="../common/scripts/clientID.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
 	<script src="inbox.js"></script>
   </head>
@@ -27,7 +28,7 @@
 	
 		 <div class="container">
 			<a href="#compose-modal" data-toggle="modal" id="compose-button" class="btn btn-primary pull-right hidden">
-				<img id="composeIcon" src="../img/mail/compose.png" title="Compose"/> Compose
+				<img id="composeIcon" src="img/compose.png" title="Compose"/> Compose
 			</a>
 			
 			<button id="authorize-button" class="btn btn-primary hidden">Authorize</button>

@@ -28,44 +28,83 @@
 	padding-left: 10px;
 }
 
-a.inboxNav, a.driveNav {	
-	color: #333 !important;
-	font-weight: bold;
-}
-
+/**
+	Global Navigation
+**/	
 a.mailNav {	
 	color: #e33333 !important;
 	font-weight: bold;
+	font-size: 16px;
+}
+
+a.driveNav {	
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+a.tasksNav {	
+	color: #FDD047 !important;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+a.contactsNav {	
+	color: #2a56c6 !important;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+/**
+	Mail Navigation
+**/	
+a.inboxNav {	
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 14px;
 }
 
 a.updatesNav {	
 	color: #FFA500 !important;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 a.socialNav {	
 	color: #4986e7 !important;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 a.promoNav {	
 	color: #A6D785 !important;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 a.forumNav {	
 	color: #a479e2 !important;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 a.trashNav {	
 	color: #e33333 !important;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 
-a.tasksNav {	
-	color: #007F0E !important;
-	font-weight: bold;
-}
+/**
+	Drive Navigation (ToDo)
+**/	
 
+
+/**
+	Tasks Navigation (ToDo)
+**/	
+
+
+/**
+	Contacts Navigation (ToDo)
+**/	
