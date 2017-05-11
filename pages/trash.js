@@ -16,7 +16,8 @@ function loadGmailAPI() {
 /* renderInbox()	*/
 function renderTrash() {
      // Clear Messages table
-     prepareToolbar();
+     prepareGlobalNavBar();
+	 prepareToolNavBar('mail');
 	 $('.table-trash tbody').empty();
      listMessages('TRASH', '!label:CHAT', 30, appendMessageRow);
 

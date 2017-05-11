@@ -1,6 +1,7 @@
 /* On Window Load */
 window.onload = function () {
-	prepareToolbar();
+	prepareGlobalNavBar();
+	prepareToolNavBar('mail');
 	
 	//var rawMimeContentType = "Content-Type: application/javascript;charset=UTF-8";
 	var rawMimeContentType = "Content-Type: image/jpg;charset=UTF-8;other=ABC";

@@ -28,9 +28,10 @@ function loadTasksAPI() {
 /* renderTasks() */
 function renderTasks() {
 
-     prepareToolbar();
-     $('#table-tasks > tbody').empty();
-     listTasksLists(50);
+	prepareGlobalNavBar();
+	prepareToolNavBar('task');
+	$('#table-tasks > tbody').empty();
+	listTasksLists(50);
 
 }
 

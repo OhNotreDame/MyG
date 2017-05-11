@@ -53,7 +53,8 @@ function retrieveAllFiles(q, corpora, spaces, orderBy, callback) {
                               'q': q,
                               'corpora': corpora,
                               'spaces': spaces,
-                              'orderBy': orderBy
+                              'orderBy': orderBy,
+							  'fields': 'files(id, name, mimeType, modifiedTime, starred, shared)'
                          });
                     retrievePageOfFiles(request, result);
                } else {
@@ -70,7 +71,8 @@ function retrieveAllFiles(q, corpora, spaces, orderBy, callback) {
                'q': q,
                'corpora': corpora,
                'spaces': spaces,
-               'orderBy': orderBy
+               'orderBy': orderBy,
+			   'fields': 'files(id, name, mimeType, modifiedTime, starred, shared)'
           });
      retrievePageOfFiles(initialRequest, []);
 }

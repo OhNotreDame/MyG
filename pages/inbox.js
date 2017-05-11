@@ -23,8 +23,10 @@ function loadGmailAPI() {
 /* renderInbox()	*/
 function renderInbox() {
 
-	prepareToolbar();
-     // Clear Messages table
+	prepareGlobalNavBar();
+    prepareToolNavBar('mail');
+	
+	// Clear Messages table
      $('#table-inbox > tbody').empty();
 
 	var curLoc = window.location.href;

@@ -20,8 +20,9 @@ function loadGmailAPI() {
 /* renderThreadContent() */
 function renderThreadContent() {
     
-	prepareToolbar();
-
+	prepareGlobalNavBar();
+	prepareToolNavBar('mail');
+	
 	var paramsString = new URLSearchParams(window.location.search);
 	var searchParams = new URLSearchParams(paramsString);
 	var threadId = searchParams.get("threadId");

@@ -33,6 +33,11 @@ a.inboxNav, a.driveNav {
 	font-weight: bold;
 }
 
+a.mailNav {	
+	color: #e33333 !important;
+	font-weight: bold;
+}
+
 a.updatesNav {	
 	color: #FFA500 !important;
 	font-weight: bold;
