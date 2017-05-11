@@ -1,4 +1,4 @@
-.toolbar ul {
+mail-inboxNav.toolbar ul {
 	display:table-row;
 }
 .toolbar ul li
@@ -58,37 +58,37 @@ a.contactsNav {
 /**
 	Mail Navigation
 **/	
-a.inboxNav {	
+a.mail-inboxNav {	
 	color: #333 !important;
 	font-weight: bold;
 	font-size: 14px;
 }
 
-a.updatesNav {	
+a.mail-updatesNav {	
 	color: #FFA500 !important;
 	font-weight: bold;
 	font-size: 14px;
 }
 
-a.socialNav {	
+a.mail-socialNav {	
 	color: #4986e7 !important;
 	font-weight: bold;
 	font-size: 14px;
 }
 
-a.promoNav {	
+a.mail-promoNav {	
 	color: #A6D785 !important;
 	font-weight: bold;
 	font-size: 14px;
 }
 
-a.forumNav {	
+a.mail-forumNav {	
 	color: #a479e2 !important;
 	font-weight: bold;
 	font-size: 14px;
 }
 
-a.trashNav {	
+a.mail-trashNav {	
 	color: #e33333 !important;
 	font-weight: bold;
 	font-size: 14px;
@@ -98,13 +98,44 @@ a.trashNav {
 /**
 	Drive Navigation (ToDo)
 **/	
+a.drive-myDriveNav {	
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
 
+a.drive-trashNav {	
+	color: #e33333 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
 
 /**
 	Tasks Navigation (ToDo)
 **/	
+a.tasks-myTasksNav {	
+	color: #FDD047 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
 
+a.tasks-trashNav {	
+	color: #e33333 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
 
 /**
 	Contacts Navigation (ToDo)
 **/	
+a.contacts-myContactsNav {	
+	color: #2a56c6 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+a.contacts-trashNav {	
+	color: #e33333 !important;
+	font-weight: bold;
+	font-size: 14px;
+}

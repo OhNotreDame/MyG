@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+	<head>
+		<title>MyG - Tasks (Trash)</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css"  href="../common/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../common/css/bootstrap-datepicker3.css"/>		
+		<script type="text/javascript" src="../common/scripts/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="../common/scripts/jquery.tablesorter.min.js"></script>		
+		<script type="text/javascript" src="../common/scripts/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../common/scripts/bootstrap-datepicker.min.js"></script>		
+		<script type="text/javascript" src="../common/scripts/gapi_settings.js"></script>
+		<script type="text/javascript" src="../nav/nav.js"></script>
+		<link rel="stylesheet" type="text/css"  href="../nav/nav.css">
+	    <script type="text/javascript" src="tasks.js"></script>
+		<link rel="stylesheet" type="text/css"  href="mytasks.css">
+		
+		<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
+		<script src="trash.js"></script>
+	</head>
+	<body>
+		<div id="header" class="row">
+			<div id="globalNavBar" class="header toolbar"></div>
+			<div id="toolNavBar" class="header toolbar"></div>
+		</div>	
+		<br/>
+		<div class="container">
+			<h2> Tasks / Trash // Refactoring needed </h2>
+			<button id="authorize-button" class="btn btn-primary hidden">Authorize</button>		
+			<table class="table table-striped table-hover table-tasks tablesorter {dateFormat: uk}" id="table-tasks">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Status</th>						
+						<th>Task</th>						
+						<th>Tasks List</th>
+						<th>Notes</th>
+						<th>Due Date</th>
+						<th>Completed on</th>
+						<th>Last Modified</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			
+		<div class="modal fade" id="addtask-modal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Add Task</h4>
+			  </div>
+			  <form>
+			   <div class="modal-body">
+				  <div class="form-group">
+					<input type="text" class="form-control" id="addtask-title" placeholder="Task" required />
+				  </div>
+					<div class="form-group" >
+						<select class="form-control" id="addtask-taskList"></select>
+					</div>
+				  <div class="form-group">
+					<textarea class="form-control" id="addtask-desc" placeholder="Description" rows="10"></textarea>
+				  </div>
+				 <div class="form-group ">
+					  <div class="input-group input-append date" id="addtask-datepicker">
+						<input type="text" class="form-control" name="date" id="addtask-date" placeholder="Due by (dd/mm/yyyy)" />
+						<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  <button type="button" id="add-button" class="btn btn-primary">Add</button>
+				</div>
+			  </form>
+			</div>
+		  </div>
+		</div>
+		</div>
+	</body>
+</html>
