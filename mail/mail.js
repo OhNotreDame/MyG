@@ -1,9 +1,3 @@
-const SCOPES = [
-     "https://www.googleapis.com/auth/gmail.modify",
-     "https://www.googleapis.com/auth/gmail.compose"
-];
-const USER = 'me';
-
 /*
  * checkAuth()
  * Check if the current user has authorized the application.
@@ -12,8 +6,8 @@ function checkAuth() {
 	console.log("inbox/checkAuth");
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
-          'scope': SCOPES,
-          'immediate': true
+          'scope': SCOPES_MAIL,
+          'immediate': false
      }, handleAuthResult);
 }
 

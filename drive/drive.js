@@ -1,12 +1,3 @@
-// Array of API discovery doc URLs for APIs used by the quickstart
-const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-const SCOPES = [
-     "https://www.googleapis.com/auth/drive.file",
-     "https://www.googleapis.com/auth/drive.metadata"
-];
-const USER = 'me';
-const apiKEY = 'epkkpeeiahpinbljfabcglnklpgefdgf';
-
 /*
  * checkAuth()
  * Check if the current user has authorized the application.
@@ -16,8 +7,8 @@ function checkAuth() {
 	 
 	 gapi.auth.authorize({
           'client_id': CLIENT_ID,
-          'scope': SCOPES,
-          'immediate': true
+          'scope': SCOPES_DRIVE,
+          'immediate': false
      }, handleAuthResult);
 
 }
@@ -48,7 +39,7 @@ function retrieveAllFiles(q, corpora, spaces, orderBy, callback) {
                var nextPageToken = resp.nextPageToken;
                if (nextPageToken) {
                     request = gapi.client.drive.files.list({
-                              'key': apiKEY,
+                              'key': API_KEY,
                               'pageToken': nextPageToken,
                               'q': q,
                               'corpora': corpora,
@@ -67,7 +58,7 @@ function retrieveAllFiles(q, corpora, spaces, orderBy, callback) {
           });
      }
      var initialRequest = gapi.client.drive.files.list({
-               'key': apiKEY,
+               'key': API_KEY,
                'q': q,
                'corpora': corpora,
                'spaces': spaces,

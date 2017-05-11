@@ -1,11 +1,3 @@
-// Array of API discovery doc URLs for APIs used by the quickstart
-const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-const SCOPES = [
-     "https://www.googleapis.com/auth/tasks",
-     "https://www.googleapis.com/auth/tasks.readonly"
-];
-const USER = 'me';
-
 /*
  * checkAuth()
  * Check if the current user has authorized the application.
@@ -13,8 +5,8 @@ const USER = 'me';
 function checkAuth() {
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
-          'scope': SCOPES,
-          'immediate': true
+          'scope': SCOPES_TASKS,
+          'immediate': false
      }, handleAuthResult);
 }
 

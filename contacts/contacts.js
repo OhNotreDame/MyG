@@ -1,8 +1,3 @@
-const SCOPES = [
-     "https://www.google.com/m8/feeds/"
-];
-const USER = 'me';
-
 /*
  * checkAuth()
  * Check if the current user has authorized the application.
@@ -11,8 +6,8 @@ function checkAuth() {
 	console.log("contacts/checkAuth");
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
-          'scope': SCOPES,
-          'immediate': true
+          'scope': SCOPES_CONTACTS,
+          'immediate': false
      }, handleAuthResult);
 }
 
