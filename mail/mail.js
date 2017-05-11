@@ -223,9 +223,18 @@ function markMessageAsRead(messageId, callback) {
      return request.execute(callback);
 }
 
-/* js function, using google api, to delete a message (send the email to trash), based on its messageID */
+/* js function, using google api, to send message to trash, based on its messageID */
 function sendMessageToTrash(messageId, callback) {
      var request = gapi.client.gmail.users.messages.trash({
+               'userId': USER,
+               'id': messageId
+          });
+     return request.execute(callback);
+}
+
+/* js function, using google api, to send delete permanently a message, based on its messageID */
+function deleteMessagePermanently(messageId, callback) {
+     var request = gapi.client.gmail.users.messages.delete({
                'userId': USER,
                'id': messageId
           });

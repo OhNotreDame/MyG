@@ -23,7 +23,14 @@ function renderTrash() {
 }
 
 function emptyTrash() {
-     alert("emptyTrash is not implemented yet!");
+	$('#table-trash tr').each(function(){
+		var row = this;
+		console.log(row.id);
+		if(row.id)
+		{
+		   deleteMessagePermanently(row.id, getCallResultAndShowMessage);
+		}
+	});
 }
 
 function appendMessageRow(message) {
@@ -49,7 +56,7 @@ function appendMessageRow(message) {
      //$('.table-inbox tbody').before(
      // Append row to table
      $('#table-trash').append(
-          '<tr class="email_item" id="row-' + message.id + '">\
+          '<tr class="email_item" id="' + message.id + '">\
           <td>' + from + '</td>\
           <td>\
           <a id="thread-' + message.threadId + '">' +
