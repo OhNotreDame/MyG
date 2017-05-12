@@ -1,12 +1,12 @@
 {
 	"manifest_version": 2,
 	"name": "MyG",
-	"description": "This extension shows MyG",
-	"version": "2.0",
+	"description": "MyG is about working with Google APIs directly from a Google Extension. This extension is capable of getting data from Gmail API v1, Drive API v3, Tasks API v1 and very soon Contacts v3.",
+	"version": "3.0",
 	"content_security_policy": "script-src 'self' 'unsafe-eval' https://*.google.com https://*.google.com:*/ ; img-src 'self'; object-src 'self' 'unsafe-eval'",
 	"browser_action": 
 	{
-		"default_icon": "img/icon.png",
+		"default_icon": "common/img/icon.png",
 		"default_popup": "pages/popup.html"
 	},
 	"permissions": 
@@ -21,10 +21,10 @@
 	[ 
 		{
 			"js": [ 
-				"scripts/jquery-3.1.1.js",
-				"scripts/bootstrap.min.js",
-				"scripts/bootstrap-datepicker.min.js",
-				"scripts/jquery.tablesorter.min.js"
+				"common/scripts/jquery-3.1.1.js",
+				"common/scripts/bootstrap.min.js",
+				"common/scripts/bootstrap-datepicker.min.js",
+				"common/scripts/jquery.tablesorter.min.js"
 				],
 			"matches": [ "http://*/*", "https://*/*"],
 			"run_at": "document_end"
