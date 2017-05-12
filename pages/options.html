@@ -9,11 +9,18 @@
     <script type="text/javascript" src="../common/scripts/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="../common/scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="../common/scripts/bootstrap-notify.js"></script>
+	<script type="text/javascript" src="../common/scripts/common-alerts.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../common/css/common-alerts.css">	
     <script type="text/javascript" src="../common/scripts/gapi_settings.js"></script>
     <script type="text/javascript" src="../nav/nav.js"></script>
    <script type="text/javascript" src="../common/scripts/jquery.tablesorter.min.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>    
 	<script src="options.js"></script>
+	<style>
+	.scopes {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+	}
+	</style>
   </head>
 	<body> 	
 		<div id="header" class="row">
@@ -29,13 +36,14 @@
 					<div id="headerGmail">
 						<h3>Gmail </h3>
 					</div>
-					<div id="scopeGmail">
-						Scopes: <span id="scope_gmail"></span><br/>
-					</div>
 					<div id="authGmail">
-						<span id="authGmailStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="authGmail-button" class="btn btn-primary">Authorize</button>
+						<span id="status_auth_gmail"></span>
+						<button id="btn_auth_gmail" class="hidden btn btn-primary">Authorize</button>
 					</div>
+					<div id="scopesGmail" class="hidden">
+						<b>Allowed Scopes:</b>
+						<br/><span id="scope_gmail" class="scopes"></span><br/>
+					</div>					
 				</div>
 				
 				<div class="Tasks" class="col-lg-6">
@@ -47,7 +55,7 @@
 					</div>
 					<div id="authTasks">
 						<span id="authTasksStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="authTasks-button" class="btn btn-primary">Authorize</button>
+						<button id="btn_auth_tasks" class="hidden btn btn-primary">Authorize</button>
 					</div>
 				</div>
 			
@@ -60,7 +68,7 @@
 					</div>
 					<div id="authDrive">
 						<span id="authDriveStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="authDrive-button" class="btn btn-primary">Authorize</button>
+						<button id="btn_auth_drive" class="hidden btn btn-primary">Authorize</button>
 					</div>
 				</div>
 				
@@ -73,7 +81,7 @@
 					</div>
 					<div id="authContacts">
 						<span id="authContactsStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="authContacts-button" class="btn btn-primary">Authorize</button>
+						<button id="btn_auth_contacts" class="hidden btn btn-primary">Authorize</button>
 					</div>
 				</div>
 			</div>	
