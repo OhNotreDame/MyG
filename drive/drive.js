@@ -8,7 +8,7 @@ function checkAuth() {
 	 gapi.auth.authorize({
           'client_id': CLIENT_ID,
           'scope': SCOPES_DRIVE,
-          'immediate': false
+          'immediate': true
      }, handleAuthResult);
 
 }

@@ -6,7 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css"  href="../common/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css"  href="../nav/nav.css">
-	<link rel="stylesheet" type="text/css"  href="../common/css/inbox.css">
     <script type="text/javascript" src="../common/scripts/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="../common/scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="../common/scripts/bootstrap-notify.js"></script>
@@ -23,16 +22,32 @@
 			<div id="toolNavBar" class="header toolbar"></div>
 		</div>	
 		<br/>
-		<div class="container container-fluid">
+		<div class="container">
 			<h2> Options </h2>			
 			<div class="row">
 				<div class="Gmail" class="col-lg-6">
 					<div id="headerGmail">
 						<h3>Gmail </h3>
 					</div>
+					<div id="scopeGmail">
+						Scopes: <span id="scope_gmail"></span><br/>
+					</div>
 					<div id="authGmail">
 						<span id="authGmailStatus"> Authenticated as ...  | Need Authentication </span>
 						<button id="authGmail-button" class="btn btn-primary">Authorize</button>
+					</div>
+				</div>
+				
+				<div class="Tasks" class="col-lg-6">
+					<div id="headerTasks">
+						<h3>Tasks </h3>
+					</div>
+					<div id="scopeTasks">
+						Scopes: <span id="scope_tasks"></span><br/>
+					</div>
+					<div id="authTasks">
+						<span id="authTasksStatus"> Authenticated as ...  | Need Authentication </span>
+						<button id="authTasks-button" class="btn btn-primary">Authorize</button>
 					</div>
 				</div>
 			
@@ -40,9 +55,25 @@
 					<div id="headerDrive">
 						<h3>Drive </h3>
 					</div>
+					<div id="scopeDrive">
+						Scopes: <span id="scope_drive"></span><br/>
+					</div>
 					<div id="authDrive">
 						<span id="authDriveStatus"> Authenticated as ...  | Need Authentication </span>
 						<button id="authDrive-button" class="btn btn-primary">Authorize</button>
+					</div>
+				</div>
+				
+				<div class="Contacts" class="col-lg-6">
+					<div id="headerContacts">
+						<h3>Contacts </h3>
+					</div>
+					<div id="scopeContacts">
+						Scopes:<span id="scope_contacts"></span><br/>
+					</div>
+					<div id="authContacts">
+						<span id="authContactsStatus"> Authenticated as ...  | Need Authentication </span>
+						<button id="authContacts-button" class="btn btn-primary">Authorize</button>
 					</div>
 				</div>
 			</div>	
