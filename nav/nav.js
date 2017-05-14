@@ -17,6 +17,9 @@ function prepareGlobalNavBar()
 		<li>\
 			<a href="/contacts/mycontacts.html" class="contactsNav"><img id="contactsNavIco" src="/nav/global/contacts.png" height="32" width="32" title="Tasks"/>&nbsp;Contacts</a>\
 		</li>\
+		<li>\
+			<a href="/pages/options.html" class="settingsNav"><img id="optionsNavIco" src="/nav/global/settings.png" height="32" width="32" title="Settings"/>&nbsp;Settings</a>\
+		</li>\
 		</ul>');
 	$("#globalNavBar").show();
 }

@@ -20,6 +20,9 @@
 	.scopes {
 	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
 	}
+	.scopes_lbl {
+	font-weight:bold;
+	}
 	</style>
   </head>
 	<body> 	
@@ -32,56 +35,78 @@
 		<div class="container">
 			<h2> Options </h2>			
 			<div class="row">
-				<div class="Gmail" class="col-lg-6">
+		
+				<div class="Gmail col-lg-6">
 					<div id="headerGmail">
 						<h3>Gmail </h3>
 					</div>
 					<div id="authGmail">
-						<span id="status_auth_gmail"></span>
-						<button id="btn_auth_gmail" class="hidden btn btn-primary">Authorize</button>
+						<span id="status_auth_gmail_label" class="scopes_lbl"></span>
+						<br/><span id="status_auth_gmail" class="scopes"></span>						
 					</div>
 					<div id="scopesGmail" class="hidden">
-						<b>Allowed Scopes:</b>
+						<span id="scope_gmail_label" class="scopes_lbl">Allowed Scopes:</span>
 						<br/><span id="scope_gmail" class="scopes"></span><br/>
-					</div>					
+					</div>		
+					<div id="btnGmail">
+						<button id="btn_signin_gmail" class="hidden btn btn-primary">Sign-In</button>
+						<button id="btn_signout_gmail" class="hidden btn btn-primary">Sign-Out</button>
+					</div>
 				</div>
 				
-				<div class="Tasks" class="col-lg-6">
+				<div class="Tasks col-lg-6">
 					<div id="headerTasks">
 						<h3>Tasks </h3>
 					</div>
-					<div id="scopeTasks">
-						Scopes: <span id="scope_tasks"></span><br/>
-					</div>
 					<div id="authTasks">
-						<span id="authTasksStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="btn_auth_tasks" class="hidden btn btn-primary">Authorize</button>
+						<span id="status_auth_tasks_label" class="scopes_lbl"></span>
+						<br/><span id="status_auth_tasks" class="scopes"></span>						
+					</div>
+					<div id="scopeTasks" class="hidden">
+						<span id="scope_tasks_label" class="scopes_lbl">Allowed Scopes:</span>
+						<br/><span id="scope_tasks" class="scopes"></span><br/>
+					</div>
+					<div id="btnTasks">
+						<button id="btn_signin_tasks" class="hidden btn btn-primary">Sign-In</button>
+						<button id="btn_signout_tasks" class="hidden btn btn-primary">Sign-Out</button>
 					</div>
 				</div>
-			
-				<div class="Drive" class="col-lg-6">
+			</div>
+			<div class="row"><br/></div>
+			<div class="row">
+				<div class="drive col-lg-6">
 					<div id="headerDrive">
 						<h3>Drive </h3>
 					</div>
-					<div id="scopeDrive">
-						Scopes: <span id="scope_drive"></span><br/>
-					</div>
 					<div id="authDrive">
-						<span id="authDriveStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="btn_auth_drive" class="hidden btn btn-primary">Authorize</button>
+						<span id="status_auth_drive_label" class="scopes_lbl"></span>
+						<br/><span id="status_auth_drive" class="scopes"></span>						
+					</div>
+					<div id="scopeDrive">
+						<span id="scope_drive_label" class="scopes_lbl">Allowed Scopes:</span>
+						<br/><span id="scope_drive" class="scopes"></span><br/>
+					</div>
+					<div id="btnDrive">
+						<button id="btn_signin_drive" class="hidden btn btn-primary">Sign-In</button>
+						<button id="btn_signout_drive" class="hidden btn btn-primary">Sign-Out</button>
 					</div>
 				</div>
 				
-				<div class="Contacts" class="col-lg-6">
+				<div class="contacts col-lg-6">
 					<div id="headerContacts">
 						<h3>Contacts </h3>
 					</div>
-					<div id="scopeContacts">
-						Scopes:<span id="scope_contacts"></span><br/>
-					</div>
 					<div id="authContacts">
-						<span id="authContactsStatus"> Authenticated as ...  | Need Authentication </span>
-						<button id="btn_auth_contacts" class="hidden btn btn-primary">Authorize</button>
+						<span id="status_auth_contacts_label" class="scopes_lbl"></span>
+						<br/><span id="status_auth_contacts" class="scopes"></span>						
+					</div>
+					<div id="scopeContacts">
+						<span id="scope_contacts_label" class="scopes_lbl">Allowed Scopes:</span>
+						<br/><span id="scope_contacts" class="scopes"></span><br/>
+					</div>
+					<div id="btnContacts">
+						<button id="btn_signin_contacts" class="hidden btn btn-primary">Sign-In</button>
+						<button id="btn_signout_contacts" class="hidden btn btn-primary">Sign-Out</button>
 					</div>
 				</div>
 			</div>	

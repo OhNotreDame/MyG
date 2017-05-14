@@ -1,6 +1,9 @@
 /* On Window Load */
 window.onload = function () {
-     window.setTimeout(checkAuth, 1);
+   	prepareGlobalNavBar();
+    prepareToolNavBar('mail');
+	
+	window.setTimeout(checkAuth, 1);
 
 	document.getElementById("send-close-button")
      .addEventListener("click", clearAndCloseComposeModal, false);
@@ -21,11 +24,7 @@ function loadGmailAPI() {
 }
 
 /* renderInbox()	*/
-function renderInbox() {
-
-	prepareGlobalNavBar();
-    prepareToolNavBar('mail');
-	
+function renderInbox() {	
 	// Clear Messages table
      $('#table-inbox > tbody').empty();
 
