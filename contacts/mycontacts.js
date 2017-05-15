@@ -1,6 +1,8 @@
 /* On Window Load */
 window.onload = function () {
-     window.setTimeout(checkAuth, 1);
+   	prepareGlobalNavBar();
+    prepareToolNavBar('contacts');
+	window.setTimeout(checkAuth, 1);
 }
 
 /* Load Gmail API, and when it's done, call renderInbox */
@@ -13,6 +15,5 @@ function loadContactsAPI() {
 /* renderContacts()	*/
 function renderContacts() {
 	console.log("contacts/renderContacts");
-	prepareGlobalNavBar();
-    prepareToolNavBar('contacts');
+
 }

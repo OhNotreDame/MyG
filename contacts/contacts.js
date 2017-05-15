@@ -7,7 +7,7 @@ function checkAuth() {
      gapi.auth.authorize({
           'client_id': CLIENT_ID,
           'scope': SCOPES_CONTACTS,
-          'immediate': false
+          'immediate': true
      }, handleAuthResult);
 }
 
@@ -22,7 +22,7 @@ function handleAuthResult(authResult) {
 		  console.log("contacts/handleAuthResult/OK");
 		  loadContactsAPI();
           $('#authorize-button').remove();
-          $('.table-inbox').removeClass("hidden");
+          $('.table-contacts').removeClass("hidden");
           $('#compose-button').removeClass("hidden");
      } else {
 		 console.log("contacts/handleAuthResult/KO");
