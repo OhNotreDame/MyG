@@ -190,17 +190,34 @@ function exportFile(fileId, fileName, mimeType, fileExtension) {
 }
 
 
-/** A TERMINER **/
+/** Create an empty file with the right name and mimeType, then call uploadFileContent (fileId) **/
 function createFile(file, fileName, mimeType, parentId, callback) 
 {
+	console.log(fileName + " - "+ mimeType);
+
 	var folderMetadata = {
-          'title': fileName,
-          'originalFilename': fileName,
           'name': fileName,
 		  'parents': [parentId],
-          'mimeType': mimeType,
-		  'body': file
+          'mimeType': mimeType
         };
+		
+     var request = gapi.client.drive.files.create({
+               'resource': folderMetadata
+          });
+     request.execute(function (resp) {
+          uploadFileContent(resp.id,file,mimeType,callback);
+     });
+}
+
+/** A terminer **/
+function uploadFileContent(fileId, file, mimeType, callback) 
+{
+	console.log(fileId);
+	
+	var fileMedia = {
+		'mimeType': mimeType,
+		'body': file		
+	}
 	/*
      var request = gapi.client.drive.files.create({
 			   'uploadType': 'multipart',
@@ -208,12 +225,26 @@ function createFile(file, fileName, mimeType, parentId, callback)
 			   'body': file
           }); */
 		  
-		  var request = gapi.client.drive.files.create({
-			   'uploadType': 'multipart',
-			   'resource': file
-          });
-     request.execute(function (resp) {
+	var request = gapi.client.request({
+          path: '/upload/drive/v3/files/' + fileId,
+          method: 'PATCH',
+		  mimeType : mimeType,
+          params: {
+			mimeType : mimeType,
+            uploadType: 'media'
+          },
+          body: fileMedia
+        });
+	request.execute(function (resp) {
           callback(resp);
      });
+	// var request = 	gapi.client.drive.files.update({
+		// 'fileId': fileId,
+		// 'uploadType': 'media',
+		// 'media': fileMedia
+	// });
+     // request.execute(function (resp) {
+          // callback(resp);
+     // });
 	
 }
