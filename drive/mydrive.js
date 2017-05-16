@@ -5,11 +5,17 @@ window.onload = function () {
 	 document.getElementById("gotoparent")
      .addEventListener("click", goToParentFolder, false);
 	 
-	 document.getElementById("uploadfile")
-     .addEventListener("click", uploadFile, false);	 
 	 
-	 document.getElementById("createfolder")
-     .addEventListener("click", newFolder, false);
+	 document.getElementById("uploadFile-upload-button")
+     .addEventListener("click", uploadFile, false);	 
+	 document.getElementById("uploadFile-close-button")
+     .addEventListener("click", clearAndCloseUploadFileModal, false); 
+	 
+	 document.getElementById("newFolder-create-button")
+     .addEventListener("click", newFolder, false); 
+	 document.getElementById("newFolder-close-button")
+     .addEventListener("click", clearAndCloseNewFolderModal, false); 
+	 
 }
 
 /* Load Gmail API, and when it's done, call displayInbox */
@@ -210,20 +216,47 @@ function goToParentFolder()
     document.location.href = redirectToURL;
 }
 
-
+/** A TERMINER **/
 function uploadFile()
 {
-	alert("uploadFile() not implemented yet!")
+	$('#uploadFile-upload-button').addClass('disabled');
+	var parentId = $("#current-folder-id").text();
+
+	var file = document.getElementById('uploadFile-file').files[0];
+    if (file) {
+        // create reader
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function(e) {
+			createFile(e.target.result, file.name, file.type, parentId, getCallResultAndShowMessage) 
+			clearAndCloseUploadFileModal();
+        };
+    }
 }
 
 /* newFolder() */
-// create a new folder in the current location
-// find a decent solution to type the name of the folder
 function newFolder()
 {
-	//alert("newFolder() not implemented yet!")
-	var folderName ="test-from-MyG";
+	$('#newFolder-create-button').addClass('disabled');
+	var folderName = "FolderCreatedByMyG";
+	folderName = $("#newFolder-folderName").val();
 	var parentId = $("#current-folder-id").text();
+	
 	createFolder(folderName, parentId, getCallResultAndShowMessage);
+	clearAndCloseNewFolderModal();
 }
 
+function clearAndCloseNewFolderModal()
+{
+	$('#newFolder-modal').modal('hide');
+	$('#newFolder-create-button').removeClass('disabled');
+    $('#newFolder-folderName').val('');
+}
+
+
+function clearAndCloseUploadFileModal()
+{
+	$('#uploadFile-modal').modal('hide');
+	$('#uploadFile-upload-button').removeClass('disabled');
+    $('#uploadFile-uploadFile-file').val('');
+}

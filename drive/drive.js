@@ -189,3 +189,31 @@ function exportFile(fileId, fileName, mimeType, fileExtension) {
      xhr.send();
 }
 
+
+/** A TERMINER **/
+function createFile(file, fileName, mimeType, parentId, callback) 
+{
+	var folderMetadata = {
+          'title': fileName,
+          'originalFilename': fileName,
+          'name': fileName,
+		  'parents': [parentId],
+          'mimeType': mimeType,
+		  'body': file
+        };
+	/*
+     var request = gapi.client.drive.files.create({
+			   'uploadType': 'multipart',
+			   'resource': folderMetadata,
+			   'body': file
+          }); */
+		  
+		  var request = gapi.client.drive.files.create({
+			   'uploadType': 'multipart',
+			   'resource': file
+          });
+     request.execute(function (resp) {
+          callback(resp);
+     });
+	
+}

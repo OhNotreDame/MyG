@@ -49,12 +49,20 @@
 			</div>
 			<div id="folderActions" class="pull-right">
 			<!-- style="display:none;" -->
-				<button type="button" class="btn drive-button" id="uploadfile">
-					<img id="uploadfileIco" src="img/uploadFile.png"  height='24' width='24' title="Upload file"/> &nbsp; Upload file
-				</button>
-					<button type="button" class="btn drive-button" id="createfolder">
+				<a href="#newFolder-modal" data-toggle="modal" id="createfolder" class="btn drive-button">
 					<img id="createfolderIco" src="img/newFolder.png"  height='24' width='24' title="Create new folder"/> &nbsp; New folder
-				</button>
+				</a>
+				
+				<a href="#uploadFile-modal" data-toggle="modal" id="uploadfile" class="btn drive-button">
+					<img id="uploadfileIco" src="img/uploadFile.png"  height='24' width='24' title="Upload file"/> &nbsp; Upload file
+				</a>
+				
+				<!-- <button type="button" class="btn drive-button" id="uploadfile"> -->
+					<!-- <img id="uploadfileIco" src="img/uploadFile.png"  height='24' width='24' title="Upload file"/> &nbsp; Upload file -->
+				<!-- </button> -->
+				<!-- <button type="button" class="btn drive-button" id="createfolder"> -->
+					<!-- <img id="createfolderIco" src="img/newFolder.png"  height='24' width='24' title="Create new folder"/> &nbsp; New folder -->
+				<!-- </button> -->
 			</div>
 			<br/>
 			
@@ -68,6 +76,58 @@
 				</thead>
 				<tbody></tbody>
 			</table>
+			
+		<div class="modal fade" id="newFolder-modal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">New Folder</h4>
+			  </div>
+				  <form>
+			   <div class="modal-body">
+				 <div class="form-group">
+					<input type="text" class="form-control" id="newFolder-folderName" placeholder="Folder Name" required />
+				  </div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" id="newFolder-close-button" class="btn btn-default">Close</button>
+				  <button type="button" id="newFolder-create-button" class="btn btn-primary">Create</button>
+				</div>
+			  </form>
+			</div>
+		  </div>
+		</div>
+	
+		<div class="modal fade" id="uploadFile-modal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Upload File</h4>
+			  </div>
+			  <form>
+			   <div class="modal-body">
+				  <div class="form-group">
+					<input type="file" value="Browse" id="uploadFile-file" placeholder="Attach" />
+				  </div>				 
+				</div>
+				<div class="modal-footer">
+				  <button type="button" id="uploadFile-close-button" class="btn btn-default">Close</button>
+				  <button type="button" id="uploadFile-upload-button" class="btn btn-primary">Upload</button>
+				</div>
+			  </form>
+			</div>
+		  </div>
+		</div>	
+			
+			
+			
+			
 		</div>
 	</body>
 </html>
