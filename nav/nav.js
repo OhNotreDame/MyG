@@ -50,10 +50,10 @@ function prepareToolNavBar(toolName)
 					<a href="/mail/inbox.html?forums" class="mail-forumNav"><img id="forumNavIco" src="/nav/mail/forums.png" title="Forums"/>&nbsp;Forums</a>\
 				</li>\
 				<li>\
-					<a href="/mail/message.html?sent" class="mail-sentNav"><img id="sentNavIco" src="/nav/mail/sent.png" title="Sent"/>&nbsp;Sent</a>\
+					<a href="/mail/inbox.html?sent" class="mail-sentNav"><img id="sentNavIco" src="/nav/mail/sent.png" title="Sent"/>&nbsp;Sent</a>\
 				</li>\
 				<li>\
-					<a href="/mail/message.html?trash" class="mail-trashNav"><img id="trashNavIco" src="/nav/mail/delete.png" title="Trash"/>&nbsp;Trash</a>\
+					<a href="/mail/inbox.html?trash" class="mail-trashNav"><img id="trashNavIco" src="/nav/mail/delete.png" title="Trash"/>&nbsp;Trash</a>\
 				</li>\
 				</ul>');
 			$("#toolNavBar").show();

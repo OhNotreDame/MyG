@@ -1,4 +1,6 @@
-/* On Window Load */
+var trash = false;
+var sent = false;
+
 window.onload = function () {
    	prepareGlobalNavBar();
     prepareToolNavBar('mail');
@@ -11,6 +13,10 @@ window.onload = function () {
 	
 	document.getElementById("send-close-button")
      .addEventListener("click", clearAndCloseComposeModal, false);
+	
+    document.getElementById("emptyTrash-button")
+     .addEventListener("click", emptyTrash, false);	
+	 
 }
 
 /* Load Gmail API, and when it's done, call renderInbox */
@@ -45,6 +51,18 @@ function renderInbox() {
 			case 'forums':
 				listThreads('INBOX', 'label:Forums after:'+getLast30DaysDate(), 50, addThreadToInbox);
 				$("a.mail-forumNav").addClass("CurrentPage");
+				break;
+			case 'sent':
+				listThreads('SENT',  '!label:CHAT after:'+getLast30DaysDate(), 50, addThreadToInbox);
+				sent = true;
+				$("a.mail-sentNav").addClass("CurrentPage");			
+				break;
+			case 'trash':
+				listThreads('TRASH', 'label:TRASH !label:CHAT', 50, addThreadToInbox);
+				trash = true;
+				$("a.mail-trashNav").addClass("CurrentPage");
+				$("#compose-button").addClass("hidden");
+				$("#emptyTrash-button").removeClass("hidden");
 				break;
 			default:
 				listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
@@ -114,15 +132,21 @@ function addThreadToInbox(thread) {
 
      /* Add js event handler on "Delete (thread)" Button */
      $('#delete-button-' + thread.id).on('click', function () {
-         sendThreadToTrash(thread.id, null);
+         sendThreadToTrash(thread.id, getCallResultAndShowMessage);
          $('#delete-button-' + thread.id).hide();
-		 $('#row-' +  thread.id).hide();
+		 $('#' +  thread.id).hide();
      });
 
      /*  Add js event handler on "Mark (thread) as Read" Button */
      $('#asread-button-' + thread.id).on('click', function () {
-           markThreadAsRead(thread.id, null);
+			markThreadAsRead(thread.id, getCallResultAndShowMessage);
 			$('#asread-button-' + thread.id).hide();
+     });
+	 
+	  /* js event handler on Restore Button */
+     $('#restore-button-' + thread.id).on('click', function () {
+          sendThreadBackToInbox(thread.id, getCallResultAndShowMessage);
+          $('#' + thread.id).hide();
      });
 
 	 /* Reinforce sort */
@@ -130,4 +154,17 @@ function addThreadToInbox(thread) {
           dateFormat: "uk",
           sortList: [[3, 1]]
      });
+}
+
+
+function emptyTrash() {
+	$('#table-inbox tr.email_item').each(function(){
+		var row = this;
+		console.log(row.id);
+		if(row.id)
+		{
+		   deleteThreadPermanently(row.id, null);
+		}
+	});
+	window.setTimeout(location.reload(), 2000);
 }

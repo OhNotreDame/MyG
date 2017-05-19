@@ -50,9 +50,9 @@ function listThreads(labelIds, query, maxResult) {
                               'maxResults': maxResult,
                               'pageToken': nextPageToken
                          });
-                    getPageOfThreads(request, result);
+					getPageOfThreads(request, result);
                } else {
-                    parseThreads(resp.threads);
+                    parseThreads(result);
                }
           });
      };
@@ -117,6 +117,15 @@ function sendThreadToTrash(threadId, callback) {
 /* js function, using google api, to restore a thread (send the email back to the inbox), based on its threadId */
 function sendThreadBackToInbox(threadId, callback) {
      var request = gapi.client.gmail.users.threads.untrash({
+               'userId': USER,
+               'id': threadId
+          });
+     return request.execute(callback);
+}
+
+/* js function, using google api, to delete permanently a thread, based on its messageID */
+function deleteThreadPermanently(threadId, callback) {
+     var request = gapi.client.gmail.users.threads.delete({
                'userId': USER,
                'id': threadId
           });
@@ -435,7 +444,25 @@ function addActionsButtonsToMailRow(threadId)
 		  &nbsp;\
           <button type="button" class="inbox-buttons delete-button" id="delete-button-' + threadId + '">\
           <img id="delete-icon-' + threadId + '" src="img/delete.png" title="Delete"/>\
-          </button>');
+          </button>\
+		  &nbsp;\
+		  <button type="button" class="inbox-buttons restore-button hidden" id="restore-button-' + threadId + '">\
+          <img id="restore-icon-' + threadId + '" src="img/restore.png" title="Restore"/></button>\</td>\
+          </tr>');
+		  
+	if (trash)
+	{
+		 $('#asread-button-'+threadId).addClass("hidden");
+		 $('#delete-button-'+threadId).addClass("hidden");
+		 $('#restore-button-'+threadId).removeClass("hidden");
+	}
+	
+	if (sent)
+	{
+		 $('#asread-button-'+threadId).addClass("hidden");
+		 $('#delete-button-'+threadId).addClass("hidden");
+		 $('#restore-button-'+threadId).addClass("hidden");
+	}
 }
 
 function addLabelsToMailRow(threadId, labels)
@@ -475,12 +502,12 @@ function renderThreadRow(threadId, from, subject, date, labels)
 {
 
 	   $('#table-inbox > tbody').append(
-          '<tr class="email_item" id="row-' + threadId + '">\
+          '<tr class="email_item" id="' + threadId + '">\
           <td><div style="display:inline-block; width: 70px !important;" id="icons-' + threadId + '""/></td>\
           <td>' + from + '</td>\
           <td> <a id="thread-' + threadId + '">' + subject + '</a> </td>\
           <td style="width: 166px !important;"><div id="dateEmail">' + date + '</div></td>\
-		  <td id="actions-btn-' + threadId + '" style="display:inline-block; width: 70px !important;"></td>\
+		  <td id="actions-btn-' + threadId + '"></td>\
 		  </tr>'); 
 	
 	addActionsButtonsToMailRow(threadId);
