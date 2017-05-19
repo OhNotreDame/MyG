@@ -7,9 +7,18 @@
 	display: flex;
 }*/
 
-.table-hover>tbody>tr:hover
+.table-hover tbody tr:hover,
+.table-hover tbody tr:hover td,
+#email_item tr:hover, 
+#email_item td:hover
 {
-	background-color:#e6efff;
+	background-color:#e6efff !important;
+}
+
+.inbox-buttons
+{
+	border: 1px solid #ddd !important;
+ 	background-color: #fff !important; 
 }
 
 .labelSubject
@@ -65,4 +74,9 @@
 	color: #42C0FB;
 	font-size: 12px;
 	font-weight: bold;
+}
+
+.container80 {
+	min-width: 80% !important;		
+	width: 90% !important;		
 }

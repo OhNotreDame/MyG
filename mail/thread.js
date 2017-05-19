@@ -1,6 +1,7 @@
 /* On Window Load */
 window.onload = function () {
-    window.setTimeout(checkAuth, 1);
+   	$('#reply-message').summernote();
+	window.setTimeout(checkAuth, 1);
 	
 
 	document.getElementById("reply-close-button")

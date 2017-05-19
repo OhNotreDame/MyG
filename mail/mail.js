@@ -425,7 +425,71 @@ function prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessag
      $('#reply-thread-id').val(thread_id);
 }
 
+function addActionsButtonsToMailRow(threadId)
+{
+	//add 2 actions buttons: Mark as Read and Delete
+	 $('#actions-btn-'+threadId).append(
+		'<button type="button" style="display:none;" class="inbox-buttons asread-button" id="asread-button-' + threadId + '"> \
+			<img id="asread-icon-' + threadId+ '" src="img/markAsRead.png" title="Mark as read"/>\
+          </button>\
+		  &nbsp;\
+          <button type="button" class="inbox-buttons delete-button" id="delete-button-' + threadId + '">\
+          <img id="delete-icon-' + threadId + '" src="img/delete.png" title="Delete"/>\
+          </button>');
+}
+
+function addLabelsToMailRow(threadId, labels)
+{
+	 if (labels.includes("UNREAD")) {
+          var iconDivID = "#icons-" + threadId;
+          $(iconDivID).append("<img id='newIco' src='img/new.png' title='Unread'/>&nbsp;");
+
+          var buttonID = "#asread-button-" + threadId;
+          $(buttonID).toggle();
+     }
+
+     if (labels.includes("STARRED")) {
+          var iconDivID = "#icons-" + threadId;
+          $(iconDivID).append("<img id='starIco' src='img/star.png' title='Starred'/>&nbsp;");
+     }
+
+     if (labels.includes("IMPORTANT")) {
+          var iconDivID = "#icons-" + threadId;
+          $(iconDivID).append("<img id='importIco' src='img/important.png'  title='Important'/>&nbsp;");
+     }
+     if (labels.includes("CATEGORY_PERSONAL")) {
+          var iconDivID = "#icons-" + threadId;
+          $(iconDivID).append("<img id='promoIco' src='img/personal.png' title='Personal'/>&nbsp;");
+     }
+}
+
+function addAttachmentIcon(threadId, hasAttachment)
+{
+	if (hasAttachment)
+	{
+		
+	}	
+}
+
+function renderThreadRow(threadId, from, subject, date, labels)
+{
+
+	   $('#table-inbox > tbody').append(
+          '<tr class="email_item" id="row-' + threadId + '">\
+          <td><div style="display:inline-block; width: 70px !important;" id="icons-' + threadId + '""/></td>\
+          <td>' + from + '</td>\
+          <td> <a id="thread-' + threadId + '">' + subject + '</a> </td>\
+          <td style="width: 166px !important;"><div id="dateEmail">' + date + '</div></td>\
+		  <td id="actions-btn-' + threadId + '" style="display:inline-block; width: 70px !important;"></td>\
+		  </tr>'); 
+	
+	addActionsButtonsToMailRow(threadId);
+	addLabelsToMailRow(threadId, labels);
+}
+
+
 /* function to render a row with email info */
+/* still used by message.html */
 function renderMailRow(message) {
      var messageHeaders = message.payload.headers;
      var messageLabelIds = message.labelIds;
@@ -440,50 +504,19 @@ function renderMailRow(message) {
      var mailDate = new Date(mailDateString);
      var finalMailDate = mailDate.toLocaleString("en-GB");
 
-     /* '<tr class="email_item" id="row-' + message.id + '">\ */
-
      $('#table-inbox > tbody').append(
           '<tr class="email_item" id="row-' + message.threadId + '">\
           <td><div style="display:inline-block; width: 70px !important;" id="icons-' + message.id + '""/></td>\
           <td>' + from + '</td>\
           <td>\
-          <a id="thread-' + message.threadId + '">' +
-          getHeader(messageHeaders, 'Subject') +
+          <a id="thread-' + message.threadId + '">' + getHeader(messageHeaders, 'Subject') +
           '</a>\
           </td>\
           <td style="width: 166px !important;"><div id="dateEmail">' + finalMailDate + '</div></td>\
-          <td> <button type="button" style="display:none;" class="btn asread-button" id="asread-button-' + message.id + '"> \
-          <img id="asread-icon-' + message.id + '" src="img/markAsRead.png" title="Mark as read"/>\
-          </button>\</td>\
-          <td> <button type="button" class="btn delete-button" id="delete-button-' + message.id + '">\
-          <img id="delete-icon-' + message.id + '" src="img/delete.png" title="Delete"/>\
-          </button>\</td>\
-          <td> <button type="button" class="btn reply-button" id="reply-button-' + message.id + '">\
-          <img id="reply-icon-' + message.id + '" src="img/reply.png" title="Reply"/>\
-          </button>\</td>\
-          </tr>');
-
-     if (messageLabelIds.includes("UNREAD")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='newIco' src='img/new.png' title='Unread'/>&nbsp;");
-
-          var buttonID = "#asread-button-" + message.id;
-          $(buttonID).toggle();
-     }
-
-     if (messageLabelIds.includes("STARRED")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='starIco' src='img/star.png' title='Starred'/>&nbsp;");
-     }
-
-     if (messageLabelIds.includes("IMPORTANT")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='importIco' src='img/important.png'  title='Important'/>&nbsp;");
-     }
-     if (messageLabelIds.includes("CATEGORY_PERSONAL")) {
-          var iconDivID = "#icons-" + message.id;
-          $(iconDivID).append("<img id='promoIco' src='img/personal.png' title='Personal'/>&nbsp;");
-     }
+		  <td id="actions-btn-' + message.id + '"></td></tr>'); 
+		  
+		addActionsButtonsToMailRow(message.id);
+		addLabelsToMailRow(message.id, messageLabelIds);
 
      if (message.payload.parts) {
           getAttachments(message.id, message.payload.parts, function (filename, mimeType, attachment) {
@@ -499,7 +532,7 @@ function renderMailRow(message) {
                          $(emailAttachID).append("<img id='attachIco' src='img/paperclip.png' title='Has attachment'/>" + filename + "&nbsp;");
                     $(emailAttachID).toggle();
                }
-          });
+          }); 
      }
 }
 
@@ -514,7 +547,7 @@ function sendEmail() {
 
      // Mail itself
      var subject = $('#compose-subject').val();
-	 var message = $('#compose-message').val()
+	 var message = $('#compose-message').summernote('code');
 	 
      sendMessage('', {
           'To': to,
@@ -548,7 +581,7 @@ function sendReply() {
 
      // Mail itself
      var subject = $('#reply-subject').val();
-     var reply = $('#reply-message').val();
+	 var reply = $('#reply-message').summernote('code');
 
      // Quote
      var quoteHeader = $('#original-message-header').text();

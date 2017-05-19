@@ -2,19 +2,15 @@
 window.onload = function () {
    	prepareGlobalNavBar();
     prepareToolNavBar('mail');
-	
+	$('#compose-message').summernote();
+	 
 	window.setTimeout(checkAuth, 1);
 
+	document.getElementById("send-button")
+     .addEventListener("click", sendEmail, false);
+	
 	document.getElementById("send-close-button")
      .addEventListener("click", clearAndCloseComposeModal, false);
-	
-	document.getElementById("reply-close-button")
-     .addEventListener("click", clearAndCloseReplyModal, false);
-	 
-     document.getElementById("send-button")
-     .addEventListener("click", sendEmail, false);
-     document.getElementById("reply-button")
-     .addEventListener("click", sendReply, false);
 }
 
 /* Load Gmail API, and when it's done, call renderInbox */
@@ -35,33 +31,31 @@ function renderInbox() {
 	{
 		switch(splitLoc[1]) {
 			case 'updates':
-				listThreads('INBOX', 'label:Updates after:'+getLast30DaysDate(), 50, addThreadToInbox);
-				//$('#labelUpdates').removeClass('hidden');
+				listThreads('INBOX', 'label:Updates after:'+getLast30DaysDate(), 50, addThreadToInbox);				
+				$("a.mail-updatesNav").addClass("CurrentPage");
 				break;			
 			case 'social':
 				listThreads('INBOX', 'label:Social after:'+getLast30DaysDate(), 50, addThreadToInbox);
-				//$('#labelSocial').removeClass('hidden');
+				$("a.mail-socialNav").addClass("CurrentPage");
 				break;
 			case 'promotions':
 				listThreads('INBOX', 'label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
-				//$('#labelPromo').removeClass('hidden');
+				$("a.mail-promoNav").addClass("CurrentPage");
 				break;
 			case 'forums':
 				listThreads('INBOX', 'label:Forums after:'+getLast30DaysDate(), 50, addThreadToInbox);
-				//$('#labelForums').removeClass('hidden');
+				$("a.mail-forumNav").addClass("CurrentPage");
 				break;
 			default:
 				listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
-				//$('#labelPersonal').removeClass('hidden');
-				//$('#labelImportant').removeClass('hidden');
+				$("a.mail-inboxNav").addClass("CurrentPage");
 				break;
 		}
 	}
 	else
 	{
 		listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
-		//$('#labelPersonal').removeClass('hidden');
-		//$('#labelImportant').removeClass('hidden');
+		$("a.mail-inboxNav").addClass("CurrentPage");
 	}	
 }
 
@@ -74,84 +68,63 @@ function getLast30DaysDate() {
 }
 
 function addThreadToInbox(thread) {
-
+	
 	var firstMsgOfThread = getFirstMessageOfThread(thread);
-	//var lastMsgOfThread = getLastMessageOfThread(thread);
-	var threadHeaders = firstMsgOfThread.payload.headers;
-	var threadLabels = firstMsgOfThread.labelIds;
-	var threadParts = firstMsgOfThread.payload.part;
+	var lastMsgOfThread = getLastMessageOfThread(thread);
+	var firstMsgOfThreadHeaders = firstMsgOfThread.payload.headers;
+	var lastMsgOfThreadHeaders = lastMsgOfThread.payload.headers;
 
-	 /* Append Message to table #table-inbox */
-     renderMailRow(firstMsgOfThread);
-
-     /* Extract ReplyTo value and parse it */
-     // Option 1: Display Name <EmailAddress@MyDomain.com>
-     // Option 2: EmailAddress@MyDomain.com
-     var orig_reply_to = (getHeader(threadHeaders, 'Reply-to') !== '' ?
-          getHeader(threadHeaders, 'Reply-to') :
-          getHeader(threadHeaders, 'From')).replace(/"/g, '&quot;');
-
-		var reply_to = (getHeader(threadHeaders, 'Reply-to') !== '' ?
-          getHeader(threadHeaders, 'Reply-to') :
-          getHeader(threadHeaders, 'From')).replace(/"/g, '&quot;');
-		  
-     // If necessary, extract Email Address from <EmailAddress@MyDomain.com>, escaping "<" and ">"
-     var tmp_reply_to = reply_to.match("<(.*)>");
-     if (tmp_reply_to) {
-          reply_to = tmp_reply_to[1];
+	 // Sender of the First Message of the thread to display
+	 var from = getHeader(firstMsgOfThreadHeaders, 'From');
+     var tmp_from = from.match("<(.*)>");
+     if (tmp_from) {
+          from = tmp_from[1];
      }
-
-	 /* Extract Subject value and parse it */
-     var subject = getHeader(threadHeaders, 'Subject');
-     var substring = "Re: ";
-     var reply_subject = subject;
+	 
+	 // Subject of the first message of the thread to display
+	 var subject =  getHeader(firstMsgOfThreadHeaders, 'Subject');
 	
-	/*
-     if (subject.indexOf(substring) !== -1) {
-          reply_subject = subject.replace(/\"/g, '&quot;');
-     } else {
-          reply_subject = 'Re: ' + subject.replace(/\"/g, '&quot;');
+	 // Date of Last message of the thread to display
+	 var mailDateString = getHeader(lastMsgOfThreadHeaders, 'Date');
+     var mailDate = new Date(mailDateString);
+     var date = mailDate.toLocaleString("en-GB");
+	
+	 // Labels of the first message of the thread to display
+	 var labels = firstMsgOfThread.labelIds;
+	 
+	 /* Render Thread Row */
+	 renderThreadRow(thread.id, from, subject, date, labels)
+	 
+	 // Has Attachment
+	 if (firstMsgOfThread.payload.parts) {
+          getAttachments(firstMsgOfThread.id, firstMsgOfThread.payload.parts, function (filename, mimeType, attachment) {
+			   if ((mimeType) && ($("#icons-" + thread.id).has('#attachIco').length <= 0)) {
+					$("#icons-" + thread.id).append("<img id='attachIco' src='img/paperclip.png' title='Has attachment'/>&nbsp;");
+				}               
+          }); 
      }
-	 */
 	
-     /* Add js event handler on Email Subject */
+     /* Add js event handler on Thread Subject Link*/
      $('#thread-' + thread.id).on('click', function () {
-         var threadDetailURL="thread.html?threadId="+thread.id;
+         console.log('click');
+		 var threadDetailURL="thread.html?threadId="+thread.id;
 		 console.log(threadDetailURL);
 		 document.location.href=threadDetailURL;
      });
 
-     /* Add js event handler on Delete Main Button */
-     $('#delete-button-' + firstMsgOfThread.id).on('click', function () {
-         sendThreadToTrash(firstMsgOfThread.id, null);
-         $('#delete-button-' + firstMsgOfThread.id).hide();
-		 $('#row-' +  firstMsgOfThread.id).hide();
+     /* Add js event handler on "Delete (thread)" Button */
+     $('#delete-button-' + thread.id).on('click', function () {
+         sendThreadToTrash(thread.id, null);
+         $('#delete-button-' + thread.id).hide();
+		 $('#row-' +  thread.id).hide();
      });
 
-     /*  Add js event handler on Delete Main Button */
-     $('#asread-button-' + firstMsgOfThread.id).on('click', function () {
-           markThreadAsRead(firstMsgOfThread.id, null);
-			$('#asread-button-' + firstMsgOfThread.id).hide();
+     /*  Add js event handler on "Mark (thread) as Read" Button */
+     $('#asread-button-' + thread.id).on('click', function () {
+           markThreadAsRead(thread.id, null);
+			$('#asread-button-' + thread.id).hide();
      });
 
-     /* Add js event handler on Reply Main Button */
-     $('#reply-button-' + thread.id).on('click', function () {
-		
-		
-		console.log("reply-button: " + orig_reply_to);
-		var mailDateString = getHeader(threadHeaders, 'Date');
-		var mailDate = new Date(mailDateString);
-		var options = {weekday: "short", year: "numeric", month: "numeric", day: "numeric" , hour: "numeric" , minute: "numeric"};
-		var finalMailDate = mailDate.toLocaleString("en-GB", options);
-
-		//var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
-		var quoteHeader = "On " + finalMailDate + ", "+  reply_to + " wrote:";
-		var quoteMessage = getBody(firstMsgOfThread.payload);
-
-		 //prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)
-          prepareAndOpenReplyModal(reply_to, '', '', reply_subject, quoteHeader, quoteMessage , firstMsgOfThread.id, thread.id);
-     });
-	 
 	 /* Reinforce sort */
      $('#table-inbox').tablesorter({
           dateFormat: "uk",
