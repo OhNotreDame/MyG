@@ -226,8 +226,16 @@ function uploadFile()
     if (file) {
         // create reader
         var reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = function(e) {
+        /*
+		reader.readAsText(file);
+        reader.onload = function(e) {			
+			createFile(e.target.result, file.name, file.type, parentId, getCallResultAndShowMessage) 
+			clearAndCloseUploadFileModal();
+        };
+		*/
+		//reader.readAsArrayBuffer(file);
+		reader.readAsDataURL(file);
+        reader.onloadend  = function(e) {			
 			createFile(e.target.result, file.name, file.type, parentId, getCallResultAndShowMessage) 
 			clearAndCloseUploadFileModal();
         };
