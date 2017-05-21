@@ -36,11 +36,11 @@ function renderFiles() {
      if (splitLoc.length == 2 && splitLoc[1]) {
           switch (splitLoc[1]) {
           case 'root':
-               retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', 'folder, name', addFileToTable);
-			   getFolderMetatadata('root');
+				retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', 'name', addFileToTable);
+				getFolderMetatadata('root');
                break;
           default:
-               retrieveAllFiles("'" + splitLoc[1] + "' in parents and trashed=false", 'user', 'drive', 'folder, name', addFileToTable);
+               retrieveAllFiles("'" + splitLoc[1] + "' in parents and trashed=false", 'user', 'drive', 'name', addFileToTable);
 			   getFolderMetatadata(splitLoc[1]);
                break;
           }
@@ -52,11 +52,10 @@ function renderFiles() {
 	/**
 		retrieveAllFiles ... query examples
 		retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', null, addFileToTable); <=> return all pdf fukes and add them to the table
-		retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null, addFileToTable), addFileToTable; <=> return all folders  and add them to the table
+		retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null, addFileToTable), addFileToTable; <=> return all folders  and add them to the table
 		retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable); <=> return all root folders (not in trash)  and add them to the table
 		retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable);
 	*/
-	
 }
 
 /* addFileToTable() */
@@ -64,13 +63,18 @@ function addFileToTable(file) {
 	
 	//'fields': "id, name, mimeType, modifiedByMeTime, starred, shared"
 	
+	var isFolder = 0;
+	
+	if (file.mimeType == 'application/vnd.google-apps.folder'){isFolder = 1}
+
 	 var dateString = file.modifiedTime;
      var date = new Date(dateString);
      var finalDate = date.toLocaleString("en-GB");
 	
 	
      $('#table-files > tbody').append(
-          '<tr class="file_item" id="row-' + file.id + '">\
+          '<tr class="file_item" id="' + file.id + '">\
+          <td><span id="isFolder-' + file.id + '" class="hidden" >'+isFolder+'</span></td>\
           <td><div id="fileIcons-' + file.id + '"></div></td>\
           <td><div id="fileTypeIcon-' + file.id + '"> <a id="file-' + file.id + '">' + file.name + '</a></td>\
           <td>' + finalDate + '</td>\
@@ -204,7 +208,7 @@ function addFileToTable(file) {
 	
      /* Reinforce sort */
      $('#table-files').tablesorter({
-          sortList: [[1, 0]]
+          sortList: [[0, 1],[1, 0]]
      });
 }
 
