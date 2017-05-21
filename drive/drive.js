@@ -78,6 +78,15 @@ function getFile(fileId, callback) {
      });
 }
 
+function getParentFolderName(fileId, callback) {
+     var request = gapi.client.drive.files.get({
+               'fileId': fileId
+          });
+     request.execute(function (resp) {
+          callback(resp);
+     });
+}
+
 function getFolderMetatadata(fileId) {
      var request = gapi.client.drive.files.get({
                'fileId': fileId,
@@ -189,97 +198,141 @@ function exportFile(fileId, fileName, mimeType, fileExtension) {
 
 
 
-/** Create an empty file with the right name and mimeType, then call uploadFileContent (fileId) **/
+/** Create an empty file with the right name and mimeType, then call uploadFileContent() **/
 function createFile(file, fileName, mimeType, parentId, callback) {
-     var fileMetadata = {
-          'name': fileName,
-          'parents': [parentId],
-          'mimeType': mimeType
-     };
+    
+	var fileMetadata = {
+		'name': fileName,
+		'parents': [parentId],
+		'mimeType': mimeType
+	};
 
-     var request = gapi.client.drive.files.create({
-               'resource': fileMetadata
-          });
-     request.execute(function (resp) {
-          uploadFileContent(resp.id, file, fileName, mimeType, callback);
-     });
-}
-
-
-
-function createFileOrUpload( file, fileName, mimeType, parentId, callback) {
-
-     var fileMetadata = {
-          'name': fileName,
-          'parents': [parentId],
-          'mimeType': mimeType
-     };
-
-    const boundary = '-------314159265358979323846';
-	const CRLF = "\r\n";
-    const delimiter = "\r\n--" + boundary + "\r\n";
-    const close_delim = "\r\n--" + boundary + "--";
-
-     // prepare fileUploadURL (using googleapis domain)
-     var fileUploadURL = "https://content.googleapis.com/upload/drive/v3/files?uploadType=multipart";
-
-     // get gapi authentication token
-     var accessToken = gapi.auth.getToken().access_token;
-
-     // build XMLHttpRequest
-     var xhr = new XMLHttpRequest();
-     xhr.open('POST', fileUploadURL);
-     xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // to ensure authentication during file download
-     xhr.setRequestHeader("Content-Type", "multipart/related; boundary=" + boundary);
-     //xhr.responseType = "arraybuffer"; // to ensure that any file are properly created
-
-	  var multipartRequestBody =
-          delimiter +
-          'Content-Type: application/json' + CRLF + CRLF +
-          JSON.stringify(fileMetadata) +
-          delimiter +
-          'Content-Type: ' + mimeType + CRLF +
-          'Content-Transfer-Encoding: base64' + CRLF +
-          JSON.stringify(file) +
-          close_delim;
-
-	 //console.log(multipartRequestBody);
-	 xhr.send(multipartRequestBody)
-	  
-     xhr.onload = function () {
-          
-		  
-		 if (xhr.status === 200) 
-		 {
-               displaySuccess("", "Upload of " + fileName + "completed.");
-          }
-		  else
-		  {
-			  displayInfo("", "Upload of " + fileName + " on going.");
-		  }
-     };
-
-     xhr.onerror = function () {
-          displayError("", "Upload of " + fileName + " failed.");
-     };
-	 
+	var request = gapi.client.drive.files.create({
+	   'resource': fileMetadata
+	});
+	request.execute(function (resp) {
+		uploadFileContent(resp.id, file, fileName, mimeType, parentId, callback);
+	});
+	
 
 }
 
-/** A terminer **/	 
-function uploadFileContent(fileId, file, fileName, mimeType, callback) {
+/** uploadFileContent() **/
+function uploadFileContent(fileId, file, fileName, mimeType, parentId, callback) {
 
-     var request = gapi.client.request({
-               path: '/upload/drive/v3/files/' + fileId,
-               method: 'PATCH',
-               params: {
-                    mimeType: mimeType,
-                    uploadType: 'media'
-               },
-               body: JSON.stringify(file)
-          });
+	console.log("uploadFileContent");
+	// define separators for XMLHttpRequest
+	var boudaryId = "wc9702vjjvaw";
+    var boundary = '--';
+	var CRLF = "\r\n";
+	
+	// prepare file metadata
+	var fileMetadata = {
+		'name': fileName,
+		'mimeType': mimeType,
+		'parents': [ {"id": parentId } ]
+	};
+	console.log(fileMetadata);
 
-     request.execute(function (resp) {
-          callback(resp);
-     });
+	// prepare file content
+	var fileContent = file.split(",")[1];
+
+	// prepare query URL
+	var fileUploadURL = "https://content.googleapis.com/upload/drive/v3/files/"+fileId+"?uploadType=multipart&addParents="+parentId;
+	console.log(fileUploadURL);
+	
+	// get gapi authentication token
+	var accessToken = gapi.auth.getToken().access_token;
+
+	// build XMLHttpRequest
+	var xhr = new XMLHttpRequest();
+	xhr.open('PATCH', fileUploadURL);
+	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // to ensure authentication during file download
+	xhr.setRequestHeader("Content-Type", "multipart/related; boundary=" + boudaryId);
+
+	// prepare XMLHttpRequest Body
+	var multipartRequestBody =
+			boundary + boudaryId +  CRLF +
+			'content-type: application/json; charset=UTF-8' + CRLF + CRLF +
+			JSON.stringify(fileMetadata) + CRLF +
+			boundary + boudaryId + CRLF +
+			'Content-Type: ' + mimeType + CRLF +
+			'Content-Transfer-Encoding: base64' + CRLF + CRLF +
+			fileContent + CRLF +
+			boundary + boudaryId + "--";
+
+	xhr.send(multipartRequestBody) 
+	xhr.onload = function () {
+		if (xhr.status === 200){
+			displaySuccess("", "Upload of " + fileName + "completed.");
+		}
+		else {
+			displayInfo("", "Upload of " + fileName + " on going.");
+		}
+	};
+
+	xhr.onerror = function () {
+		displayError("", "Upload of " + fileName + " failed.");
+	};
+}
+
+
+function uploadToRoot(file, fileName, mimeType, parentId, callback) {
+
+	// define separators for XMLHttpRequest
+	var boudaryId = "wc9702vjjvaw";
+    var boundary = '--';
+	var CRLF = "\r\n";
+	
+	var parents = {"id": parentId };
+	
+	// prepare file metadata
+	var fileMetadata = {
+		'name': fileName,
+		'mimeType': mimeType,
+		'parents': [parents]
+	};
+	console.log(fileMetadata);
+
+	// prepare file content
+	var fileContent = file.split(",")[1];
+
+	// prepare fileUploadURL (using googleapis domain)
+	var fileUploadURL = "https://content.googleapis.com/upload/drive/v3/files?uploadType=multipart";
+
+	// get gapi authentication token
+	var accessToken = gapi.auth.getToken().access_token;
+
+	// build XMLHttpRequest
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', fileUploadURL);
+	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // to ensure authentication during file download
+	xhr.setRequestHeader("Content-Type", "multipart/related; boundary=" + boudaryId);
+
+	// prepare XMLHttpRequest Body
+	var multipartRequestBody =
+			boundary + boudaryId +  CRLF +
+			'content-type: application/json; charset=UTF-8' + CRLF + CRLF +
+			JSON.stringify(fileMetadata) + CRLF +
+			boundary + boudaryId + CRLF +
+			'Content-Type: ' + mimeType + CRLF +
+			'Content-Transfer-Encoding: base64' + CRLF + CRLF +
+			fileContent + CRLF +
+			boundary + boudaryId + "--";
+
+	xhr.send(multipartRequestBody) 
+	xhr.onload = function () {
+		if (xhr.status === 200){	
+			var resp = JSON.parse(xhr.response);
+			//moveFile(resp.id, parentId);
+			displaySuccess("", "Upload of " + fileName + "completed.");
+		}
+		else {
+			displayInfo("", "Upload of " + fileName + " on going.");
+		}
+	};
+
+	xhr.onerror = function () {
+		displayError("", "Upload of " + fileName + " failed.");
+	};
 }

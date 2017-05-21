@@ -49,13 +49,14 @@ function renderFiles() {
 			getFolderMetatadata('root');
      }
 
-	 /**
+	/**
 		retrieveAllFiles ... query examples
 		retrieveAllFiles("mimeType = 'application/pdf'", 'user', 'drive', null, addFileToTable); <=> return all pdf fukes and add them to the table
 		retrieveAllFiles""mimeType = 'application/vnd.google-apps.folder'", 'user', 'drive', null, addFileToTable), addFileToTable; <=> return all folders  and add them to the table
 		retrieveAllFiles("mimeType = 'application/vnd.google-apps.folder' and 'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable); <=> return all root folders (not in trash)  and add them to the table
 		retrieveAllFiles("'root' in parents and trashed=false", 'user', 'drive', null, addFileToTable);
 	*/
+	
 }
 
 /* addFileToTable() */
@@ -200,7 +201,7 @@ function addFileToTable(file) {
 			   }
           }
      });
-
+	
      /* Reinforce sort */
      $('#table-files').tablesorter({
           sortList: [[1, 0]]
@@ -216,7 +217,7 @@ function goToParentFolder()
     document.location.href = redirectToURL;
 }
 
-/** A TERMINER **/
+/* uploadFile() */
 function uploadFile()
 {
 	$('#uploadFile-upload-button').addClass('disabled');
@@ -224,20 +225,13 @@ function uploadFile()
 
 	var file = document.getElementById('uploadFile-file').files[0];
     if (file) {
-        // create reader
+        // create FileReader
         var reader = new FileReader();
-        /*
-		reader.readAsText(file);
-        reader.onload = function(e) {			
-			createFile(e.target.result, file.name, file.type, parentId, getCallResultAndShowMessage) 
-			clearAndCloseUploadFileModal();
-        };
-		*/
-		//reader.readAsArrayBuffer(file);
 		reader.readAsDataURL(file);
         reader.onloadend  = function(e) {			
+			//when reader is fully loaded, call createFile()
 			createFile(e.target.result, file.name, file.type, parentId, getCallResultAndShowMessage) 
-			clearAndCloseUploadFileModal();
+			clearAndCloseUploadFileModal();			
         };
     }
 }
@@ -260,7 +254,6 @@ function clearAndCloseNewFolderModal()
 	$('#newFolder-create-button').removeClass('disabled');
     $('#newFolder-folderName').val('');
 }
-
 
 function clearAndCloseUploadFileModal()
 {
