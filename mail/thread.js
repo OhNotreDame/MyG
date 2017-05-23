@@ -50,16 +50,12 @@ function addMessageToThreadDisplay(thread) {
 			<button type="button" class="btn delete-button" id="delete-button">\
 				<img id="delete-icon-' + thread.id + '" src="img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
 			</button>');
-		
-	
-		
-    renderThreadIcons(threadLabels);
-	 if (threadLabels.includes("UNREAD")) {
-		$('#asread-button-' + thread.id).show();
-	 }
 
-	
-	
+	renderThreadIcons(threadLabels);
+	if (threadLabels.includes("UNREAD")) {
+		$('#asread-button-' + thread.id).show();
+	}
+
 	var messageCount = thread.messages.length;
 	console.log(messageCount);
 	for (var i = 0; i < messageCount; i++) 
@@ -142,8 +138,6 @@ function addMessageToThreadDisplay(thread) {
 			var fromContact = createContact(getHeader(replyMsgHeaders, 'From')) ;
 			var toContact = createContact(getHeader(replyMsgHeaders, 'To')) ;
 			var ccContact = createContact(getHeader(replyMsgHeaders, 'CC')) ;
-
-			
 			
 			/* Extract Subject value and parse it */
 			 var subject = getHeader(replyMsgHeaders, 'Subject');
@@ -164,36 +158,6 @@ function addMessageToThreadDisplay(thread) {
 			//prepareAndOpenReplyModal( fromContact.emailAddress, '', '', reply_subject, quoteHeader, quoteMessage , message.id, thread.id);
 			prepareAndOpenReplyModal( fromContact.emailAddress, '', '', reply_subject, quoteHeader, quoteMessage , message.id, thread.id);
 		});
-		
-		
-		
-
-		/* Add js event handler on Reply Main Button */
-		// $('#replyall-button-' + message.id).on('click', function () {
-			// console.log('#replyall-button-' + message.id);
-			// console.log("message.id: " + message.id);
-			// console.log("thread.id: " + thread.id);
-			
-			
-			// /* Extract Subject value and parse it */
-			 // var subject = getHeader(threadHeaders, 'Subject');
-			 // var substring = "Re: ";
-			 // var reply_subject = subject;
-			 
-			// //console.log("reply-button: " + orig_reply_to);
-			// var mailDateString = getHeader(msgHeader, 'Date');
-			// var mailDate = new Date(mailDateString);
-			// var options = {weekday: "short", year: "numeric", month: "numeric", day: "numeric" , hour: "numeric" , minute: "numeric"};
-			// var finalMailDate = mailDate.toLocaleString("en-GB", options);
-
-			// //var quoteHeader = "On " + finalMailDate + ", &lt;"+  reply_to + "&gt; wrote:";
-			// var quoteHeader = "<br/> On " + finalMailDate + ", "+  fromContact.emailAddress + " wrote:";
-			// var quoteMessage = getBody(message.payload);
-
-			// //prepareAndOpenReplyModal(to, cc, cci, subject, quoteHeader, quoteMessage ,message_id, thread_id)
-			// prepareAndOpenReplyModal( fromContact.emailAddress, ccContact.emailAddress, '', reply_subject, quoteHeader, quoteMessage , message.id, thread.id);
-		// });	
-			
 			
 	}
 	

@@ -86,74 +86,70 @@ function getLast30DaysDate() {
 }
 
 function addThreadToInbox(thread) {
-	
+
 	var firstMsgOfThread = getFirstMessageOfThread(thread);
 	var lastMsgOfThread = getLastMessageOfThread(thread);
 	var firstMsgOfThreadHeaders = firstMsgOfThread.payload.headers;
 	var lastMsgOfThreadHeaders = lastMsgOfThread.payload.headers;
 
-	 // Sender of the First Message of the thread to display
-	 var from = getHeader(firstMsgOfThreadHeaders, 'From');
-     var tmp_from = from.match("<(.*)>");
-     if (tmp_from) {
-          from = tmp_from[1];
-     }
-	 
 	 // Subject of the first message of the thread to display
 	 var subject =  getHeader(firstMsgOfThreadHeaders, 'Subject');
 	
+	 // Sender of the Last Message of the thread to display
+	 var fromContact = createContact(getHeader(lastMsgOfThreadHeaders, 'From')) ;
+	 
 	 // Date of Last message of the thread to display
 	 var mailDateString = getHeader(lastMsgOfThreadHeaders, 'Date');
-     var mailDate = new Date(mailDateString);
-     var date = mailDate.toLocaleString("en-GB");
+	 var mailDate = new Date(mailDateString);
+	 var date = mailDate.toLocaleString("en-GB");
 	
 	 // Labels of the first message of the thread to display
 	 var labels = firstMsgOfThread.labelIds;
 	 
 	 /* Render Thread Row */
-	 renderThreadRow(thread.id, from, subject, date, labels)
+	 renderThreadRow(thread.id, fromContact.fullName, subject, date, labels)
 	 
 	 // Has Attachment
 	 if (firstMsgOfThread.payload.parts) {
-          getAttachments(firstMsgOfThread.id, firstMsgOfThread.payload.parts, function (filename, mimeType, attachment) {
+		  getAttachments(firstMsgOfThread.id, firstMsgOfThread.payload.parts, function (filename, mimeType, attachment) {
 			   if ((mimeType) && ($("#icons-" + thread.id).has('#attachIco').length <= 0)) {
 					$("#icons-" + thread.id).append("<img id='attachIco' src='img/paperclip.png' title='Has attachment'/>&nbsp;");
 				}               
-          }); 
-     }
+		  }); 
+	 }
 	
-     /* Add js event handler on Thread Subject Link*/
-     $('#thread-' + thread.id).on('click', function () {
-         console.log('click');
+	 /* Add js event handler on Thread Subject Link*/
+	 $('#thread-' + thread.id).on('click', function () {
+		 console.log('click');
 		 var threadDetailURL="thread.html?threadId="+thread.id;
 		 console.log(threadDetailURL);
 		 document.location.href=threadDetailURL;
-     });
+	 });
 
-     /* Add js event handler on "Delete (thread)" Button */
-     $('#delete-button-' + thread.id).on('click', function () {
-         sendThreadToTrash(thread.id, getCallResultAndShowMessage);
-         $('#delete-button-' + thread.id).hide();
+	 /* Add js event handler on "Delete (thread)" Button */
+	 $('#delete-button-' + thread.id).on('click', function () {
+		 sendThreadToTrash(thread.id, getCallResultAndShowMessage);
+		 $('#delete-button-' + thread.id).hide();
 		 $('#' +  thread.id).hide();
-     });
+	 });
 
-     /*  Add js event handler on "Mark (thread) as Read" Button */
-     $('#asread-button-' + thread.id).on('click', function () {
+	 /*  Add js event handler on "Mark (thread) as Read" Button */
+	 $('#asread-button-' + thread.id).on('click', function () {
 			markThreadAsRead(thread.id, getCallResultAndShowMessage);
 			$('#asread-button-' + thread.id).hide();
-     });
+	 });
 	 
 	  /* js event handler on Restore Button */
-     $('#restore-button-' + thread.id).on('click', function () {
-          sendThreadBackToInbox(thread.id, getCallResultAndShowMessage);
-          $('#' + thread.id).hide();
-     });
+	 $('#restore-button-' + thread.id).on('click', function () {
+		  sendThreadBackToInbox(thread.id, getCallResultAndShowMessage);
+		  $('#' + thread.id).hide();
+	 });
 
 	 /* Reinforce sort */
-     $('#table-inbox').tablesorter({
-          dateFormat: "uk",
-          sortList: [[3, 1]]
-     });
+	 $('#table-inbox').tablesorter({
+		  dateFormat: "uk",
+		  sortList: [[3, 1]]
+	 });
 }
 
 
