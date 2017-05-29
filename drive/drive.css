@@ -26,3 +26,8 @@ iframe
 {
 	font-weight: bold;
 }
+
+.container80 {
+	min-width: 80% !important;		
+	width: 90% !important;		
+}

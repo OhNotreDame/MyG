@@ -38,3 +38,8 @@ button.task-button
 	border-color: #ddd !important;	
 	background-color: #fff !important;	
 }
+
+.container80 {
+	min-width: 80% !important;		
+	width: 90% !important;		
+}
