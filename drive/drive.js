@@ -123,8 +123,8 @@ function downloadFile(fileId, fileName, fileType) {
      // prepare fileDownloadUrl (using googleapis domain)
      var fileDownloadUrl = "https://www.googleapis.com/drive/v3/files/" + fileId + "?alt=media"
 
-          // get gapi authentication token
-          var accessToken = gapi.auth.getToken().access_token;
+	  // get gapi authentication token
+	  var accessToken = gapi.auth.getToken().access_token;
 
      // build XMLHttpRequest
      var xhr = new XMLHttpRequest();
