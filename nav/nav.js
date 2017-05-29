@@ -50,6 +50,9 @@ function prepareToolNavBar(toolName)
 					<a href="/mail/inbox.html?forums" class="mail-forumNav"><img id="forumNavIco" src="/nav/mail/forums.png" title="Forums"/>&nbsp;Forums</a>\
 				</li>\
 				<li>\
+					<a href="/mail/inbox.html?search" class="mail-searchNav"><img id="searchNavIco" src="/nav/mail/search.png" title="Search"/>&nbsp;Search</a>\
+				</li>\
+				<li>\
 					<a href="/mail/inbox.html?sent" class="mail-sentNav"><img id="sentNavIco" src="/nav/mail/sent.png" title="Sent"/>&nbsp;Sent</a>\
 				</li>\
 				<li>\

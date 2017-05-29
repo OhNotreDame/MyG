@@ -64,7 +64,7 @@ a.settingsNav {
 /**
 	Mail Navigation
 **/	
-a.mail-inboxNav {	
+a.mail-inboxNav, a.mail-searchNav {	
 	color: #333 !important;
 	font-weight: bold;
 	font-size: 14px;

@@ -17,6 +17,8 @@ window.onload = function () {
     document.getElementById("emptyTrash-button")
      .addEventListener("click", emptyTrash, false);	
 	 
+	document.getElementById("search-button")
+     .addEventListener("click", searchMail, false);	
 }
 
 /* Load Gmail API, and when it's done, call renderInbox */
@@ -63,6 +65,13 @@ function renderInbox() {
 				$("a.mail-trashNav").addClass("CurrentPage");
 				$("#compose-button").addClass("hidden");
 				$("#emptyTrash-button").removeClass("hidden");
+				break;
+			case 'search':
+				$("a.mail-searchhNav").addClass("CurrentPage");
+				$("#compose-button").addClass("hidden");
+				$("#emptyTrash-button").addClass("hidden");
+				$("#search-box").removeClass("hidden");
+				$("#search-button").removeClass("hidden");
 				break;
 			default:
 				listThreads('INBOX', '!label:CHAT !label:Social !label:Updates !label:Promotions after:'+getLast30DaysDate(), 50, addThreadToInbox);
@@ -163,4 +172,12 @@ function emptyTrash() {
 		}
 	});
 	window.setTimeout(location.reload(), 2000);
+}
+
+
+function searchMail()
+{
+	var customQuery = $('#search-box').val();
+	listThreads(null, customQuery , 50, addThreadToInbox);
+	
 }
