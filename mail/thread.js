@@ -44,18 +44,61 @@ function addMessageToThreadDisplay(thread) {
 	$('#threadSubject').text(getHeader(threadHeaders, 'Subject'));
 	$('#threadInfo').show();
 	$('#threadActions').append(
-			'<button type="button" style="display:none;" class="btn asread-button" id="asread-button"> \
-				<img id="asread-icon-' + thread.id + '" src="img/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
+			'<button type="button" style="display:none;" class="btn archive-button" id="archive-button"> \
+				<img id="archive-icon" src="img/archive.png" title="Archive"/> &nbsp; Archive &nbsp; \
+			</button> &nbsp; \
+			<button type="button" style="display:none;" class="btn backInbox-button" id="backInbox-button"> \
+				<img id="backInbox-icon" src="img/inbox.png" title="Move to Inbox"/> &nbsp; Move to Inbox &nbsp; \
+			</button> &nbsp; \
+			<button type="button" style="display:none;" class="btn star-button" id="star-button"> \
+				<img id="star-icon" src="img/star.png" title="Star"/> &nbsp; Star &nbsp; \
+			</button> &nbsp; \
+			<button type="button" style="display:none;" class="btn unstar-button" id="unstar-button"> \
+				<img id="unstar-icon" src="img/unstar.png" title="Star"/> &nbsp; Unstar &nbsp; \
+			</button> &nbsp; \
+			<button type="button" style="display:none;" class="btn asunread-button" id="asunread-button"> \
+				<img id="asunread-icon" src="img/markAsRead.png" title="Mark as unread"/> &nbsp; Mark as unread &nbsp; \
+			</button> &nbsp; \
+			<button type="button" style="display:none;" class="btn asread-button" id="asread-button"> \
+				<img id="asread-icon" src="img/markAsRead.png" title="Mark as read"/> &nbsp; Mark as read &nbsp; \
 			</button> &nbsp; \
 			<button type="button" class="btn delete-button" id="delete-button">\
-				<img id="delete-icon-' + thread.id + '" src="img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
+				<img id="delete-icon" src="img/delete.png" title="Delete"/>&nbsp; Delete &nbsp;\
 			</button>');
 
 	renderThreadIcons(threadLabels);
+	
 	if (threadLabels.includes("UNREAD")) {
-		$('#asread-button-' + thread.id).show();
+		$('#asread-button').show();
+		$('#asunread-button').hide();
 	}
-
+	else
+	{
+		$('#asread-button').hide();
+		$('#asunread-button').show();
+	}
+	
+	if (threadLabels.includes("STARRED")) {
+		$('#star-button').hide();
+		$('#unstar-button').show();
+	}
+	else
+	{
+		$('#star-button').show();
+		$('#unstar-button').hide();
+	}
+	
+	
+	if (threadLabels.includes("INBOX")) {
+		$('#backInbox-button').hide();
+		$('#archive-button').show();
+	}
+	else
+	{
+		$('#backInbox-button').show();
+		$('#archive-button').hide();
+	}
+	
 	var messageCount = thread.messages.length;
 	console.log(messageCount);
 	for (var i = 0; i < messageCount; i++) 
@@ -166,15 +209,54 @@ function addMessageToThreadDisplay(thread) {
 	$(lastMsgToShow).addClass("collapse in");
 
 
-	/*  Add js event handler on Delete Main Button */
+	/*  Add js event handler on 'Mark as Read' Button */
 	$('#asread-button').on('click', function () {
 		markThreadAsRead(thread.id, null);
-		$('#asread-button-' + thread.id).hide();
+		$('#asread-button').hide();
+		$('#asunread-button').show();
 		$('#threadUnread').addClass('hidden');
 		$('#threadUnread').hide();
 	});
 
-	/* Add js event handler on Delete Main Button */
+	/*  Add js event handler on 'Mark as Unead' Button */
+	$('#asunread-button').on('click', function () {
+		markThreadAsUnread(thread.id, null);
+		$('#asread-button').show();
+		$('#asunread-button').hide();
+		$('#threadUnread').remove('hidden');
+		$('#threadUnread').show();
+	});
+	
+	/*  Add js event handler on 'Star' Button */
+	$('#star-button').on('click', function () {
+		starThread(thread.id, null);
+		$('#star-button').hide();
+		$('#unstar-button').show();
+	});
+
+	/*  Add js event handler on 'Unstar' Button */
+	$('#unstar-button').on('click', function () {
+		unstarThread(thread.id, null);
+		$('#star-button').show();
+		$('#unstar-button').hide();
+	});
+	
+	/*  Add js event handler on 'Star' Button */
+	$('#archive-button').on('click', function () {
+		archiveThread(thread.id, null);
+		$('#archive-button').hide();
+		$('#backInbox-button').show();
+	});
+
+	/*  Add js event handler on 'Unstar' Button */
+	$('#backInbox-button').on('click', function () {
+		restoreThread(thread.id, null);
+		$('#archive-button').show();
+		$('#backInbox-button').hide();
+	});
+	
+	
+	/* Add js event handler on 'Delete' Button */
 	$('#delete-button').on('click', function () {
 		sendThreadToTrash(thread.id, null);
 	});

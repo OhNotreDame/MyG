@@ -94,9 +94,35 @@ function getThreadMessage(threadId) {
      });
 }
 
+
+
+function addLabelToThread(threadId, label, callback) {
+     var request = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                    'addLabelIds': [label],
+                    'removeLabelIds': []
+               }
+          });
+     return request.execute(callback);
+}
+
+function removeLabelToThread(threadId, label, callback) {
+     var request = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                    'addLabelIds': [label],
+                    'removeLabelIds': []
+               }
+          });
+     return request.execute(callback);
+}
+
 /* js function, using google api, to mark a thread as read, based on its messageID */
 function markThreadAsRead(threadId, callback) {
-     var request = gapi.client.gmail.users.threads.modify({
+	var request = gapi.client.gmail.users.threads.modify({
                'userId': USER,
                'id': threadId,
                'resource': {
@@ -107,9 +133,9 @@ function markThreadAsRead(threadId, callback) {
      return request.execute(callback);
 }
 
-/* js function, using google api, to mark a thread as read, based on its messageID */
+/* js function, using google api, to mark a thread as read, based on its threadId */
 function markThreadAsUnread(threadId, callback) {
-     var request = gapi.client.gmail.users.threads.modify({
+	var request = gapi.client.gmail.users.threads.modify({
                'userId': USER,
                'id': threadId,
                'resource': {
@@ -119,6 +145,63 @@ function markThreadAsUnread(threadId, callback) {
           });
      return request.execute(callback);
 }
+
+
+/* js function, using google api, to star a thread, based on its threadId */
+function starThread(threadId, callback) {
+	var request = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                   'addLabelIds': ['STARRED'],
+                   'removeLabelIds': []
+               }
+          });
+     return request.execute(callback);
+}
+
+/* js function, using google api, to unstar a thread, based on its threadId */
+function unstarThread(threadId, callback) {
+
+   var request = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                   'addLabelIds': [],
+                   'removeLabelIds': ['STARRED']
+               }
+          });
+     return request.execute(callback);
+}
+
+/* js function, using google api, to archive a thread (move out of inbox), based on its threadId */
+function archiveThread(threadId, callback) {
+	 var request = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                   'addLabelIds': [],
+                   'removeLabelIds': ['INBOX']
+               }
+          });
+     return request.execute(callback);
+}
+
+/* js function, using google api, to restore a thread (move back to inbox), based on its threadId */
+function restoreThread(threadId, callback) {
+
+   var request = gapi.client.gmail.users.threads.modify({
+               'userId': USER,
+               'id': threadId,
+               'resource': {
+                  'addLabelIds': ['INBOX'],
+                  'removeLabelIds': []
+               }
+          });
+     return request.execute(callback); 
+}
+
+
 
 /* js function, using google api, to delete a thread (send the email to trash), based on its threadId */
 function sendThreadToTrash(threadId, callback) {
