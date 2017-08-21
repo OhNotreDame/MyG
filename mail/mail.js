@@ -596,6 +596,10 @@ function addAttachmentIcon(threadId, hasAttachment) {
 }
 
 function renderThreadRow(threadId, from, subject, date, labels) {
+	if (subject == "")
+	{
+		subject = "Empty subject";
+	}
 
      $('#table-inbox > tbody').append(
           '<tr class="email_item" id="' + threadId + '">\
