@@ -9,13 +9,16 @@ function prepareGlobalNavBar()
 				<a href="/mail/inbox.html" class="mailNav"><img id="mail-inboxNavIco" src="/nav/global/mail.png"  height="32" width="32" title="Inbox"/>&nbsp; Mail</a>\
 				</li>\
 		<li>\
-			<a href="/drive/mydrive.html" class="driveNav"><img id="driveNavIco" src="/nav/global/drive.png" height="32" width="32" title="Drive"/>&nbsp;Drive (Beta)</a>\
+			<a href="/drive/mydrive.html" class="driveNav"><img id="driveNavIco" src="/nav/global/drive.png" height="32" width="32" title="Drive"/>&nbsp;Drive</a>\
 		</li>\
 		<li>\
 			<a href="/tasks/mytasks.html" class="tasksNav"><img id="tasksNavIco" src="/nav/global/tasks.png" height="32" width="32" title="Tasks"/>&nbsp;Tasks</a>\
 		</li>\
 		<li>\
-			<a href="/contacts/mycontacts.html" class="contactsNav"><img id="contactsNavIco" src="/nav/global/contacts.png" height="32" width="32" title="Tasks"/>&nbsp;Contacts</a>\
+			<a href="/contacts/mycontacts.html" class="contactsNav"><img id="contactsNavIco" src="/nav/global/contacts.png" height="32" width="32" title="Contacts"/>&nbsp;Contacts</a>\
+		</li>\
+		<li>\
+			<a href="/youtube/new.html" class="youtubeNav"><img id="contactsNavIco" src="/nav/global/youtube.png" height="32" width="32" title="YouTube"/>&nbsp;YouTube</a>\
 		</li>\
 		<li>\
 			<a href="/pages/options.html" class="settingsNav"><img id="optionsNavIco" src="/nav/global/settings.png" height="32" width="32" title="Settings"/>&nbsp;Settings</a>\
@@ -94,6 +97,18 @@ function prepareToolNavBar(toolName)
 				</li>\
 				<li>\
 					<a href="/contacts/trash.html" class="contacts-trashNav"><img id="" src="/nav/contacts/delete.png" title="Trash"/>&nbsp;Trash</a>\
+				</li>\
+				');
+			break; 
+		case 'youtube':
+			$("#toolNavBar").empty();
+			$("#toolNavBar").append('<ul id="navUL">\
+				<li></li>\
+				<li>\
+					<a href="/youtube/new.html" class="youtube-newNav"><img id="" src="/nav/youtube/new.png" title="New"/>&nbsp; New</a>\
+				</li>\
+				<li>\
+					<a href="/youtube/subscriptions.html" class="youtube-subNav"><img id="" src="/nav/youtube/subscriptions.png" title="Subscriptions"/>&nbsp;Subscriptions</a>\
 				</li>\
 				');
 			break;

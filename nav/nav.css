@@ -61,6 +61,13 @@ a.settingsNav {
 	font-size: 16px;
 }
 
+a.youtubeNav {	
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+
 /**
 	Mail Navigation
 **/	
