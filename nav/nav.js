@@ -105,7 +105,7 @@ function prepareToolNavBar(toolName)
 			$("#toolNavBar").append('<ul id="navUL">\
 				<li></li>\
 				<li>\
-					<a href="/youtube/new.html" class="youtube-newNav"><img id="" src="/nav/youtube/new.png" title="New"/>&nbsp; New</a>\
+					<a href="/youtube/new.html" class="youtube-newNav"><img id="" src="/nav/youtube/video.png" title="New"/>&nbsp; New</a>\
 				</li>\
 				<li>\
 					<a href="/youtube/subscriptions.html" class="youtube-subNav"><img id="" src="/nav/youtube/subscriptions.png" title="Subscriptions"/>&nbsp;Subscriptions</a>\

@@ -5,6 +5,7 @@ window.onload = function () {
 	checkAuth_Tasks(true);
 	checkAuth_Drive(true);
 	checkAuth_Contacts(true);
+	checkAuth_YouTube(true);
 	
 	/*
 	$("#scope_drive").text(SCOPES_DRIVE);
@@ -40,6 +41,14 @@ window.onload = function () {
 		checkAuth_Contacts(false);
 	});
 	$('#btn_signout_contacts').on('click', function () {
+		global_signOut()
+	});
+	
+	// Enable YouTube buttons		
+	$('#btn_signin_youtube').on('click', function () {
+		checkAuth_YouTube(false);
+	});
+	$('#btn_signout_youtube').on('click', function () {
 		global_signOut()
 	});
 }
@@ -210,4 +219,41 @@ function handleAuthResult_Contacts(authResult)
 function getUserInfo_Contacts()
 {
 	$("#status_auth_contacts_label").html("Connected as :");
+}
+
+
+/**
+ YouTube - Authentication
+**/
+function checkAuth_YouTube(immediate)
+{
+	$("#scope_youtube").text(SCOPES_YOUTUBE);	
+	$("#scopesYouTube").removeClass("hidden");
+	 gapi.auth.authorize({
+          'client_id': CLIENT_ID,
+          'scope': SCOPES_YOUTUBE,
+          'immediate': immediate
+     }, handleAuthResult_YouTube);
+	
+}
+	
+function handleAuthResult_YouTube(authResult) 
+{
+	if (authResult && !authResult.error) {
+		displaySuccess("YouTube Authentication", "Success !");
+		$('#btn_signin_youtube').addClass("hidden");
+		$('#btn_signout_youtube').removeClass("hidden");
+		gapi.client.load('youtube', 'v3', getUserInfo_Youtube);
+	} 
+	else {
+		displayDanger("YouTube Authentication", "Error !");
+		$('#btn_signout_youtube').addClass("hidden");
+		$('#btn_signin_youtube').removeClass("hidden");
+
+	}
+}
+
+function getUserInfo_Youtube()
+{
+	$("#status_auth_youtube_label").html("Connected as :");
 }

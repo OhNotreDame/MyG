@@ -158,6 +158,21 @@ a.contacts-trashNav {
 	font-size: 14px;
 }
 
+/**
+	YouTube Navigation (ToDo)
+**/	
+a.youtube-newNav {	
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+a.youtube-subNav {	
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 14px;
+}
+
 
 /** 
 	Current Page 
